@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class Members extends Component {
+class GMS extends Component {
   render() {
     return (
       <div>
@@ -10,4 +10,4 @@ class Members extends Component {
   }
 }
 
-export default Members
+export default GMS

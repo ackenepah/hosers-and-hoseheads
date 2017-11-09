@@ -1,0 +1,15 @@
+/* STICKY FOOTER */
+.wrapper {
+  display: flex;
+  height: 100vh;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}
+
+.container {
+  margin: 0 auto;
+  max-width: 1024px;
+}

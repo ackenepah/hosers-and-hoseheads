@@ -1,0 +1,9 @@
+@font-face {
+  font-family: "Geared Slab";
+  src: url('../assets/fonts/GearedSlab.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: "Geared Slab Thin";
+  src: url('../assets/fonts/GearedSlab-Light.ttf') format('truetype');
+}

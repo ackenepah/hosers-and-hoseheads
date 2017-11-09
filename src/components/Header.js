@@ -1,20 +1,25 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+
+import '../css/header.css'
 
 class Header extends Component {
   render() {
     return (
       <header>
-        <nav>
-          <Link to='/'>Logo</Link>
-          <ul>
-            <li><Link to='/news'>News</Link></li>
-            <li><Link to='/rules'>Rules</Link></li>
-            <li><Link to='/members'>Members</Link></li>
-            <li><Link to='/awards'>Awards</Link></li>
-            <li><Link to='/info'>Info</Link></li>
-          </ul>
-        </nav>
+        <div className="container">
+          <nav>
+            <Link to='/'>
+            <div className="logo"></div>
+            </Link>
+            <ul>
+              <Link to='/news' className="nav-link"><li>News</li></Link>
+              <Link to='/rules' className="nav-link"><li>Rules</li></Link>
+              <Link to='/gms' className="nav-link"><li>GMS</li></Link>
+              <Link to='/awards' className="nav-link"><li>Awards</li></Link>
+            </ul>
+          </nav>
+        </div>
       </header>
     );
   }
