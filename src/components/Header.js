@@ -6,8 +6,8 @@ class Header extends Component {
     return (
       <header>
         <nav>
+          <Link to='/'>Logo</Link>
           <ul>
-            <li><Link to='/'>Home</Link></li>
             <li><Link to='/news'>News</Link></li>
             <li><Link to='/rules'>Rules</Link></li>
             <li><Link to='/members'>Members</Link></li>

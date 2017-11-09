@@ -1,17 +1,12 @@
 import React, { Component } from 'react'
 import { Switch, Route } from 'react-router-dom'
-import Home from './Home'
-import News from './News'
-import Rules from './Rules'
-import Members from './Members'
-import Awards from './Awards'
-import Info from './Info'
+import Home from '../containers/Home'
+import News from '../containers/News'
+import Rules from '../containers/Rules'
+import Members from '../containers/Members'
+import Awards from '../containers/Awards'
+import Info from '../containers/Info'
 
-// The Main component renders one of the three provided
-// Routes (provided that one matches). Both the /roster
-// and /schedule routes will match any pathname that starts
-// with /roster or /schedule. The / route will only match
-// when the pathname is exactly the string "/"
 class Main extends Component {
   render() {
     return (
