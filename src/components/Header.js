@@ -3,6 +3,38 @@ import { Link } from 'react-router-dom'
 
 import '../css/header.css'
 
+var ToggleNavMenu = React.createClass({
+  getInitialState: function() {
+    return {
+      isOpen: false
+    };
+  },
+
+  handleClick: function() {
+    this.setState({
+      isOpen: true
+    });
+  },
+
+  render: function() {
+    var isOpen = this.state.isOpen;
+
+    var style = {
+      'display': ''
+    };
+
+    if (isOpen) {
+      style = {
+        'display': 'none'
+      };
+
+      return (
+        console.log('I AM WORKING')
+      )
+    }
+  }
+})
+
 class Header extends Component {
   render() {
     return (
