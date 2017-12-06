@@ -3,7 +3,15 @@ import React from 'react';
 class Header extends React.Component {
   render() {
     return(
-      <p>Header</p>
+      <div className="navbar">
+        <div className="logo">
+          <h1>Hosers & Hoseheads</h1>
+        </div>
+
+        <div className="nav-menu">
+          <p>Nav Menu</p>
+        </div>
+      </div>
     )
   }
 }
