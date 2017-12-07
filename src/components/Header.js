@@ -4,7 +4,7 @@ import Flexbox from 'flexbox-react';
 class Header extends React.Component {
   render() {
     return(
-      <Flexbox className="navbar" width="100%">
+      <Flexbox className="navbar">
         <div className="logo">
           {/* PLACEHOLDER */}
         </div>
