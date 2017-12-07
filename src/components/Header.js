@@ -1,17 +1,29 @@
 import React from 'react';
+import Flexbox from 'flexbox-react';
 
 class Header extends React.Component {
   render() {
     return(
-      <div className="navbar">
+      <Flexbox className="navbar" width="100%">
         <div className="logo">
-          <h1>Hosers & Hoseheads</h1>
+          {/* PLACEHOLDER */}
         </div>
 
-        <div className="nav-menu">
-          <p>Nav Menu</p>
+        <div className="nav-container">
+          <div className="nav-menu-icon">
+            <span></span>
+          </div>
+          <nav className="horizontal-nav primary wrapper" role="navigation">
+            <ul>
+              <li>League News</li>
+              <li>Rules</li>
+              <li>The GMs</li>
+              <li>Awards</li>
+              <li>Info</li>
+            </ul>
+          </nav>
         </div>
-      </div>
+      </Flexbox>
     )
   }
 }
