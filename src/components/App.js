@@ -7,6 +7,7 @@ import '../css/layout.css';
 import '../css/modules.css';
 
 import Header from './Header';
+import Admin from './Admin';
 
 class App extends React.Component {
   render() {
@@ -17,7 +18,7 @@ class App extends React.Component {
         </Flexbox>
 
         <Flexbox element="main" flexGrow={1}>
-          Content
+          <Admin />
         </Flexbox>
 
         <Flexbox element="footer" height="20px">
