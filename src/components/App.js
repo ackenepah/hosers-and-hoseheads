@@ -12,7 +12,7 @@ class App extends React.Component {
   render() {
     return(
       <Flexbox flexDirection="column" minHeight="100vh">
-        <Flexbox element="header" height="60px">
+        <Flexbox element="header">
           <Header />
         </Flexbox>
 

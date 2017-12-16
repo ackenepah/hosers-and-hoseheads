@@ -1,20 +1,5 @@
-.navbar {
-  padding: 0px 5px;
-  width: 100%;
-  align-items: center;
-  justify-content: space-between;
-}
-
 .logo {
-  background-color: #000;
   color: #fff;
-  height: 50px;
-  width: 50px;
-}
-
-.nav-container {
-  background-color: #fff;
-  color: #000;
   height: 50px;
   width: 50px;
 }
