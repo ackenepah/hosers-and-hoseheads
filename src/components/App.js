@@ -21,7 +21,7 @@ class App extends React.Component {
           <Admin />
         </Flexbox>
 
-        <Flexbox element="footer" height="20px">
+        <Flexbox element="footer">
           Footer
         </Flexbox>
       </Flexbox>
