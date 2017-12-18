@@ -11,7 +11,7 @@ class BlogPost extends React.Component {
           <p className="article-contributor">by Author</p>
 
           <div className="article-meta">
-            <div className="article-date">Jan 1, 2017</div>
+            <span className="article-date">Jan 1, 2017</span>
           </div>
 
           <div className="article-img">
