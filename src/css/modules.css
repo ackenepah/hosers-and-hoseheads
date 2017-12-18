@@ -1,1 +1,85 @@
+/*
+--------------------------------------------------
+ARTICLE COMPONENT STYLES
+--------------------------------------------------
+*/
 
+.article {
+  background-color: #fff;
+}
+
+/* --- Article Info --- */
+
+.article-category {
+  font-family: 'Raleway', sans-serif;
+  font-size: .7em;
+  font-weight: 600;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+}
+
+.article-headline {
+  font-family: 'Raleway', sans-serif;
+  font-size: 2em;
+  font-weight: 700;
+}
+
+.article-sub-headline {
+  font-family: 'Raleway', sans-serif;
+  font-size: 1em;
+  font-style: italic;
+  color: #999;
+  line-height: 1.5em;
+}
+
+.article-date {
+  font-size: .8em;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+}
+
+.article-body {
+  font-size: .9em;
+  font-weight: 300;
+  line-height: 1.2em;
+  letter-spacing: .06em;
+}
+
+/*
+--------------------------------------------------
+PLACEHOLDER CONTENT
+--------------------------------------------------
+*/
+
+.article-body h4 {
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+}
+
+.article-body h3 {
+  font-size: 1.5em;
+  font-weight: 700;
+  margin-bottom: 5px;
+  line-height: 1em;
+}
+
+.standings-list {
+  list-style: decimal;
+  margin-left: 40px;
+  margin-bottom: 20px;
+}
+
+.points {
+  font-weight: 700;
+}
+
+.score {
+  display: inline-block;
+  font-size: .85em;
+  font-weight: 700;
+  font-style: italic;
+  color: #999;
+  margin-bottom: 10px;
+}
