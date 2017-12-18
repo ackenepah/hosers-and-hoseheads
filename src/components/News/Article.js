@@ -14,12 +14,15 @@ class BlogPost extends React.Component {
             <div className="article-date">Jan 1, 2017</div>
           </div>
 
-          <div className="article-img">Image</div>
+          <div className="article-img">
+            <img src="http://placehold.it/1000x500" />
+          </div>
 
           <div className="article-post">
             <div className="article-body">
               <p>Post Body</p>
             </div>
+            <button>View More</button>
           </div>
         </div>
       </div>

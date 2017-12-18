@@ -19,3 +19,18 @@ nav {
 main {
   padding: 20px;
 }
+
+button {
+  font-family: 'Raleway', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: .5em;
+  border: 1px solid #333;
+  padding: 15px 20px;
+  cursor: pointer;
+  -webkit-transition: ease-in-out .5s;
+  transition: ease-in-out .5s;
+}
+
+button:hover {
+  background-color: #f1f1f1;
+}
