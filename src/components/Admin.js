@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-dom';
 import { database } from '../firebase';
 
 class Admin extends React.Component {
@@ -27,7 +28,7 @@ class Admin extends React.Component {
       title: this.state.title,
       body: this.state.body
     }
-    
+
     database.push(post)
   }
 
