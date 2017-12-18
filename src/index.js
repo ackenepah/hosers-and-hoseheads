@@ -17,7 +17,6 @@ import Blog from './components/Blog';
 
 const Root = () => {
   return(
-
     <Flexbox flexDirection="column" minHeight="100vh">
       <Flexbox element="header">
         <Header />

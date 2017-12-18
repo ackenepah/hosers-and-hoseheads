@@ -1,5 +1,4 @@
 import React from 'react';
-import Flexbox from 'flexbox-react';
 
 import Blog from './Blog';
 
