@@ -13,7 +13,6 @@ import Home from './components/Home';
 import NotFound from './components/NotFound';
 
 import Admin from './components/Admin';
-import Blog from './components/Blog';
 
 const Root = () => {
   return(

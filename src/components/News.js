@@ -1,9 +1,13 @@
 import React from 'react';
 
+import Article from './News/Article';
+
 class Blog extends React.Component {
   render() {
     return(
-      <p>Blog Page</p>
+      <div className="article-wrapper">
+        <Article />
+      </div>
     )
   }
 }

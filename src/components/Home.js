@@ -1,12 +1,12 @@
 import React from 'react';
 
-import Blog from './Blog';
+import News from './News';
 
 class App extends React.Component {
   render() {
     return(
       <div>
-        <Blog />
+        <News />
       </div>
     )
   }
