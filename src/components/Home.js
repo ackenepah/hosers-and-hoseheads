@@ -2,12 +2,14 @@ import React from 'react';
 
 import Blog from './Blog';
 
-class Home extends React.Component {
+class App extends React.Component {
   render() {
     return(
-      <Blog />
+      <div>
+        <Blog />
+      </div>
     )
   }
 }
 
-export default Home;
+export default App;
