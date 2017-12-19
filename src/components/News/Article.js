@@ -9,7 +9,7 @@ class Article extends React.Component {
             <span className="article-category">Weekly Recap</span>
             <h1 className="article-headline">Week 12 Recap</h1>
             <h2 className="article-sub-headline">Hudson Bay maple syrup for beaver eats of all Hudson Bay on this plaid flannel Ogopogo gasbar. Tim Hortons pogey too parkade to the bacon, and its Mounted Police.</h2>
-            <p className="article-contributor">by Adrian Kenepah-Martin</p>
+            <p className="article-contributor">by <a href="#">Adrian Kenepah-Martin</a></p>
 
             <div className="article-meta">
               <span className="article-date">Jan 1, 2017</span>
