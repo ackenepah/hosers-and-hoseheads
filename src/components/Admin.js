@@ -7,8 +7,35 @@ class Admin extends React.Component {
     super(props)
 
     this.state = {
-      title: '',
-      body: ''
+      user: {
+        name: '',
+        image: ''
+      },
+      recap: {
+        title: '',
+        summary: '',
+        image: '',
+        intro: '',
+        match_intro: '',
+        standings: {
+          position: '',
+          team: {
+            name: ''
+          },
+          points: ''
+        },
+        matchup_recap: {
+          title: '',
+          score: '',
+          body: '',
+          team_mvplvp: {
+            team: {
+              name: ''
+            },
+            body: ''
+          }
+        }
+      }
     }
 
     this.onInputChange = this.onInputChange.bind(this)
@@ -39,15 +66,8 @@ class Admin extends React.Component {
           <h1>Welcome, User</h1>
           <div className="admin-settings">
             <img src="http://placehold.it/50x50" />
-            <p>Settings</p>
           </div>
         </div>
-
-        <form onSubmit={this.onHandleSubmit}>
-          <input type="text" name="title" placeholder="The Post Title" onChange={this.onInputChange} ref="title" />
-          <input type="text" name="body" placeholder="Write your blog post" onChange={this.onInputChange} ref="body" />
-          <button>Post</button>
-        </form>
       </div>
     )
   }

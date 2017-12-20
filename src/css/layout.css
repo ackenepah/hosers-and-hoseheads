@@ -2,6 +2,8 @@
   width: 500px;
 }
 
+
+
 /*
 --------------------------------------------------
 ARTICLE COMPONENT STYLES
@@ -36,4 +38,27 @@ ARTICLE COMPONENT STYLES
 
 .article-post button {
   margin: auto 0;
+}
+
+
+
+/*
+--------------------------------------------------
+ADMIN COMPONENT STYLES
+--------------------------------------------------
+*/
+
+.admin-dashboard {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  color: #fff;
+  width: 100vw;
+  padding: 10px;
+}
+
+.admin-settings img {
+  width: 50px;
+  height: 50px;
 }
