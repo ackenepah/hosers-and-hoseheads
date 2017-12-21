@@ -61,12 +61,19 @@ class Admin extends React.Component {
 
   render() {
     return(
-      <div className="container">
+      <div>
         <div className="admin-dashboard">
           <div className="admin-settings">
             <img src="http://placehold.it/50x50" />
             <span>Welcome, User</span>
           </div>
+        </div>
+
+        <div className="admin-post">
+          <form>
+            <label>Post Title</label>
+            <input type="text"></input>
+          </form>
         </div>
       </div>
     )
