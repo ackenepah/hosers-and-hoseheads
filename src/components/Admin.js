@@ -63,9 +63,9 @@ class Admin extends React.Component {
     return(
       <div className="container">
         <div className="admin-dashboard">
-          <h1>Welcome, User</h1>
           <div className="admin-settings">
             <img src="http://placehold.it/50x50" />
+            <span>Welcome, User</span>
           </div>
         </div>
       </div>

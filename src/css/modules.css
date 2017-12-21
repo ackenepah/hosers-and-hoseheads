@@ -73,7 +73,7 @@ ADMIN COMPONENT STYLES
   background-color: #333;
 }
 
-.admin-dashboard h1 {
+.admin-dashboard span {
   font-family: 'Raleway', sans-serif;
   font-weight: 400;
   font-size: 1em;
