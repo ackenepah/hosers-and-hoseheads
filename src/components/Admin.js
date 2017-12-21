@@ -51,12 +51,12 @@ class Admin extends React.Component {
   onHandleSubmit(e) {
     e.preventDefault()
 
-    const post = {
+    const recap = {
       title: this.state.title,
-      body: this.state.body
+      summary: this.state.summary
     }
 
-    database.push(post)
+    database.push(recap)
   }
 
   render() {
@@ -64,15 +64,29 @@ class Admin extends React.Component {
       <div>
         <div className="admin-dashboard">
           <div className="admin-settings">
-            <img src="http://placehold.it/50x50" />
+            <img src="http://placehold.it/50x50" alt="User" />
             <span>Welcome, User</span>
           </div>
         </div>
 
         <div className="admin-post">
           <form>
-            <label>Post Title</label>
-            <input type="text"></input>
+            <div className="admin-article-dets">
+              <div className="admin-article-desc">
+                <label>Post Title</label>
+                <input type="text" name="title" placeholder="Week 1 Recap" />
+
+                <label>Post Summary</label>
+                <input type="text" name="summary" placeholder="Brandon's team suddenly falls apart and becomes the laughing stock of the leage!" />
+              </div>
+              <div className="admin-article-image">
+                <label>Post Image</label>
+                <input type="file" name="article-image" accept="image/*" />
+
+                <img src="http://placehold.it/300x150" alt="Article Image" />
+                <span className="admin-img-remove">Delete</span> <span>/</span> <span className="admin-img-replace">Replace</span>
+              </div>
+            </div>
           </form>
         </div>
       </div>
