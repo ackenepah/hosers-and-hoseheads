@@ -48,6 +48,8 @@ ADMIN COMPONENT STYLES
 --------------------------------------------------
 */
 
+/* --- Admin Dashboard --- */
+
 .admin-dashboard {
   display: flex;
   flex-direction: row;
@@ -72,4 +74,17 @@ ADMIN COMPONENT STYLES
   display: flex;
   flex-direction: row;
   align-items: center;
+}
+
+/* --- Admin Recap Form --- */
+
+.admin-post {
+  max-width: 960px;
+  margin: 0px auto;
+  padding: 20px 0px;
+}
+
+.admin-article-image img {
+  width: 200px;
+  height: 100px;
 }
