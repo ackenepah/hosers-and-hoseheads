@@ -1,12 +1,13 @@
 import React from 'react';
 import { Link } from 'react-dom';
-import { database } from '../firebase';
+import base from '../firebase';
 
 class Admin extends React.Component {
   constructor(props) {
     super(props)
 
     this.state = {
+      teststate: {},
       user: {
         name: '',
         image: ''
@@ -18,7 +19,6 @@ class Admin extends React.Component {
         intro: '',
         match_intro: '',
         standings: {
-          position: '',
           team: {
             name: ''
           },
@@ -37,27 +37,66 @@ class Admin extends React.Component {
         }
       }
     }
-
-    this.onInputChange = this.onInputChange.bind(this)
-    this.onHandleSubmit = this.onHandleSubmit.bind(this)
   }
-
-  onInputChange(e) {
-    this.setState({
-      [e.target.value]: e.target.value
-    })
-  }
-
-  onHandleSubmit(e) {
-    e.preventDefault()
-
-    const recap = {
-      title: this.state.title,
-      summary: this.state.summary
+    componentWillMount() {
+      this.ref = base.syncState(`/posts`, {
+        context: this,
+        state: 'recap'
+      })
     }
 
-    database.push(recap)
-  }
+      // heresabutton(e){
+      //   e.preventDefault();
+      //   console.log('clicked');
+      //   this.setState({teststate: {
+      //     fish1: {
+      //       name: 'Pacific Halibut',
+      //       image: 'https://i.istockimg.com/file_thumbview_approve/36248396/5/stock-photo-36248396-blackened-cajun-sea-bass.jpg',
+      //       desc: 'Everyones favorite white fish. We will cut it to the size you need and ship it.',
+      //       price: 1724,
+      //       status: 'available'
+      //     },
+      //
+      //     fish2: {
+      //       name: 'Lobster',
+      //       image: 'https://i.istockimg.com/file_thumbview_approve/32135274/5/stock-photo-32135274-cooked-lobster.jpg',
+      //       desc: 'These tender, mouth-watering beauties are a fantastic hit at any dinner party.',
+      //       price: 3200,
+      //       status: 'available'
+      //     }
+      //   }
+      // })
+      // }
+
+      submitRecap(e){
+        e.preventDefault()
+        console.log("clicked");
+        const recap = {
+          title: this.title.value,
+        }
+
+        const newRecap = {...this.state.recap};
+        const timeStamp = Date.now();
+
+        newRecap[`recap-${timeStamp}`] = recap;
+
+        this.setState({recap: newRecap})
+      }
+
+      componentDidUpdate(){
+        console.log(this.state.recap, "test state");
+      }
+
+
+      addFish(fish) {
+        // update our state
+        const fishes = {...this.state.fishes};
+        // add in our new fish
+        const timeStamp = Date.now();
+        fishes[`fish-${timeStamp}`] = fish;
+        // set state
+        this.setState({ fishes });
+      }
 
   render() {
     return(
@@ -68,13 +107,12 @@ class Admin extends React.Component {
             <span>Welcome, User</span>
           </div>
         </div>
-
         <div className="admin-post">
-          <form>
+          <form onSubmit={this.submitRecap.bind(this)}>
             <div className="admin-article-dets">
               <div className="admin-article-desc">
                 <label>Post Title</label>
-                <input type="text" name="Title" placeholder="Week 1 Recap" />
+                <input ref={(input) => this.title = input} type="text" placeholder="Post Title" placeholder="Week 1 Recap" />
 
                 <label>Post Summary</label>
                 <input type="text" name="Summary" placeholder="Brandon's team suddenly falls apart and becomes the laughing stock of the leage!" />
@@ -97,20 +135,6 @@ class Admin extends React.Component {
                 <div className="admin-article-standings">
                   <div className="standings-data">
                     <h3>Current Standings:</h3>
-                    <label>Position:</label>
-                    <select>
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                      <option value="3">3</option>
-                      <option value="4">4</option>
-                      <option value="5">5</option>
-                      <option value="6">6</option>
-                      <option value="7">7</option>
-                      <option value="8">8</option>
-                      <option value="9">9</option>
-                      <option value="10">10</option>
-                    </select>
-
                     <label>Team:</label>
                     <select>
                       <option value="The Kessel Run">The Kessel Run</option>
@@ -133,6 +157,7 @@ class Admin extends React.Component {
                 </div>
               </div>
             </div>
+            <button>click me</button>
           </form>
         </div>
       </div>
