@@ -1,42 +1,62 @@
 import React from 'react';
+import owners from '../owners';
 
 class MatchupRecap extends React.Component {
+
+  constructor(){
+    super();
+
+    this.handleTeamChange.bind(this);
+
+    this.state = {
+      homeMvpLvp: "",
+      awayMvpLvp: ""
+    }
+  }
+
+  handleTeamChange(type, e){
+    e.preventDefault();
+    this.setState({[type]: e.target.value})
+  }
+
   render(){
+    const homeMvpLvp = this.state.homeMvpLvp ? this.state.homeMvpLvp : "Home Team MVP & LVP";
+    const awayMvpLvp = this.state.awayMvpLvp ? this.state.awayMvpLvp : "Away Team MVP & LVP";
+
+
     return(
       <div className="matchup-recap">
         <h1>Matchup Recap</h1>
-        <select className="home-team">
-          <option>Select Home Team</option>
-          <option value="thekesselrun">{"The Kessel Run"}</option>
-          <option value="Wheelin N Nealin">{"Wheelin N Nealin"}</option>
-          <option value="Gotta' Go Landeskoging">{"Gotta' Go Landeskoging"}</option>
-          <option value="MayRay Trippers">{"MayRay Trippers"}</option>
-          <option value="Toothless Zambronies">{"Toothless Zambronies"}</option>
-          <option value="Lindsey's Legit Team">{"Lindsey's Legit Team"}</option>
-          <option value="The Biloxi Frogs">{"The Biloxi Frogs"}</option>
-          <option value="The Champion">{"The Champion"}</option>
-          <option value="Toews'd And Confused">{"Toews'd And Confused"}</option>
-          <option value="Losers say Roy?">{"Losers say Roy?"}</option>
-        </select>
 
-        <select className="away-team">
-          <option>Select Away Team</option>
-          <option value="thekesselrun">{"The Kessel Run"}</option>
-          <option value="Wheelin N Nealin">{"Wheelin N Nealin"}</option>
-          <option value="Gotta' Go Landeskoging">{"Gotta' Go Landeskoging"}</option>
-          <option value="MayRay Trippers">{"MayRay Trippers"}</option>
-          <option value="Toothless Zambronies">{"Toothless Zambronies"}</option>
-          <option value="Lindsey's Legit Team">{"Lindsey's Legit Team"}</option>
-          <option value="The Biloxi Frogs">{"The Biloxi Frogs"}</option>
-          <option value="The Champion">{"The Champion"}</option>
-          <option value="Toews'd And Confused">{"Toews'd And Confused"}</option>
-          <option value="Losers say Roy?">{"Losers say Roy?"}</option>
-        </select>
+        select onChange={(e) => this.handleTeamChange('adrian')}
+
+        <div className="home-team">
+          <select className="home-team" onChange={(e) => this.handleTeamChange('homeMvpLvp', e)}>
+            <option>Select Home Team</option>
+            {Object.keys(owners).map(key => <option value={key}>{key}</option>)}
+          </select>
+          <input type="number"/>
+        </div>
+
+        <div className="away-team">
+          <select className="away-team" onChange={(e) => this.handleTeamChange('awayMvpLvp', e)}>
+            <option>Select Away Team</option>
+            {Object.keys(owners).map(key => <option value={key}>{key}</option>)}
+          </select>
+          <input type="number"/>
+        </div>
 
 
-        <label htmlFor="title">Title</label>
-        <input type="text" id="title"/>
 
+
+        <label htmlFor="recap">Recap</label>
+        <textarea id="recap"></textarea>
+
+        <label htmlFor="home">{homeMvpLvp}</label>
+        <textarea id="home"></textarea>
+
+        <label htmlFor="away">{awayMvpLvp}</label>
+        <textarea id="away"></textarea>
       </div>
     )
   }
