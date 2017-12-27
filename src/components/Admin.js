@@ -54,7 +54,7 @@ class Admin extends React.Component {
           summary: this.summary.value,
           image: this.image.value,
           articleIntro: this.articleIntro.value,
-          matchIntro: this.matchupIntro.value,
+          matchupIntro: this.matchupIntro.value,
           standings: {
             team: this.teamName.value,
             points: this.teamPoints.value,
