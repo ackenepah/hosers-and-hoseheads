@@ -6,57 +6,84 @@ class MatchupRecap extends React.Component {
   constructor(){
     super();
 
-    this.handleTeamChange.bind(this);
-
+    // this.handleTeamChange.bind(this);
+    this.submitMatchupRecap = this.submitMatchupRecap.bind(this);
     this.state = {
-      homeMvpLvp: "",
-      awayMvpLvp: ""
+      homeTeam: "",
+      awayTeam: "",
+      stageMatchup: []
     }
   }
 
   handleTeamChange(type, e){
-    e.preventDefault();
     this.setState({[type]: e.target.value})
   }
 
+  submitMatchupRecap(e){
+    e.preventDefault();
+    const stageMatchup = {
+      recap: this.recap.value,
+      homeTeam: this.state.homeTeam,
+      homeTeamScore: this.homeTeamScore.value,
+      homeMvpLvpDesc: this.homeMvpLvp.value,
+      awayTeam: this.state.awayTeam,
+      awayTeamScore: this.homeTeamScore.value,
+      awayMvpLvpDesc: this.awayMvpLvp.value
+    }
+    //use spread operator to grab current state (array) and add the stageMatchup object to it
+    this.setState({
+      stageMatchup: [...this.state.stageMatchup, stageMatchup],
+      homeTeam: "",
+      awayTeam: ""
+    })
+    this.matchupRecapForm.reset();
+  }
+
+  componentDidUpdate(){
+    console.log(this.state.stageMatchup, "componentDidUpdate");
+  }
+
   render(){
-    const homeMvpLvp = this.state.homeMvpLvp ? this.state.homeMvpLvp : "Home Team MVP & LVP";
-    const awayMvpLvp = this.state.awayMvpLvp ? this.state.awayMvpLvp : "Away Team MVP & LVP";
+    const homeMvpLvp = this.state.homeTeam ? this.state.homeTeam : "Home Team MVP & LVP";
+    const awayMvpLvp = this.state.awayTeam ? this.state.awayTeam : "Away Team MVP & LVP";
 
 
     return(
       <div className="matchup-recap">
         <h1>Matchup Recap</h1>
+        <form ref={(input) => this.matchupRecapForm = input} onSubmit={this.submitMatchupRecap}>
 
-        select onChange={(e) => this.handleTeamChange('adrian')}
+          <div className="home-team">
+            <select className="home-team-select" onChange={(e) => this.handleTeamChange('homeTeam', e)}>
+              <option>Select Home Team</option>
+              {Object.keys(owners).map(key => <option key={key} value={key}>{key}</option>)}
+            </select>
+            <input type="number" min="0" max="10" ref={(input) => this.homeTeamScore = input}c/>
+          </div>
 
-        <div className="home-team">
-          <select className="home-team" onChange={(e) => this.handleTeamChange('homeMvpLvp', e)}>
-            <option>Select Home Team</option>
-            {Object.keys(owners).map(key => <option value={key}>{key}</option>)}
-          </select>
-          <input type="number"/>
-        </div>
-
-        <div className="away-team">
-          <select className="away-team" onChange={(e) => this.handleTeamChange('awayMvpLvp', e)}>
-            <option>Select Away Team</option>
-            {Object.keys(owners).map(key => <option value={key}>{key}</option>)}
-          </select>
-          <input type="number"/>
-        </div>
-
+          <div className="away-team">
+            <select className="away-team-select" onChange={(e) => this.handleTeamChange('awayTeam', e)}>
+              <option>Select Away Team</option>
+              {Object.keys(owners).map(key => <option key={key} value={key}>{key}</option>)}
+            </select>
+            <input type="number" min="0" max="10" ref={(input) => this.awayTeamScore = input}c/>
+          </div>
 
 
 
-        <label htmlFor="recap">Recap</label>
-        <textarea id="recap"></textarea>
 
-        <label htmlFor="home">{homeMvpLvp}</label>
-        <textarea id="home"></textarea>
+          <label htmlFor="recap">Recap</label>
+          <textarea id="recap" ref={(input) => this.recap = input}></textarea>
 
-        <label htmlFor="away">{awayMvpLvp}</label>
-        <textarea id="away"></textarea>
+          <label htmlFor="home">{homeMvpLvp}</label>
+          <textarea id="home" ref={(input) => this.homeMvpLvp = input}></textarea>
+
+          <label htmlFor="away">{awayMvpLvp}</label>
+          <textarea id="away" ref={(input) => this.awayMvpLvp = input}></textarea>
+
+          <button>Add Matchup</button>
+        </form>
+
       </div>
     )
   }
