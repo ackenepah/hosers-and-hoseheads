@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-dom';
+// import { Link } from 'react-dom';
 import base from '../config';
 import MatchupRecap from './MatchupRecap';
 
@@ -89,7 +89,7 @@ class Admin extends React.Component {
             <div className="admin-article-dets">
               <div className="admin-article-desc">
                 <label>Post Title</label>
-                <input ref={(input) => this.title = input} type="text" placeholder="Post Title" placeholder="Week 1 Recap" />
+                <input ref={(input) => this.title = input} type="text" placeholder="Week 1 Recap" />
 
                 <label>Post Summary</label>
                 <input ref={(input) => this.summary = input} type="text" name="Summary" placeholder="Brandon's team suddenly falls apart and becomes the laughing stock of the leage!" />
@@ -98,7 +98,7 @@ class Admin extends React.Component {
                 <label>Post Image</label>
                 <input ref={(input) => this.image = input} type="text" name="Article Image" accept="image/*" />
 
-                <img src="http://placehold.it/300x150" alt="Article Image" />
+                <img src="http://placehold.it/300x150" alt="Article" />
                 <span className="remove">Delete</span> <span>/</span> <span className="edit">Replace</span>
               </div>
 
