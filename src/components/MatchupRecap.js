@@ -58,7 +58,7 @@ class MatchupRecap extends React.Component {
               <option>Select Home Team</option>
               {Object.keys(owners).map(key => <option key={key} value={key}>{key}</option>)}
             </select>
-            <input type="number" min="0" max="10" ref={(input) => this.homeTeamScore = input}c/>
+            <input type="number" min="0" max="10" ref={(input) => this.homeTeamScore = input}/>
           </div>
 
           <div className="away-team">
@@ -66,7 +66,7 @@ class MatchupRecap extends React.Component {
               <option>Select Away Team</option>
               {Object.keys(owners).map(key => <option key={key} value={key}>{key}</option>)}
             </select>
-            <input type="number" min="0" max="10" ref={(input) => this.awayTeamScore = input}c/>
+            <input type="number" min="0" max="10" ref={(input) => this.awayTeamScore = input}/>
           </div>
 
 

@@ -21,7 +21,7 @@ class Article extends React.Component {
           </div>
 
           <div className="article-img">
-            <img src={d.image} />
+            <img src={d.image} alt={d.title}/>
           </div>
 
           <div className="article-post">
