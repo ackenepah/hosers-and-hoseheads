@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-dom';
-import base from '../firebase';
+import base from '../config';
+import MatchupRecap from './MatchupRecap';
 
 class Admin extends React.Component {
   constructor(props) {
@@ -160,6 +161,9 @@ class Admin extends React.Component {
             <button>click me</button>
           </form>
         </div>
+
+        <MatchupRecap />
+
       </div>
     )
   }
