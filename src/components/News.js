@@ -1,6 +1,6 @@
 import React from 'react';
 import Article from './News/Article';
-import base from '../firebase';
+import base from '../config';
 
 class News extends React.Component {
   constructor(props) {
@@ -27,7 +27,7 @@ class News extends React.Component {
   render() {
     return(
       <div className="article-container">
-      
+
         {Object.keys(this.state.recaps).map(key => <Article key={key}  details={this.state.recaps[key]}/>)}
       </div>
     )
