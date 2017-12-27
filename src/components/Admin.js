@@ -8,7 +8,6 @@ class Admin extends React.Component {
     super(props)
 
     this.state = {
-      teststate: {},
       user: {
         name: '',
         image: ''
@@ -46,35 +45,23 @@ class Admin extends React.Component {
       })
     }
 
-      // heresabutton(e){
-      //   e.preventDefault();
-      //   console.log('clicked');
-      //   this.setState({teststate: {
-      //     fish1: {
-      //       name: 'Pacific Halibut',
-      //       image: 'https://i.istockimg.com/file_thumbview_approve/36248396/5/stock-photo-36248396-blackened-cajun-sea-bass.jpg',
-      //       desc: 'Everyones favorite white fish. We will cut it to the size you need and ship it.',
-      //       price: 1724,
-      //       status: 'available'
-      //     },
-      //
-      //     fish2: {
-      //       name: 'Lobster',
-      //       image: 'https://i.istockimg.com/file_thumbview_approve/32135274/5/stock-photo-32135274-cooked-lobster.jpg',
-      //       desc: 'These tender, mouth-watering beauties are a fantastic hit at any dinner party.',
-      //       price: 3200,
-      //       status: 'available'
-      //     }
-      //   }
-      // })
-      // }
-
       submitRecap(e){
         e.preventDefault()
         console.log("clicked");
+
         const recap = {
           title: this.title.value,
+          summary: this.summary.value,
+          image: this.image.value,
+          articleIntro: this.articleIntro.value,
+          matchIntro: this.matchupIntro.value,
+          standings: {
+            team: this.teamName.value,
+            points: this.teamPoints.value,
+          }
         }
+
+        console.log(recap, "THE RECAP IS HERE")
 
         const newRecap = {...this.state.recap};
         const timeStamp = Date.now();
@@ -88,17 +75,6 @@ class Admin extends React.Component {
         console.log(this.state.recap, "test state");
       }
 
-
-      addFish(fish) {
-        // update our state
-        const fishes = {...this.state.fishes};
-        // add in our new fish
-        const timeStamp = Date.now();
-        fishes[`fish-${timeStamp}`] = fish;
-        // set state
-        this.setState({ fishes });
-      }
-
   render() {
     return(
       <div>
@@ -109,18 +85,18 @@ class Admin extends React.Component {
           </div>
         </div>
         <div className="admin-post">
-          <form onSubmit={this.submitRecap.bind(this)}>
+          <form onSubmit={(e) => this.submitRecap(e)}>
             <div className="admin-article-dets">
               <div className="admin-article-desc">
                 <label>Post Title</label>
                 <input ref={(input) => this.title = input} type="text" placeholder="Post Title" placeholder="Week 1 Recap" />
 
                 <label>Post Summary</label>
-                <input type="text" name="Summary" placeholder="Brandon's team suddenly falls apart and becomes the laughing stock of the leage!" />
+                <input ref={(input) => this.summary = input} type="text" name="Summary" placeholder="Brandon's team suddenly falls apart and becomes the laughing stock of the leage!" />
               </div>
               <div className="admin-article-image">
                 <label>Post Image</label>
-                <input type="file" name="Article Image" accept="image/*" />
+                <input ref={(input) => this.image = input} type="text" name="Article Image" accept="image/*" />
 
                 <img src="http://placehold.it/300x150" alt="Article Image" />
                 <span className="remove">Delete</span> <span>/</span> <span className="edit">Replace</span>
@@ -128,21 +104,21 @@ class Admin extends React.Component {
 
               <div className="admin-article-content">
                 <label>Post Intro</label>
-                <textarea type="text" name="Article Intro" />
+                <textarea ref={(input) => this.articleIntro = input} type="text" name="Article Intro" />
 
                 <label>Match Intro</label>
-                <textarea type="text" name="Match Intro" />
+                <textarea ref={(input) => this.matchupIntro = input} type="text" name="Match Intro" />
 
                 <div className="admin-article-standings">
                   <div className="standings-data">
                     <h3>Current Standings:</h3>
                     <label>Team:</label>
                     <select>
-                      <option value="The Kessel Run">The Kessel Run</option>
+                      <option ref={(input) => this.teamName = input} value="The Kessel Run">The Kessel Run</option>
                     </select>
 
                     <label>Points:</label>
-                    <input type="text" name="Teams Points" />
+                    <input ref={(input) => this.teamPoints = input} type="text" name="Teams Points" />
                   </div>
 
                   <div className="standings-table">
