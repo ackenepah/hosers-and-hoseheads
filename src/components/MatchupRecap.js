@@ -1,6 +1,8 @@
 import React from 'react';
 import owners from '../owners';
 
+import StagedMatchups from './StagedMatchups';
+
 class MatchupRecap extends React.Component {
 
   constructor(){
@@ -40,7 +42,7 @@ class MatchupRecap extends React.Component {
   }
 
   componentDidUpdate(){
-    console.log(this.state.stageMatchup, "componentDidUpdate");
+    // console.log(this.state.stageMatchup, "componentDidUpdate");
   }
 
   render(){
@@ -70,8 +72,6 @@ class MatchupRecap extends React.Component {
           </div>
 
 
-
-
           <label htmlFor="recap">Recap</label>
           <textarea id="recap" ref={(input) => this.recap = input}></textarea>
 
@@ -83,6 +83,8 @@ class MatchupRecap extends React.Component {
 
           <button>Add Matchup</button>
         </form>
+
+        <StagedMatchups staged={this.state.stageMatchup}/>
 
       </div>
     )
