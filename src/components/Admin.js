@@ -1,5 +1,4 @@
 import React from 'react';
-// import { Link } from 'react-dom';
 import base from '../config';
 import MatchupRecap from './MatchupRecap';
 
@@ -7,16 +6,18 @@ class Admin extends React.Component {
   constructor(props) {
     super(props)
 
+    this.getStaged = this.getStaged.bind(this);
+
     this.state = {
       user: {
         name: '',
         image: ''
       },
-      recap: {
+      recaps: {
         title: '',
         summary: '',
         image: '',
-        intro: '',
+        article_intro: '',
         match_intro: '',
         standings: {
           team: {
@@ -24,56 +25,58 @@ class Admin extends React.Component {
           },
           points: ''
         },
-        matchup_recap: {
-          title: '',
-          score: '',
-          body: '',
-          team_mvplvp: {
-            team: {
-              name: ''
-            },
-            body: ''
-          }
-        }
-      }
+        matchup_recaps: [],
+        post_date: ''
+      },
+      staged_matchups: []
     }
   }
-    componentWillMount() {
-      this.ref = base.syncState(`/posts`, {
-        context: this,
-        state: 'recap'
-      })
+
+  componentWillMount() {
+    this.ref = base.syncState(`/posts`, {
+      context: this,
+      state: 'recaps'
+    })
+  }
+
+  submitRecap(e, staged){
+    e.preventDefault()
+    if(this.state.staged_matchups && this.state.staged_matchups.length <= 0){
+      alert("please select at least one matchpp")
+    } else {
+      const timeStamp = Date.now();
+      const recap = {
+        title: this.title.value,
+        summary: this.summary.value,
+        image: this.image.value,
+        article_intro: this.articleIntro.value,
+        matchup_intro: this.matchupIntro.value,
+        standings: {
+          team: this.teamName.value,
+          points: this.teamPoints.value,
+        },
+        matchup_recaps: this.state.staged_matchups,
+        post_date: timeStamp
+      }
+
+      const newRecap = {...this.state.new_recap};
+      newRecap[`recap-${timeStamp}`] = recap;
+      this.setState({recaps: newRecap})
+      this.mainForm.reset();
     }
 
-      submitRecap(e){
-        e.preventDefault()
-        console.log("clicked");
+  }
 
-        const recap = {
-          title: this.title.value,
-          summary: this.summary.value,
-          image: this.image.value,
-          articleIntro: this.articleIntro.value,
-          matchupIntro: this.matchupIntro.value,
-          standings: {
-            team: this.teamName.value,
-            points: this.teamPoints.value,
-          }
-        }
+  getStaged(matchup_recaps){
+    const currentState = {...this.state.staged_matchups, matchup_recaps}
+    // console.log(currentState, 'currentState');
+    this.setState({staged_matchups: currentState});
+  }
 
-        console.log(recap, "THE RECAP IS HERE")
+  componentDidUpdate(){
+    console.log(this.state, "test state");
+  }
 
-        const newRecap = {...this.state.recap};
-        const timeStamp = Date.now();
-
-        newRecap[`recap-${timeStamp}`] = recap;
-
-        this.setState({recap: newRecap})
-      }
-
-      componentDidUpdate(){
-        console.log(this.state.recap, "test state");
-      }
 
   render() {
     return(
@@ -85,7 +88,7 @@ class Admin extends React.Component {
           </div>
         </div>
         <div className="admin-post">
-          <form onSubmit={(e) => this.submitRecap(e)}>
+          <form onSubmit={(e) => this.submitRecap(e)} ref={(input) => {this.mainForm = input}}>
             <div className="admin-article-dets">
               <div className="admin-article-desc">
                 <label>Post Title</label>
@@ -138,7 +141,7 @@ class Admin extends React.Component {
           </form>
         </div>
 
-        <MatchupRecap />
+        <MatchupRecap getStaged={this.getStaged}/>
 
       </div>
     )
