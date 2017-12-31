@@ -66,6 +66,9 @@ class MatchupRecap extends React.Component {
       })
       this.matchupRecapForm.reset();
 
+      this.props.getStaged(allStageMatchups)
+
+
     } else {
 
       const stageMatchup = {
@@ -78,8 +81,10 @@ class MatchupRecap extends React.Component {
         awayMvpLvp: this.awayMvpLvp.value
       }
       //use spread operator to grab current state (array) and add the stageMatchup object to it
+
+      const allStageMatchups = [...this.state.stageMatchup, stageMatchup];
       this.setState({
-        stageMatchup: [...this.state.stageMatchup, stageMatchup],
+        stageMatchup: allStageMatchups,
         homeTeam: "",
         homeMvpLvp: "",
         homeTeamScore: "",
@@ -90,7 +95,10 @@ class MatchupRecap extends React.Component {
         editing: false,
         editingKey: ""
       })
+
       this.matchupRecapForm.reset();
+      this.props.getStaged(allStageMatchups)
+
     }
   }
 
@@ -112,10 +120,13 @@ class MatchupRecap extends React.Component {
     const stageMatchup = [...this.state.stageMatchup]
     stageMatchup.splice(key, 1)
     this.setState({stageMatchup})
+    this.props.getStaged(stageMatchup)
   }
 
   componentDidUpdate(){
     // console.log(this.state.stageMatchup, "componentDidUpdate");
+    // this.props.getStaged(this.state.stageMatchup)
+
   }
 
   render(){

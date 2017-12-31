@@ -9,7 +9,7 @@ class StagedMatchups extends React.Component {
 
     return (
       <li key={key} style={liStyle}>
-        {staged.homeTeam} vs {staged.awayTeam} | <span onClick={(e) => {this.props.editMatchupRecap(staged, key)}}>edit</span> | <span onClick={(e) => {this.props.deleteMatchupRecap(staged, key)}}> X </span>
+        <span onClick={(e) => {this.props.editMatchupRecap(staged, key)}}> {staged.homeTeam} vs {staged.awayTeam}</span> | <span onClick={(e) => {this.props.deleteMatchupRecap(staged, key)}}> X </span>
       </li>
     )
   }
