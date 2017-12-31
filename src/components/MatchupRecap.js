@@ -9,7 +9,8 @@ class MatchupRecap extends React.Component {
     super();
 
     this.submitMatchupRecap = this.submitMatchupRecap.bind(this);
-    this.setMatchupRecap = this.setMatchupRecap.bind(this);
+    this.editMatchupRecap = this.editMatchupRecap.bind(this);
+    this.deleteMatchupRecap = this.deleteMatchupRecap.bind(this);
     this.state = {
       homeTeam: "",
       homeMvpLvp: "",
@@ -61,8 +62,9 @@ class MatchupRecap extends React.Component {
 
 
 
-  setMatchupRecap(matchup){
+  editMatchupRecap(matchup, key){
     console.log(matchup, 'matchup lol');
+    console.log(key);
     this.setState({
       homeTeam: matchup.homeTeam,
       homeMvpLvp: matchup.homeMvpLvp,
@@ -74,8 +76,14 @@ class MatchupRecap extends React.Component {
     })
   }
 
+  deleteMatchupRecap(matchup, key){
+    const stageMatchup = [...this.state.stageMatchup]
+    stageMatchup.splice(key, 1)
+    this.setState({stageMatchup})
+  }
+
   componentDidUpdate(){
-    // console.log(this.state.homeTeam, "componentDidUpdate");
+    console.log(this.state.stageMatchup, "componentDidUpdate");
   }
 
   render(){
@@ -117,7 +125,7 @@ class MatchupRecap extends React.Component {
           <button>Add Matchup</button>
         </form>
 
-        <StagedMatchups staged={this.state.stageMatchup} setMatchupRecap={this.setMatchupRecap}/>
+        <StagedMatchups staged={this.state.stageMatchup} editMatchupRecap={this.editMatchupRecap} deleteMatchupRecap={this.deleteMatchupRecap}/>
 
       </div>
     )
