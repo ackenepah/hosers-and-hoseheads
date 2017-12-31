@@ -7,10 +7,10 @@ class MatchupRecap extends React.Component {
 
   constructor(){
     super();
-
     this.submitMatchupRecap = this.submitMatchupRecap.bind(this);
     this.editMatchupRecap = this.editMatchupRecap.bind(this);
     this.deleteMatchupRecap = this.deleteMatchupRecap.bind(this);
+
     this.state = {
       homeTeam: "",
       homeMvpLvp: "",
@@ -21,7 +21,6 @@ class MatchupRecap extends React.Component {
       recap: "",
       editing: false,
       editingKey: "",
-
       stageMatchup: []
     }
   }
@@ -95,8 +94,6 @@ class MatchupRecap extends React.Component {
     }
   }
 
-
-
   editMatchupRecap(matchup, key){
     this.setState({
       homeTeam: matchup.homeTeam,
@@ -124,6 +121,7 @@ class MatchupRecap extends React.Component {
   render(){
     const homeMvpLvp = this.state.homeTeam ? this.state.homeTeam : "Home Team MVP & LVP";
     const awayMvpLvp = this.state.awayTeam ? this.state.awayTeam : "Away Team MVP & LVP";
+    const buttonText = this.state.editing ? "Edit Matchup" : "Add Matchup";
 
 
     return(
@@ -157,7 +155,7 @@ class MatchupRecap extends React.Component {
           <label htmlFor="away">{awayMvpLvp}</label>
           <textarea id="away" ref={(input) => this.awayMvpLvp = input} value={this.state.awayMvpLvp} onChange={(e) => this.handleTeamChange('awayMvpLvp', e)}></textarea>
 
-          <button>Add Matchup</button>
+          <button>{buttonText}</button>
         </form>
 
         <StagedMatchups staged={this.state.stageMatchup} editMatchupRecap={this.editMatchupRecap} deleteMatchupRecap={this.deleteMatchupRecap}/>
