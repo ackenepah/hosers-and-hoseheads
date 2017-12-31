@@ -19,6 +19,8 @@ class MatchupRecap extends React.Component {
       awayMvpLvp: "",
       awayTeamScore: "",
       recap: "",
+      editing: false,
+      editingKey: "",
 
       stageMatchup: []
     }
@@ -35,7 +37,38 @@ class MatchupRecap extends React.Component {
       alert('no  home team or away team');
     } else if(this.state.homeTeam === this.state.awayTeam){
       alert('teams cannot be the same');
+    } else if(this.state.editing === true){
+
+      const allStageMatchups = [...this.state.stageMatchup];
+
+      const stageMatchup = {
+        recap: this.recap.value,
+        homeTeam: this.state.homeTeam,
+        homeTeamScore: this.homeTeamScore.value,
+        homeMvpLvp: this.homeMvpLvp.value,
+        awayTeam: this.state.awayTeam,
+        awayTeamScore: this.awayTeamScore.value,
+        awayMvpLvp: this.awayMvpLvp.value
+      }
+
+      allStageMatchups.splice(this.state.editingKey, 1, stageMatchup)
+
+      this.setState({
+        stageMatchup: allStageMatchups,
+        homeTeam: "",
+        homeMvpLvp: "",
+        homeTeamScore: "",
+        awayTeam: "",
+        awayMvpLvp: "",
+        awayTeamScore: "",
+        recap: "",
+        editing: false,
+        editingKey: ""
+      })
+      this.matchupRecapForm.reset();
+
     } else {
+
       const stageMatchup = {
         recap: this.recap.value,
         homeTeam: this.state.homeTeam,
@@ -54,7 +87,9 @@ class MatchupRecap extends React.Component {
         awayTeam: "",
         awayMvpLvp: "",
         awayTeamScore: "",
-        recap: ""
+        recap: "",
+        editing: false,
+        editingKey: ""
       })
       this.matchupRecapForm.reset();
     }
@@ -63,8 +98,6 @@ class MatchupRecap extends React.Component {
 
 
   editMatchupRecap(matchup, key){
-    console.log(matchup, 'matchup lol');
-    console.log(key);
     this.setState({
       homeTeam: matchup.homeTeam,
       homeMvpLvp: matchup.homeMvpLvp,
@@ -72,7 +105,9 @@ class MatchupRecap extends React.Component {
       awayTeam: matchup.awayTeam,
       awayMvpLvp: matchup.awayMvpLvp,
       awayTeamScore: matchup.awayTeamScore,
-      recap: matchup.recap
+      recap: matchup.recap,
+      editing: true,
+      editingKey: key
     })
   }
 
@@ -83,7 +118,7 @@ class MatchupRecap extends React.Component {
   }
 
   componentDidUpdate(){
-    console.log(this.state.stageMatchup, "componentDidUpdate");
+    // console.log(this.state.stageMatchup, "componentDidUpdate");
   }
 
   render(){
