@@ -5,7 +5,7 @@ class StagedMatchups extends React.Component {
   renderStages(key){
     const staged = this.props.staged[key];
     // console.log(staged , 'staged');
-    const liStyle = {width: '100%', border: '1px solid black'}
+    const liStyle = {width: '100%', border: '1px solid black', padding: "2px"}
 
     return (
       <li key={key} style={liStyle}>
@@ -20,7 +20,7 @@ class StagedMatchups extends React.Component {
     const h1style = {fontSize: '40px'}
     const stagedIds = Object.keys(this.props.staged)
     // console.log(stagedIds, "stagedIds");
-    const ulStyle = {width: '400px', background: 'yellow'}
+    const ulStyle = {width: '400px', background: 'yellow', minHeight: '500px'}
 
     return (
       <div className="staged-matchups" style={divStyle}>

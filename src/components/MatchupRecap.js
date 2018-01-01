@@ -10,6 +10,7 @@ class MatchupRecap extends React.Component {
     this.submitMatchupRecap = this.submitMatchupRecap.bind(this);
     this.editMatchupRecap = this.editMatchupRecap.bind(this);
     this.deleteMatchupRecap = this.deleteMatchupRecap.bind(this);
+    this.clearForm = this.clearForm.bind(this);
 
     this.state = {
       homeTeam: "",
@@ -96,7 +97,8 @@ class MatchupRecap extends React.Component {
         editingKey: ""
       })
 
-      this.matchupRecapForm.reset();
+      // this.matchupRecapForm.reset();
+      console.log('getting ehre');
       this.props.getStaged(allStageMatchups)
 
     }
@@ -119,8 +121,34 @@ class MatchupRecap extends React.Component {
   deleteMatchupRecap(matchup, key){
     const stageMatchup = [...this.state.stageMatchup]
     stageMatchup.splice(key, 1)
-    this.setState({stageMatchup})
+    // this.setState({stageMatchup})
+    this.setState({
+      stageMatchup: stageMatchup,
+      homeTeam: "",
+      homeMvpLvp: "",
+      homeTeamScore: "",
+      awayTeam: "",
+      awayMvpLvp: "",
+      awayTeamScore: "",
+      recap: "",
+      editing: false,
+      editingKey: ""
+    })
     this.props.getStaged(stageMatchup)
+  }
+
+  clearForm(){
+    this.setState({
+      homeTeam: "",
+      homeMvpLvp: "",
+      homeTeamScore: "",
+      awayTeam: "",
+      awayMvpLvp: "",
+      awayTeamScore: "",
+      recap: "",
+      editing: false,
+      editingKey: ""
+    })
   }
 
   componentDidUpdate(){
@@ -133,6 +161,8 @@ class MatchupRecap extends React.Component {
     const homeMvpLvp = this.state.homeTeam ? this.state.homeTeam : "Home Team MVP & LVP";
     const awayMvpLvp = this.state.awayTeam ? this.state.awayTeam : "Away Team MVP & LVP";
     const buttonText = this.state.editing ? "Edit Matchup" : "Add Matchup";
+    // const clearFormBtn = this.state.editing ? <button type="button" onClick={this.cancelEdit}> Cancel </button> : <button type="button" onClick={this.cancelEdit}> Clear </button>;
+    const clearFormBtn = this.state.editing ? 'Cancel' : 'Clear';
 
 
     return(
@@ -167,6 +197,7 @@ class MatchupRecap extends React.Component {
           <textarea id="away" ref={(input) => this.awayMvpLvp = input} value={this.state.awayMvpLvp} onChange={(e) => this.handleTeamChange('awayMvpLvp', e)}></textarea>
 
           <button>{buttonText}</button>
+          <button type="button" onClick={this.clearForm}>{clearFormBtn}</button>
         </form>
 
         <StagedMatchups staged={this.state.stageMatchup} editMatchupRecap={this.editMatchupRecap} deleteMatchupRecap={this.deleteMatchupRecap}/>

@@ -88,6 +88,7 @@ class Admin extends React.Component {
           </div>
         </div>
         <div className="admin-post">
+
           <form onSubmit={(e) => this.submitRecap(e)} ref={(input) => {this.mainForm = input}}>
             <div className="admin-article-dets">
               <div className="admin-article-desc">
