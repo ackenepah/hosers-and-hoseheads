@@ -6,7 +6,7 @@ class Admin extends React.Component {
   constructor(props) {
     super(props)
 
-    this.getStaged = this.getStaged.bind(this);
+    this.handleStaged = this.handleStaged.bind(this);
 
     this.state = {
       user: {
@@ -45,6 +45,7 @@ class Admin extends React.Component {
       alert("please select at least one matchpp")
     } else {
       const timeStamp = Date.now();
+      const newRecap = {...this.state.new_recap};
       const recap = {
         title: this.title.value,
         summary: this.summary.value,
@@ -58,23 +59,30 @@ class Admin extends React.Component {
         matchup_recaps: this.state.staged_matchups,
         post_date: timeStamp
       }
-
-      const newRecap = {...this.state.new_recap};
       newRecap[`recap-${timeStamp}`] = recap;
-      this.setState({recaps: newRecap})
+      this.setState({recaps: newRecap, staged_matchups: []})
       this.mainForm.reset();
     }
-
   }
 
-  getStaged(matchup_recaps){
-    const currentState = {...this.state.staged_matchups, matchup_recaps}
-    // console.log(currentState, 'currentState');
-    this.setState({staged_matchups: currentState});
+  handleStaged(matchup_recaps, type){
+    //this function is not needed - data is being manipulated directly in MatchupRecap component
+
+    // if(type === 'new'){
+    //   console.log('ADDING NEW!!!');
+    //   const currentState = this.state.staged_matchups.concat(matchup_recaps)
+    //   console.log(currentState, 'currentState');
+    //   this.setState({staged_matchups: currentState});
+    // } else if (type === 'edit'){
+    //   console.log('ediitng hahah');
+    // } else if (type === 'delete'){
+    //   console.log('DELETINGGGG');
+    // }
   }
+
 
   componentDidUpdate(){
-    console.log(this.state, "test state");
+    console.log(this.state.staged_matchups, 'staged_matchups componentDidUpdate Admin');
   }
 
 
@@ -88,6 +96,7 @@ class Admin extends React.Component {
           </div>
         </div>
         <div className="admin-post">
+
           <form onSubmit={(e) => this.submitRecap(e)} ref={(input) => {this.mainForm = input}}>
             <div className="admin-article-dets">
               <div className="admin-article-desc">
@@ -141,7 +150,7 @@ class Admin extends React.Component {
           </form>
         </div>
 
-        <MatchupRecap getStaged={this.getStaged}/>
+        <MatchupRecap handleStaged={this.handleStaged} stagedMatchups={this.state.staged_matchups}/>
 
       </div>
     )

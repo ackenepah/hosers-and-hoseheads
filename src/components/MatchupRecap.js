@@ -5,11 +5,12 @@ import StagedMatchups from './StagedMatchups';
 
 class MatchupRecap extends React.Component {
 
-  constructor(){
-    super();
+  constructor(props){
+    super(props);
     this.submitMatchupRecap = this.submitMatchupRecap.bind(this);
     this.editMatchupRecap = this.editMatchupRecap.bind(this);
     this.deleteMatchupRecap = this.deleteMatchupRecap.bind(this);
+    this.clearForm = this.clearForm.bind(this);
 
     this.state = {
       homeTeam: "",
@@ -20,8 +21,7 @@ class MatchupRecap extends React.Component {
       awayTeamScore: "",
       recap: "",
       editing: false,
-      editingKey: "",
-      stageMatchup: []
+      editingKey: ""
     }
   }
 
@@ -38,9 +38,7 @@ class MatchupRecap extends React.Component {
       alert('teams cannot be the same');
     } else if(this.state.editing === true){
 
-      const allStageMatchups = [...this.state.stageMatchup];
-
-      const stageMatchup = {
+      const editingMatchup = {
         recap: this.recap.value,
         homeTeam: this.state.homeTeam,
         homeTeamScore: this.homeTeamScore.value,
@@ -49,11 +47,7 @@ class MatchupRecap extends React.Component {
         awayTeamScore: this.awayTeamScore.value,
         awayMvpLvp: this.awayMvpLvp.value
       }
-
-      allStageMatchups.splice(this.state.editingKey, 1, stageMatchup)
-
       this.setState({
-        stageMatchup: allStageMatchups,
         homeTeam: "",
         homeMvpLvp: "",
         homeTeamScore: "",
@@ -64,14 +58,14 @@ class MatchupRecap extends React.Component {
         editing: false,
         editingKey: ""
       })
-      this.matchupRecapForm.reset();
 
-      this.props.getStaged(allStageMatchups)
-
+      this.props.stagedMatchups.splice(this.state.editingKey, 1, editingMatchup)
+      // const allStageMatchups = this.props.stagedMatchups.splice(this.state.editingKey, 1, stageMatchup)
+      // this.props.handleStaged(allStageMatchups, 'edit')
 
     } else {
 
-      const stageMatchup = {
+      const newMatchup = {
         recap: this.recap.value,
         homeTeam: this.state.homeTeam,
         homeTeamScore: this.homeTeamScore.value,
@@ -80,11 +74,7 @@ class MatchupRecap extends React.Component {
         awayTeamScore: this.awayTeamScore.value,
         awayMvpLvp: this.awayMvpLvp.value
       }
-      //use spread operator to grab current state (array) and add the stageMatchup object to it
-
-      const allStageMatchups = [...this.state.stageMatchup, stageMatchup];
       this.setState({
-        stageMatchup: allStageMatchups,
         homeTeam: "",
         homeMvpLvp: "",
         homeTeamScore: "",
@@ -96,9 +86,8 @@ class MatchupRecap extends React.Component {
         editingKey: ""
       })
 
-      this.matchupRecapForm.reset();
-      this.props.getStaged(allStageMatchups)
-
+      this.props.stagedMatchups.push(newMatchup)
+      // this.props.handleStaged(stageMatchup, 'new')
     }
   }
 
@@ -117,23 +106,48 @@ class MatchupRecap extends React.Component {
   }
 
   deleteMatchupRecap(matchup, key){
-    const stageMatchup = [...this.state.stageMatchup]
-    stageMatchup.splice(key, 1)
-    this.setState({stageMatchup})
-    this.props.getStaged(stageMatchup)
+    this.setState({
+      homeTeam: "",
+      homeMvpLvp: "",
+      homeTeamScore: "",
+      awayTeam: "",
+      awayMvpLvp: "",
+      awayTeamScore: "",
+      recap: "",
+      editing: false,
+      editingKey: ""
+    })
+
+    this.props.stagedMatchups.splice(key, 1)
+    // const stageMatchup = this.props.stagedMatchups
+    // stageMatchup.splice(key, 1)
+    // this.props.handleStaged(stageMatchup, 'delete')
+  }
+
+  clearForm(){
+    this.setState({
+      homeTeam: "",
+      homeMvpLvp: "",
+      homeTeamScore: "",
+      awayTeam: "",
+      awayMvpLvp: "",
+      awayTeamScore: "",
+      recap: "",
+      editing: false,
+      editingKey: ""
+    })
   }
 
   componentDidUpdate(){
     // console.log(this.state.stageMatchup, "componentDidUpdate");
-    // this.props.getStaged(this.state.stageMatchup)
-
   }
+
 
   render(){
     const homeMvpLvp = this.state.homeTeam ? this.state.homeTeam : "Home Team MVP & LVP";
     const awayMvpLvp = this.state.awayTeam ? this.state.awayTeam : "Away Team MVP & LVP";
     const buttonText = this.state.editing ? "Edit Matchup" : "Add Matchup";
-
+    const clearFormBtn = this.state.editing ? 'Cancel' : 'Clear';
 
     return(
       <div className="matchup-recap">
@@ -167,9 +181,10 @@ class MatchupRecap extends React.Component {
           <textarea id="away" ref={(input) => this.awayMvpLvp = input} value={this.state.awayMvpLvp} onChange={(e) => this.handleTeamChange('awayMvpLvp', e)}></textarea>
 
           <button>{buttonText}</button>
+          <button type="button" onClick={this.clearForm}>{clearFormBtn}</button>
         </form>
 
-        <StagedMatchups staged={this.state.stageMatchup} editMatchupRecap={this.editMatchupRecap} deleteMatchupRecap={this.deleteMatchupRecap}/>
+        <StagedMatchups staged={this.props.stagedMatchups} editMatchupRecap={this.editMatchupRecap} deleteMatchupRecap={this.deleteMatchupRecap}/>
 
       </div>
     )
