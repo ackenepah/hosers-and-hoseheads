@@ -1,13 +1,13 @@
 import React from 'react';
 import base from '../config';
 import MatchupRecap from './MatchupRecap';
-import owners from '../owners';
 
 class Admin extends React.Component {
   constructor(props) {
     super(props)
 
     this.handleStaged = this.handleStaged.bind(this);
+    this.getTeamPoints = this.getTeamPoints.bind(this);
 
     this.state = {
       user: {
@@ -20,15 +20,12 @@ class Admin extends React.Component {
         image: '',
         article_intro: '',
         match_intro: '',
-        standings: {
-          team: {
-            name: ''
-          },
-          points: ''
-        },
+        standings: {},
         matchup_recaps: [],
         post_date: ''
       },
+      staged_standings: {},
+
       staged_matchups: [],
       owners: {}
     }
@@ -44,6 +41,13 @@ class Admin extends React.Component {
       context: this,
       state: 'owners'
     })
+
+    base.fetch('/owners', {
+      context: this,
+      then(data){
+        this.setState({staged_standings: data})
+      }
+    });
   }
 
   submitRecap(e, staged){
@@ -87,15 +91,14 @@ class Admin extends React.Component {
     // }
   }
 
-
-  componentDidUpdate(){
-    console.log(this.state.staged_matchups, 'staged_matchups componentDidUpdate Admin');
+  getTeamPoints(e) {
+    const standingsCopy = {...this.state.staged_standings}
+    standingsCopy[e.target.name].points = e.target.value
+    console.log(standingsCopy[e.target.name], 'name and points?');
   }
 
 
   render() {
-    console.log(this.state.owners, 'OWNERS');
-
     return(
       <div>
         <div className="admin-dashboard">
@@ -134,21 +137,19 @@ class Admin extends React.Component {
                   <div className="standings-data">
                     <h3>Current Standings:</h3>
                     <label>Team:</label>
-                    <select>
-                      <option ref={(input) => this.teamName = input} value="The Kessel Run">The Kessel Run</option>
-                    </select>
-
-                    <label>Points:</label>
-                    <input ref={(input) => this.teamPoints = input} type="text" name="Teams Points" />
+                    <ul>
+                    {
+                      Object.keys(this.state.staged_standings).map((item, index)=> {
+                        return <li key={index}>{item} <input type="number" name={item} onBlur={this.getTeamPoints} /></li>
+                      })
+                    }
+                    </ul>
                   </div>
 
                   <div className="standings-table">
                     <ol>
                       <li>
-                        <div className="standings-table-team">The Kessel Run</div>
-                        <div className="standings-table-edit">
-                          <span className="edit">edit</span> <span>/</span> <span className="remove">X</span>
-                        </div>
+
                       </li>
                     </ol>
                   </div>
@@ -157,6 +158,7 @@ class Admin extends React.Component {
             </div>
             <button>click me</button>
           </form>
+
         </div>
 
         <MatchupRecap handleStaged={this.handleStaged} stagedMatchups={this.state.staged_matchups} owners={this.state.owners} />

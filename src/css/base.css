@@ -42,3 +42,15 @@ p {
 button:hover {
   background-color: #f1f1f1;
 }
+
+
+.standings-table {
+  background-color: #00ff00;
+  height: 500px;
+}
+
+.standings-table ol li {
+  width: 100%;
+  background-color: #ff0000;
+  padding: 30px;
+}
