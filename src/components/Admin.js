@@ -94,8 +94,16 @@ class Admin extends React.Component {
   getTeamPoints(e) {
     const standingsCopy = {...this.state.staged_standings}
     standingsCopy[e.target.name].points = e.target.value
-    console.log(standingsCopy[e.target.name], 'name and points?');
+    // console.log(standingsCopy[e.target.name], 'name and points?');
+    this.setState({staged_standings: standingsCopy})
   }
+
+  renderStandings(item, key) {
+    const hello = this.state.staged_standings[item]
+    // console.log(hello.points, 'item');
+    return <li key={key}>{item} {hello.points}</li>
+  }
+
 
 
   render() {
@@ -136,7 +144,6 @@ class Admin extends React.Component {
                 <div className="admin-article-standings">
                   <div className="standings-data">
                     <h3>Current Standings:</h3>
-                    <label>Team:</label>
                     <ul>
                     {
                       Object.keys(this.state.staged_standings).map((item, index)=> {
@@ -148,9 +155,9 @@ class Admin extends React.Component {
 
                   <div className="standings-table">
                     <ol>
-                      <li>
-
-                      </li>
+                      {
+                        Object.keys(this.state.staged_standings).map(this.renderStandings.bind(this))
+                      }
                     </ol>
                   </div>
                 </div>
