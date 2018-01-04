@@ -143,11 +143,18 @@ class MatchupRecap extends React.Component {
 
 
   render(){
-    const owners = this.props.owners; 
+    const owners = {...this.props.owners}
     const homeMvpLvp = this.state.homeTeam ? this.state.homeTeam : "Home Team MVP & LVP";
     const awayMvpLvp = this.state.awayTeam ? this.state.awayTeam : "Away Team MVP & LVP";
     const buttonText = this.state.editing ? "Edit Matchup" : "Add Matchup";
     const clearFormBtn = this.state.editing ? 'Cancel' : 'Clear';
+
+    // DELETE OWNERS FROM OPTIONS LIST
+    // for(var team in owners) {
+    //   if(this.state.homeTeam === team) {
+    //     delete owners[team]
+    //   }
+    // }
 
     return(
       <div className="matchup-recap">
