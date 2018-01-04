@@ -1,5 +1,4 @@
 import React from 'react';
-import owners from '../owners';
 
 import StagedMatchups from './StagedMatchups';
 
@@ -144,6 +143,7 @@ class MatchupRecap extends React.Component {
 
 
   render(){
+    const owners = this.props.owners; 
     const homeMvpLvp = this.state.homeTeam ? this.state.homeTeam : "Home Team MVP & LVP";
     const awayMvpLvp = this.state.awayTeam ? this.state.awayTeam : "Away Team MVP & LVP";
     const buttonText = this.state.editing ? "Edit Matchup" : "Add Matchup";

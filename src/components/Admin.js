@@ -1,6 +1,7 @@
 import React from 'react';
 import base from '../config';
 import MatchupRecap from './MatchupRecap';
+import owners from '../owners';
 
 class Admin extends React.Component {
   constructor(props) {
@@ -28,7 +29,8 @@ class Admin extends React.Component {
         matchup_recaps: [],
         post_date: ''
       },
-      staged_matchups: []
+      staged_matchups: [],
+      owners: {}
     }
   }
 
@@ -36,6 +38,11 @@ class Admin extends React.Component {
     this.ref = base.syncState(`/posts`, {
       context: this,
       state: 'recaps'
+    })
+
+    this.ref = base.syncState(`/owners`, {
+      context: this,
+      state: 'owners'
     })
   }
 
@@ -87,6 +94,8 @@ class Admin extends React.Component {
 
 
   render() {
+    console.log(this.state.owners, 'OWNERS');
+
     return(
       <div>
         <div className="admin-dashboard">
@@ -150,7 +159,7 @@ class Admin extends React.Component {
           </form>
         </div>
 
-        <MatchupRecap handleStaged={this.handleStaged} stagedMatchups={this.state.staged_matchups}/>
+        <MatchupRecap handleStaged={this.handleStaged} stagedMatchups={this.state.staged_matchups} owners={this.state.owners} />
 
       </div>
     )
