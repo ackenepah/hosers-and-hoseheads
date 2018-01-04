@@ -25,6 +25,7 @@ class Admin extends React.Component {
         post_date: ''
       },
       staged_standings: {},
+      subStaged_standings: {},
 
       staged_matchups: [],
       owners: {}
@@ -91,19 +92,78 @@ class Admin extends React.Component {
     // }
   }
 
-  getTeamPoints(e) {
-    const standingsCopy = {...this.state.staged_standings}
-    standingsCopy[e.target.name].points = e.target.value
-    // console.log(standingsCopy[e.target.name], 'name and points?');
-    this.setState({staged_standings: standingsCopy})
+  getTeamPoints(index, e) {
+    const subStandingsCopy = [...this.state.subStaged_standings]
+    let teamFound = false;
+    let teamFoundIndex = "";
+
+    for(var i = 0; i < subStandingsCopy.length; i++){
+      if (e.target.name === subStandingsCopy[i].team){
+        teamFound = true;
+        teamFoundIndex = i;
+      }
+    }
+
+
+
+
+    if(e.target.value && teamFound){
+
+      subStandingsCopy[teamFoundIndex].points = e.target.value;
+      this.setState({subStaged_standings: subStandingsCopy})
+
+    } else if (e.target.value){
+
+      var obj = {
+        team: e.target.name,
+        points: e.target.value
+
+      }
+
+
+      subStandingsCopy.push(obj)
+
+
+      this.setState({subStaged_standings: subStandingsCopy})
+    }
+
+
+
+    //WORK ON LATERRRRRRR
+
+    // if(e.target.value && teamFound){
+    //
+    //   subStandingsCopy[teamFoundIndex].points = e.target.value;
+    //   this.setState({subStaged_standings: subStandingsCopy})
+    //
+    // } else if (e.target.value){
+    //
+    //   var obj = {
+    //     team: e.target.name,
+    //     points: e.target.value
+    //
+    //   }
+    //
+    //
+    //   subStandingsCopy.push(obj)
+    //
+    //
+    //   this.setState({subStaged_standings: subStandingsCopy})
+    // }
+
+
+
   }
 
-  renderStandings(item, key) {
-    const hello = this.state.staged_standings[item]
-    // console.log(hello.points, 'item');
-    return <li key={key}>{item} {hello.points}</li>
+  renderStandings(index) {
+    const team = this.state.subStaged_standings
+
+    return <li key={index}>{team[index].team} - {team[index].points} </li>
   }
 
+componentDidUpdate(){
+  // console.log(this.state.subStaged_standings, 'componentDidUpdate');
+}
 
 
   render() {
@@ -147,7 +207,7 @@ class Admin extends React.Component {
                     <ul>
                     {
                       Object.keys(this.state.staged_standings).map((item, index)=> {
-                        return <li key={index}>{item} <input type="number" name={item} onBlur={this.getTeamPoints} /></li>
+                        return <li key={index}>{item} <input type="number" name={item} onBlur={(e) => this.getTeamPoints(index, e)} /></li>
                       })
                     }
                     </ul>
@@ -156,7 +216,7 @@ class Admin extends React.Component {
                   <div className="standings-table">
                     <ol>
                       {
-                        Object.keys(this.state.staged_standings).map(this.renderStandings.bind(this))
+                        Object.keys(this.state.subStaged_standings).map(this.renderStandings.bind(this))
                       }
                     </ol>
                   </div>
