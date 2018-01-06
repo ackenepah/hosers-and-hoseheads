@@ -1,5 +1,5 @@
 import React from 'react';
-
+import own from '../owners'
 import StagedMatchups from './StagedMatchups';
 
 class MatchupRecap extends React.Component {
@@ -20,12 +20,49 @@ class MatchupRecap extends React.Component {
       awayTeamScore: "",
       recap: "",
       editing: false,
-      editingKey: ""
+      editingKey: "",
+      ownersA: own,
+      ownersB: own
     }
   }
 
+  diffArray(arr1, arr2) {
+    var newArr = [];
+    var myArr = arr1.concat(arr2);
+
+      newArr = myArr.filter(function(item){
+        return arr2.indexOf(item) < 0 || arr1.indexOf(item) < 0;
+      });
+     console.log(newArr, 'diffArray function');
+     return newArr
+  }
+
   handleTeamChange(type, e){
-    this.setState({[type]: e.target.value})
+    // // this.setState({[type]: e.target.value})
+    // const newStateA = Object.keys({...this.state.ownersA})
+    // const newStateB = Object.keys({...this.state.ownersB})
+    const newStateA = {...this.state.ownersA}
+    const newStateB = {...this.state.ownersB}
+
+    console.log(newStateA);
+
+    if(type === 'homeTeam'){
+
+      for(var ht in newStateA){
+        if(e.target.value === ht){
+          console.log('found' + ht);
+          delete newStateB[ht]
+        }
+      }
+      this.setState({[type]: e.target.value, ownersB: newStateB})
+    } else if(type === 'awayTeam'){
+      for(var at in newStateB){
+        if(e.target.value === at){
+          delete newStateA[at]
+        }
+      }
+      this.setState({[type]: e.target.value, ownersA: newStateA})
+    }
   }
 
   submitMatchupRecap(e){
@@ -73,6 +110,25 @@ class MatchupRecap extends React.Component {
         awayTeamScore: this.awayTeamScore.value,
         awayMvpLvp: this.awayMvpLvp.value
       }
+
+      const newStateA = {...this.state.ownersA}
+      const newStateB = {...this.state.ownersB}
+
+
+        for(var ht in newStateA){
+          if(newMatchup.homeTeam === ht){
+            console.log('found' + ht);
+            delete newStateA[ht]
+          }
+        }
+        // this.setState({[type]: e.target.value, ownersB: newStateB})
+        for(var at in newStateB){
+          if(newMatchup.awayTeam === at){
+            delete newStateB[at]
+          }
+        }
+        // this.setState({[type]: e.target.value, ownersA: newStateA})
+
       this.setState({
         homeTeam: "",
         homeMvpLvp: "",
@@ -82,7 +138,9 @@ class MatchupRecap extends React.Component {
         awayTeamScore: "",
         recap: "",
         editing: false,
-        editingKey: ""
+        editingKey: "",
+        ownersA: newStateA,
+        ownersB: newStateB
       })
 
       this.props.stagedMatchups.push(newMatchup)
@@ -138,12 +196,13 @@ class MatchupRecap extends React.Component {
   }
 
   componentDidUpdate(){
-    // console.log(this.state.stageMatchup, "componentDidUpdate");
+    // console.log(this.state.ownersB, "componentDidUpdate");
+    // console.log(own);
   }
 
 
   render(){
-    const owners = {...this.props.owners}
+    // const owners = {...this.props.owners}
     const homeMvpLvp = this.state.homeTeam ? this.state.homeTeam : "Home Team MVP & LVP";
     const awayMvpLvp = this.state.awayTeam ? this.state.awayTeam : "Away Team MVP & LVP";
     const buttonText = this.state.editing ? "Edit Matchup" : "Add Matchup";
@@ -164,7 +223,7 @@ class MatchupRecap extends React.Component {
           <div className="home-team">
             <select className="home-team-select" onChange={(e) => this.handleTeamChange('homeTeam', e)} value={this.state.homeTeam}>
               <option>Select Home Team</option>
-              {Object.keys(owners).map(key => <option key={key} value={key}>{key}</option>)}
+              {Object.keys(this.state.ownersA).map(key => <option key={key} value={key}>{key}</option>)}
             </select>
             <input type="number" min="0" max="10" ref={(input) => this.homeTeamScore = input} value={this.state.homeTeamScore} onChange={(e) => this.handleTeamChange('homeTeamScore', e)}/>
           </div>
@@ -172,7 +231,7 @@ class MatchupRecap extends React.Component {
           <div className="away-team">
             <select className="away-team-select" onChange={(e) => this.handleTeamChange('awayTeam', e)} value={this.state.awayTeam}>
               <option>Select Away Team</option>
-              {Object.keys(owners).map(key => <option key={key} value={key}>{key}</option>)}
+              {Object.keys(this.state.ownersB).map(key => <option key={key} value={key}>{key}</option>)}
             </select>
             <input type="number" min="0" max="10" ref={(input) => this.awayTeamScore = input} value={this.state.awayTeamScore} onChange={(e) => this.handleTeamChange('awayTeamScore', e)}/>
           </div>

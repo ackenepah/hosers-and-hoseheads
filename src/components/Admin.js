@@ -104,12 +104,12 @@ class Admin extends React.Component {
       }
     }
 
-
-
-
     if(e.target.value && teamFound){
 
       subStandingsCopy[teamFoundIndex].points = e.target.value;
+      subStandingsCopy.sort((a, b) =>{
+        return b.points - a.points;
+      })
       this.setState({subStaged_standings: subStandingsCopy})
 
     } else if (e.target.value){
@@ -123,6 +123,9 @@ class Admin extends React.Component {
 
       subStandingsCopy.push(obj)
 
+      subStandingsCopy.sort((a, b) =>{
+        return b.points - a.points;
+      })
 
       this.setState({subStaged_standings: subStandingsCopy})
     }
@@ -207,7 +210,7 @@ componentDidUpdate(){
                     <ul>
                     {
                       Object.keys(this.state.staged_standings).map((item, index)=> {
-                        return <li key={index}>{item} <input type="number" name={item} onBlur={(e) => this.getTeamPoints(index, e)} /></li>
+                        return <li key={index}> {item}  <input type="number" name={item} onBlur={(e) => this.getTeamPoints(index, e)} /></li>
                       })
                     }
                     </ul>
