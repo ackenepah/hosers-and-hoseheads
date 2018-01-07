@@ -1,5 +1,5 @@
 import React from 'react';
-import own from '../owners'
+import own from '../owners';
 import StagedMatchups from './StagedMatchups';
 
 class MatchupRecap extends React.Component {
@@ -21,48 +21,108 @@ class MatchupRecap extends React.Component {
       recap: "",
       editing: false,
       editingKey: "",
-      ownersA: own,
-      ownersB: own
+      ownersA: Object.keys(own),
+      ownersB: Object.keys(own)
     }
   }
 
-  diffArray(arr1, arr2) {
-    var newArr = [];
-    var myArr = arr1.concat(arr2);
+  differenceOf2Arrays (array1, array2, team) {
+      let newString = "";
+      let arrNum = ""
+      // for (var i in array1) {
+      //   if(array2.indexOf(array1[i]) === -1) {
+      //     newString = array1[i];
+      //     arrNum = "1"
+      //     console.log(newString, '1');
+      //
+      //   }
+      // }
+      // for(i in array2) {
+      //   if(array1.indexOf(array2[i]) === -1) {
+      //     newString = array2[i];
+      //     arrNum = "2"
+      //
+      //     console.log(newString, '2');
+      //   }
+      // }
 
-      newArr = myArr.filter(function(item){
-        return arr2.indexOf(item) < 0 || arr1.indexOf(item) < 0;
-      });
-     console.log(newArr, 'diffArray function');
-     return newArr
+      for (var i = 0; i < array1.length; i++) {
+        // console.log(array2.indexOf(array1[i]));
+          if(array2.indexOf(array1[i]) === -1) {
+            newString = array1[i];
+            arrNum = "1";
+            console.log(newString, '1');
+          }
+      }
+
+      for (var j = 0; j < array2.length; j++) {
+          if(array1.indexOf(array2[j]) === -1) {
+            newString = array2[j];
+            arrNum = "2";
+            console.log(newString, '2');
+
+          }
+      }
+
+      // if(team === 'awayTeam'){
+      //   console.log('getting here');
+      //   array2.push(newString)
+      //   return array2
+      // } else if(team === 'homeTeam'){
+      //   array1.push(newString)
+      //   return array1
+      // }
+      if(newString){
+        // array2.push(newString)
+        // newString = "";
+        // console.log(array2);
+        // return array2
+        // if(team === 'awayTeam'){
+        //   console.log('pushing away team');
+        //   // array2.push(temp.toString())
+        //   array2.push(newString)
+        //   return array2
+        // } else if(team === 'homeTeam'){
+        //   console.log('pushing HOME team');
+        //
+        //   array2.push(newString)
+        //   return array2
+        // }
+        if(arrNum === '2'){
+          console.log('pushing 2 team');
+          // array2.push(temp.toString())
+          array1.push(newString);
+          return array1;
+        } else if(arrNum === '1'){
+          console.log('pushing 1 team');
+
+          array2.push(newString);
+          return array2;
+        }
+      }
+
+
   }
 
   handleTeamChange(type, e){
-    // // this.setState({[type]: e.target.value})
-    // const newStateA = Object.keys({...this.state.ownersA})
-    // const newStateB = Object.keys({...this.state.ownersB})
-    const newStateA = {...this.state.ownersA}
-    const newStateB = {...this.state.ownersB}
-
-    console.log(newStateA);
+    const newStateA = [...this.state.ownersA];
+    const newStateB = [...this.state.ownersB];
 
     if(type === 'homeTeam'){
+      this.differenceOf2Arrays(newStateA, newStateB, type);
 
-      for(var ht in newStateA){
-        if(e.target.value === ht){
-          console.log('found' + ht);
-          delete newStateB[ht]
-        }
-      }
-      this.setState({[type]: e.target.value, ownersB: newStateB})
+      const htInd = newStateB.indexOf(e.target.value);
+      newStateB.splice(htInd, 1);
+
     } else if(type === 'awayTeam'){
-      for(var at in newStateB){
-        if(e.target.value === at){
-          delete newStateA[at]
-        }
-      }
-      this.setState({[type]: e.target.value, ownersA: newStateA})
+
+      this.differenceOf2Arrays(newStateA, newStateB, type);
+      const atInd = newStateA.indexOf(e.target.value);
+      newStateA.splice(atInd, 1);
     }
+
+    this.setState({[type]: e.target.value, ownersB: newStateB, ownersA: newStateA})
+
   }
 
   submitMatchupRecap(e){
@@ -179,7 +239,26 @@ class MatchupRecap extends React.Component {
     // const stageMatchup = this.props.stagedMatchups
     // stageMatchup.splice(key, 1)
     // this.props.handleStaged(stageMatchup, 'delete')
+    const ownersA = {...this.state.ownersA};
+    const ownersB = {...this.state.ownersB};
+
+    ownersA[matchup.awayTeam] = own[matchup.awayTeam];
+    ownersA[matchup.homeTeam] = own[matchup.homeTeam];
+    ownersB[matchup.awayTeam] = own[matchup.awayTeam];
+    ownersB[matchup.homeTeam] = own[matchup.homeTeam];
+
+    // console.log(own[matchup.homeTeam], 'ownmh');
+    // console.log(ownersA, 'a');
+    // console.log(ownersB, 'b');
+    // SORTING NOT WORKING - PUSHES TO END OF OBJECT
+    // sortObject(ownersA); //sort coming from helpers.js
+    // console.log(ownersA, 'aa');
+
+    this.setState({ownersA, ownersB})
+
   }
+
+
 
   clearForm(){
     this.setState({
@@ -208,12 +287,6 @@ class MatchupRecap extends React.Component {
     const buttonText = this.state.editing ? "Edit Matchup" : "Add Matchup";
     const clearFormBtn = this.state.editing ? 'Cancel' : 'Clear';
 
-    // DELETE OWNERS FROM OPTIONS LIST
-    // for(var team in owners) {
-    //   if(this.state.homeTeam === team) {
-    //     delete owners[team]
-    //   }
-    // }
 
     return(
       <div className="matchup-recap">
@@ -223,7 +296,7 @@ class MatchupRecap extends React.Component {
           <div className="home-team">
             <select className="home-team-select" onChange={(e) => this.handleTeamChange('homeTeam', e)} value={this.state.homeTeam}>
               <option>Select Home Team</option>
-              {Object.keys(this.state.ownersA).map(key => <option key={key} value={key}>{key}</option>)}
+              {this.state.ownersA.map((key, ind) => { return <option key={ind} value={key}>{key}</option>})}
             </select>
             <input type="number" min="0" max="10" ref={(input) => this.homeTeamScore = input} value={this.state.homeTeamScore} onChange={(e) => this.handleTeamChange('homeTeamScore', e)}/>
           </div>
@@ -231,7 +304,7 @@ class MatchupRecap extends React.Component {
           <div className="away-team">
             <select className="away-team-select" onChange={(e) => this.handleTeamChange('awayTeam', e)} value={this.state.awayTeam}>
               <option>Select Away Team</option>
-              {Object.keys(this.state.ownersB).map(key => <option key={key} value={key}>{key}</option>)}
+              {this.state.ownersB.map((key, ind) => { return <option key={ind} value={key}>{key}</option>})}
             </select>
             <input type="number" min="0" max="10" ref={(input) => this.awayTeamScore = input} value={this.state.awayTeamScore} onChange={(e) => this.handleTeamChange('awayTeamScore', e)}/>
           </div>
