@@ -44,12 +44,15 @@ button:hover {
 }
 
 
-.standings-table {
+.standings-table ol {
   background-color: #00ff00;
+  min-height: 480px;
+  width: 400px;
 }
 
 .standings-table ol li {
   width: 100%;
-  background-color: #ff0000;
-  padding: 30px;
+  /*background-color: #ff0000;*/
+  padding: 15px;
+  border: 1px solid black;
 }
