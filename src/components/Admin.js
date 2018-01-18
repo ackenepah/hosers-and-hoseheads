@@ -1,6 +1,7 @@
 import React from 'react';
 import base from '../config';
 import MatchupRecap from './MatchupRecap';
+import Header from './Header';
 
 class Admin extends React.Component {
   constructor(props) {
@@ -114,48 +115,18 @@ class Admin extends React.Component {
 
     } else if (e.target.value){
 
-      var obj = {
+      var team = {
         team: e.target.name,
         points: e.target.value
-
       }
 
-
-      subStandingsCopy.push(obj)
-
+      subStandingsCopy.push(team)
       subStandingsCopy.sort((a, b) =>{
         return b.points - a.points;
       })
 
       this.setState({subStaged_standings: subStandingsCopy})
     }
-
-
-
-    //WORK ON LATERRRRRRR
-
-    // if(e.target.value && teamFound){
-    //
-    //   subStandingsCopy[teamFoundIndex].points = e.target.value;
-    //   this.setState({subStaged_standings: subStandingsCopy})
-    //
-    // } else if (e.target.value){
-    //
-    //   var obj = {
-    //     team: e.target.name,
-    //     points: e.target.value
-    //
-    //   }
-    //
-    //
-    //   subStandingsCopy.push(obj)
-    //
-    //
-    //   this.setState({subStaged_standings: subStandingsCopy})
-    // }
-
-
-
   }
 
   renderStandings(index) {
@@ -164,21 +135,11 @@ class Admin extends React.Component {
     return <li key={index}>{team[index].team} - {team[index].points} </li>
   }
 
-componentDidUpdate(){
-  // console.log(this.state.subStaged_standings, 'componentDidUpdate');
-}
-
-
   render() {
-
     return(
       <div>
-        <div className="admin-dashboard">
-          <div className="admin-settings">
-            <img src="http://placehold.it/50x50" alt="User" />
-            <span>Welcome, User</span>
-          </div>
-        </div>
+        <Header admin={this.props.admin}/>
+
         <div className="admin-post">
 
           <form onSubmit={(e) => this.submitRecap(e)} ref={(input) => {this.mainForm = input}}>

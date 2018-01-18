@@ -8,34 +8,41 @@ import './css/base.css';
 import './css/layout.css';
 import './css/modules.css';
 
-import Header from './components/Header';
 import Home from './components/Home';
+import Admin from './components/Admin';
 import NotFound from './components/NotFound';
 
-import Admin from './components/Admin';
+class Root extends React.Component {
 
-const Root = () => {
-  return(
-    <Flexbox flexDirection="column" minHeight="100vh">
-      <Flexbox element="header">
-        <Header />
-      </Flexbox>
+  constructor(){
+    super();
+    this.state = {
+      admin: {
+        loggedIn: true
+      }
+    }
+  }
 
-      <Flexbox element="main" flexGrow={1}>
-        <BrowserRouter>
-          <div>
-            <Match exactly pattern="/" component={Home} />
-            <Match pattern="/admin" component={Admin} />
-            <Miss component={NotFound} />
-          </div>
-        </BrowserRouter>
-      </Flexbox>
+  render(){
+    return(
+      <Flexbox flexDirection="column" minHeight="100vh">
 
-      <Flexbox element="footer">
-        Footer
+        <Flexbox element="main" flexGrow={1}>
+          <BrowserRouter>
+            <div>
+              <Match exactly pattern="/"  render={(props) => <Home {...props} admin={this.state.admin}/> }/>
+              <Match pattern="/admin" render={(props) => <Admin {...props} admin={this.state.admin}/> }/>
+              <Miss component={NotFound} />
+            </div>
+          </BrowserRouter>
+        </Flexbox>
+
+        <Flexbox element="footer">
+          Footer
+        </Flexbox>
       </Flexbox>
-    </Flexbox>
-  )
+    )
+  }
 }
 
 render(<Root />, document.querySelector('#main'));
