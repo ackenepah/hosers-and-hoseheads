@@ -59,6 +59,7 @@ ARTICLE COMPONENT STYLES
   font-weight: 300;
   line-height: 1.2em;
   letter-spacing: .06em;
+  white-space: pre-line;
 }
 
 

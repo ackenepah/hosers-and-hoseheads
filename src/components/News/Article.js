@@ -16,7 +16,7 @@ class Article extends React.Component {
             <p className="article-contributor">by <a href="#">Adrian Kenepah-Martin</a></p>
 
             <div className="article-meta">
-              <span className="article-date">Jan 1, 2017</span>
+              <span className="article-date">{new Date(d.post_date).toDateString()}</span>
             </div>
           </div>
 
@@ -26,7 +26,7 @@ class Article extends React.Component {
 
           <div className="article-post">
             <div className="article-body">
-              <p>{d.articleIntro}</p>
+              <p>{d.article_intro}</p>
 
               <h4>Current Standings:</h4>
               <ol className="standings-list">

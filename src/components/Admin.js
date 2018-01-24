@@ -1,7 +1,9 @@
 import React from 'react';
-import base from '../config';
+import base, {rebaseAuth} from '../config';
 import MatchupRecap from './MatchupRecap';
 import Header from './Header';
+
+
 
 class Admin extends React.Component {
   constructor(props) {
@@ -39,7 +41,7 @@ class Admin extends React.Component {
       state: 'recaps'
     })
 
-    this.ref = base.syncState(`/owners`, {
+    this.ref2 = base.syncState(`/owners`, {
       context: this,
       state: 'owners'
     })
@@ -65,10 +67,11 @@ class Admin extends React.Component {
         image: this.image.value,
         article_intro: this.articleIntro.value,
         matchup_intro: this.matchupIntro.value,
-        standings: {
-          team: this.teamName.value,
-          points: this.teamPoints.value,
-        },
+        // standings: {
+        //   team: this.teamName.value,
+        //   points: this.teamPoints.value,
+        // },
+        standings: this.state.subStaged_standings,
         matchup_recaps: this.state.staged_matchups,
         post_date: timeStamp
       }
@@ -135,12 +138,26 @@ class Admin extends React.Component {
     return <li key={index}>{team[index].team} - {team[index].points} </li>
   }
 
+
+
+  handleAuth(){
+    var email = 'k@k.comm';
+    var password  = 'kkkkkk';
+    rebaseAuth.createUserWithEmailAndPassword(email,password).then(user => {
+      console.log(user, 'user created!');
+    });
+    console.log(rebaseAuth.currentUser, 'rebaseAuth');
+  }
+
   render() {
+    console.log(base);
     return(
       <div>
         <Header admin={this.props.admin}/>
 
         <div className="admin-post">
+
+        <button onClick={this.handleAuth.bind(this)}>login</button>
 
           <form onSubmit={(e) => this.submitRecap(e)} ref={(input) => {this.mainForm = input}}>
             <div className="admin-article-dets">

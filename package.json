@@ -17,7 +17,7 @@
     "firebase": "^4.8.0",
     "flexbox-react": "^4.4.0",
     "history": "4.2.0",
-    "re-base": "^2.2.0",
+    "re-base": "^3.2.2",
     "react": "15.3.2",
     "react-addons-css-transition-group": "15.3.2",
     "react-css-grid-layout": "^1.0.0",
