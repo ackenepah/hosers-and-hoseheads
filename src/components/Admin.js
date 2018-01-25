@@ -11,7 +11,7 @@ class Admin extends React.Component {
 
     this.handleStaged = this.handleStaged.bind(this);
     this.getTeamPoints = this.getTeamPoints.bind(this);
-    this.handleAuth = this.handleAuth.bind(this);
+    // this.handleAuth = this.handleAuth.bind(this);
 
     this.state = {
       user: {
@@ -141,26 +141,26 @@ class Admin extends React.Component {
 
 
 
-  handleAuth(e, type){
-    e.preventDefault();
-    console.log(type, 'type');
-    console.log(this.email.value);
-    console.log(this.pass.value);
-    const email = this.email.value;
-    const password = this.pass.value;
-
-    // var email = 'k@k.comm';
-    // var password  = 'kkkkkk';
-    // rebaseAuth.createUserWithEmailAndPassword(email,password).then(user => {
-    //   console.log(user, 'user created!');
-    // });
-    console.log(rebaseAuth.currentUser, 'rebaseAuth');
-    // rebaseAuth.signInWithEmailAndPassword(email, password).then(user => {
-    //   console.log(user, 'signed in');
-    //   console.log(rebaseAuth.currentUser, 'rebaseAuth');
-    //
-    // })
-  }
+  // handleAuth(e, type){
+  //   e.preventDefault();
+  //   console.log(type, 'type');
+  //   console.log(this.email.value);
+  //   console.log(this.pass.value);
+  //   const email = this.email.value;
+  //   const password = this.pass.value;
+  //
+  //   // var email = 'k@k.comm';
+  //   // var password  = 'kkkkkk';
+  //   // rebaseAuth.createUserWithEmailAndPassword(email,password).then(user => {
+  //   //   console.log(user, 'user created!');
+  //   // });
+  //   console.log(rebaseAuth.currentUser, 'rebaseAuth');
+  //   // rebaseAuth.signInWithEmailAndPassword(email, password).then(user => {
+  //   //   console.log(user, 'signed in');
+  //   //   console.log(rebaseAuth.currentUser, 'rebaseAuth');
+  //   //
+  //   // })
+  // }
 
   logout(){
     rebaseAuth.signOut().then(() => {
@@ -170,16 +170,16 @@ class Admin extends React.Component {
     });
   }
 
-  renderLogin(){
-    return (
-      <form onSubmit={(e)=> this.handleAuth(e,'haha')}>
-        <input ref={(input) => this.email = input} type="text" name="" id=""/>
-        <input ref={(input) => this.pass = input} type="text" name="" id=""/>
-        <button>click me!</button>
-        <button type='button' onClick={this.logout.bind(this)}>logout</button>
-      </form>
-    )
-  }
+  // renderLogin(){
+  //   return (
+  //     <form onSubmit={(e)=> this.handleAuth(e,'haha')}>
+  //       <input ref={(input) => this.email = input} type="text" name="" id=""/>
+  //       <input ref={(input) => this.pass = input} type="text" name="" id=""/>
+  //       <button>click me!</button>
+  //       <button type='button' onClick={this.logout.bind(this)}>logout</button>
+  //     </form>
+  //   )
+  // }
 
   render() {
     console.log(base);
