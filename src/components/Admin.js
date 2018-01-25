@@ -2,7 +2,7 @@ import React from 'react';
 import base, {rebaseAuth} from '../config';
 import MatchupRecap from './MatchupRecap';
 import Header from './Header';
-
+import Login from './Login';
 
 
 class Admin extends React.Component {
@@ -11,6 +11,7 @@ class Admin extends React.Component {
 
     this.handleStaged = this.handleStaged.bind(this);
     this.getTeamPoints = this.getTeamPoints.bind(this);
+    this.handleAuth = this.handleAuth.bind(this);
 
     this.state = {
       user: {
@@ -140,17 +141,52 @@ class Admin extends React.Component {
 
 
 
-  handleAuth(){
-    var email = 'k@k.comm';
-    var password  = 'kkkkkk';
-    rebaseAuth.createUserWithEmailAndPassword(email,password).then(user => {
-      console.log(user, 'user created!');
-    });
+  handleAuth(e, type){
+    e.preventDefault();
+    console.log(type, 'type');
+    console.log(this.email.value);
+    console.log(this.pass.value);
+    const email = this.email.value;
+    const password = this.pass.value;
+
+    // var email = 'k@k.comm';
+    // var password  = 'kkkkkk';
+    // rebaseAuth.createUserWithEmailAndPassword(email,password).then(user => {
+    //   console.log(user, 'user created!');
+    // });
     console.log(rebaseAuth.currentUser, 'rebaseAuth');
+    // rebaseAuth.signInWithEmailAndPassword(email, password).then(user => {
+    //   console.log(user, 'signed in');
+    //   console.log(rebaseAuth.currentUser, 'rebaseAuth');
+    //
+    // })
+  }
+
+  logout(){
+    rebaseAuth.signOut().then(() => {
+      console.log('user signed out');
+      console.log(rebaseAuth.currentUser, 'rebaseAuth');
+
+    });
+  }
+
+  renderLogin(){
+    return (
+      <form onSubmit={(e)=> this.handleAuth(e,'haha')}>
+        <input ref={(input) => this.email = input} type="text" name="" id=""/>
+        <input ref={(input) => this.pass = input} type="text" name="" id=""/>
+        <button>click me!</button>
+        <button type='button' onClick={this.logout.bind(this)}>logout</button>
+      </form>
+    )
   }
 
   render() {
     console.log(base);
+    if(this.props.admin){
+      // return this.renderLogin();
+      return <Login pathname={this.props.location.pathname}/>
+    }
     return(
       <div>
         <Header admin={this.props.admin}/>
