@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router';
-// import { rebaseAuth } from '../config';
+import { rebaseAuth } from '../config';
 
 class Login extends React.Component {
 
@@ -12,8 +12,7 @@ class Login extends React.Component {
       formType: null,
       resetPassword: false
     }
-
-    this.handleAuth = this.handleAuth.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
     this.clearFormOnChange = this.clearFormOnChange.bind(this);
   }
 
@@ -23,69 +22,67 @@ class Login extends React.Component {
       this.setState({formType})
     }
   }
+
   componentDidUpdate(){
     console.log(this.state, 'componentDidUpdate');
-  }
-
-  handleAuth(e, type){
-    e.preventDefault();
-    let displayName = null;
-    let email = this.email.value;
-    let password = null;
-    let confirmPassword = null;
-
-    if(type === 'signup' || type === 'login'){
-      password = this.pass.value;
-    }
-
-    // if(!displayName || !email || !password || !confirmPassword)
-
-    if(!email){
-      console.log('no email, not moving forward');
-    } else {
-
-      if(type === 'signup'){
-        console.log('getting to signup');
-        displayName = this.display.value;
-        confirmPassword = this.confirmPass.value;
-        if(!displayName){
-          console.log('please enter display name');
-        }
-        if(confirmPassword !== password){
-          console.log('passwords must be the same');
-        } else {
-
-        }
-      } else if(type === 'reset'){
-        console.log('I WANNA RESET');
-      } else if(type === 'login' && this.state.formType === null){
-        console.log('getting here');
-        // rebaseAuth.signInWithEmailAndPassword(email, password).then(user => {
-        //   console.log(user, 'signed in');
-        //   console.log(rebaseAuth.currentUser, 'rebaseAuth');
-        //
-        // })
-      } else {
-        console.log('here too');
-      }
-    }
-
-    // var email = 'k@k.comm';
-    // var password  = 'kkkkkk';
-    // rebaseAuth.createUserWithEmailAndPassword(email,password).then(user => {
-    //   console.log(user, 'user created!');
-    // });
-    // console.log(rebaseAuth.currentUser, 'rebaseAuth');
-    // rebaseAuth.signInWithEmailAndPassword(email, password).then(user => {
-    //   console.log(user, 'signed in');
-    //   console.log(rebaseAuth.currentUser, 'rebaseAuth');
-    //
-    // })
   }
 
   clearFormOnChange(id){
     id.reset();
   }
+
+  handleSubmit(e, type){
+    e.preventDefault();
+    let user = {}
+    if(type === 'signup'){
+      user.displayName = this.display.value
+      user.email = this.email.value
+      user.password = this.pass.value
+      user.confirmPassword = this.confirmPass.value
+    } else if(type === 'reset'){
+      user.email = this.email.value
+    } else if(type === 'login'){
+      user.email = this.email.value
+      user.password = this.pass.value
+
+      rebaseAuth.signInWithEmailAndPassword(user.email, user.password).then(firebaseUser => {
+        console.log(firebaseUser, 'signed in');
+        console.log(rebaseAuth.currentUser, 'rebaseAuth');
+        // const admin = {...this.state.admin, user, loggedIn:true}
+        // this.setState({admin})
+        this.props.handleAuth(firebaseUser)
+      }).catch(err => {
+        if(err.code === "auth/user-not-found"){
+          alert('incorrect email or password')
+        }
+      })
+    }
+
+    console.log(user, 'user');
+    // this.props.handleAuth(obj, type);
+
+
+    // switch(type){
+    //   case 'signup': {
+    //     return console.log('signup submitted');
+    //   }
+    //   case 'reset': {
+    //     return console.log('reset submitted');
+    //   }
+    //   case 'login': {
+    //       console.log('login submitted');
+    //       rebaseAuth.signInWithEmailAndPassword(formInfo.email, formInfo.password).then(user => {
+    //         console.log(user, 'signed in');
+    //         console.log(rebaseAuth.currentUser, 'rebaseAuth');
+    //         const admin = {...this.state.admin, user, loggedIn:true}
+    //         this.setState({admin})
+    //       }).catch(err => console.log(err, 'error'))
+    //       break;
+    //   }
+    //   default: return false
+    // }
+  }
+
 
 
   render(){
@@ -95,14 +92,14 @@ class Login extends React.Component {
         <div>
           <h1>Sign Up</h1>
 
-          <form ref={(el) => this.form = el} onSubmit={(e)=> this.handleAuth(e, 'signup')}>
-            <input ref={(input) => this.display = input} type="text" placeholder="Display Name"/>
-            <input ref={(input) => this.email = input} type="text" placeholder="Email"/>
-            <input ref={(input) => this.pass = input} type="text" placeholder="Password"/>
-            <input ref={(input) => this.confirmPass = input} type="text" placeholder="Confirm Password"/>
+          <form ref={(el) => this.form = el} onSubmit={(e)=> this.handleSubmit(e, 'signup')}>
+            <input ref={(input) => this.display = input} type="text" placeholder="Display Name" required/>
+            <input ref={(input) => this.email = input} type="email" placeholder="Email" required/>
+            <input ref={(input) => this.pass = input} type="text" placeholder="Password" required/>
+            <input ref={(input) => this.confirmPass = input} type="text" placeholder="Confirm Password" required/>
 
             <button>Sign Up</button>
-            <Link to="/admin" onClick={()=>{this.clearFormOnChange(this.form); this.setState({formType: null})}}><button type='button'>Log In</button></Link>
+            <Link to="/admin" onClick={()=>{this.clearFormOnChange(this.form); this.setState({formType: null})}}><p>Log In</p></Link>
           </form>
         </div>
       )
@@ -111,8 +108,8 @@ class Login extends React.Component {
         <div>
           <h1>resetPassword</h1>
 
-          <form ref={(el) => this.form = el} onSubmit={(e)=> this.handleAuth(e, 'reset')}>
-            <input ref={(input) => this.email = input} type="text" placeholder="Email"/>
+          <form ref={(el) => this.form = el} onSubmit={(e)=> this.handleSubmit(e, 'reset')}>
+            <input ref={(input) => this.email = input} type="email" placeholder="Email" required/>
             <button>Reset Password</button>
 
             { /* cliking login button inside form submits the form - should not be submitting form! */ }
@@ -126,7 +123,6 @@ class Login extends React.Component {
           </form>
           { /* works but outside the form */ }
 
-          <button type="button" onClick={()=>{this.clearFormOnChange(this.form); this.setState({formType: null})}}>Log In</button>
 
         </div>
       )
@@ -134,11 +130,11 @@ class Login extends React.Component {
       return (
         <div>
           <h1>Login Component</h1>
-          <form ref={(el) => this.form = el} onSubmit={(e)=> this.handleAuth(e, 'login')}>
-            <input ref={(input) => this.email = input} type="text" placeholder="Email"/>
-            <input ref={(input) => this.pass = input} type="text" placeholder="Password"/>
+          <form ref={(el) => this.form = el} onSubmit={(e)=> this.handleSubmit(e, 'login')}>
+            <input ref={(input) => this.email = input} type="email" placeholder="Email" required/>
+            <input ref={(input) => this.pass = input} type="text" placeholder="Password" required/>
             <button>Log In</button>
-            <button type='button' onClick={()=>{this.clearFormOnChange(this.form); this.setState({formType: 'reset'})}}>resetPassword</button>
+            <p onClick={()=>{this.clearFormOnChange(this.form); this.setState({formType: 'reset'})}}>resetPassword</p>
           </form>
         </div>
       )

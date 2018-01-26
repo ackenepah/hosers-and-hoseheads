@@ -183,9 +183,9 @@ class Admin extends React.Component {
 
   render() {
     console.log(base);
-    if(this.props.admin){
+    if(!this.props.admin.loggedIn){
       // return this.renderLogin();
-      return <Login pathname={this.props.location.pathname}/>
+      return <Login pathname={this.props.location.pathname} handleAuth={this.props.handleAuth}/>
     }
     return(
       <div>
@@ -193,7 +193,6 @@ class Admin extends React.Component {
 
         <div className="admin-post">
 
-        <button onClick={this.handleAuth.bind(this)}>login</button>
 
           <form onSubmit={(e) => this.submitRecap(e)} ref={(input) => {this.mainForm = input}}>
             <div className="admin-article-dets">

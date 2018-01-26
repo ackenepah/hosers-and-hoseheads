@@ -11,7 +11,7 @@ class Header extends React.Component {
           <div className="admin-settings">
             <Link to="/admin">
               <img src="http://placehold.it/50x50" alt="User" />
-              <span>Welcome, User</span>
+              <span>Welcome, {this.props.admin.adminUser.email}</span>
             </Link>
           </div>
         </div>
