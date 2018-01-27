@@ -7,7 +7,7 @@ class App extends React.Component {
   render() {
     return(
       <div>
-        <Header admin={this.props.admin}/>
+        <Header admin={this.props.admin} logout={this.props.logout}/>
         <News />
       </div>
     )

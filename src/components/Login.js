@@ -24,7 +24,11 @@ class Login extends React.Component {
   }
 
   componentDidUpdate(){
-    console.log(this.state, 'componentDidUpdate');
+    // console.log(this.state, 'componentDidUpdate');
+  }
+
+  componentDidMount(){
+    this.setState({loading: false})
   }
 
   clearFormOnChange(id){
@@ -45,49 +49,29 @@ class Login extends React.Component {
       user.email = this.email.value
       user.password = this.pass.value
 
-      rebaseAuth.signInWithEmailAndPassword(user.email, user.password).then(firebaseUser => {
-        console.log(firebaseUser, 'signed in');
-        console.log(rebaseAuth.currentUser, 'rebaseAuth');
-        // const admin = {...this.state.admin, user, loggedIn:true}
-        // this.setState({admin})
-        this.props.handleAuth(firebaseUser)
-      }).catch(err => {
-        if(err.code === "auth/user-not-found"){
-          alert('incorrect email or password')
-        }
-      })
+      if(user.password.length < 6){
+        console.log('password must be at least 6 characters');
+      } else {
+        rebaseAuth.signInWithEmailAndPassword(user.email, user.password).then(firebaseUser => {
+          console.log(rebaseAuth.currentUser, 'rebaseAuth');
+          this.props.handleAuth(firebaseUser)
+        }).catch(err => {
+          if(err.code === "auth/user-not-found"){
+            alert('incorrect email or password')
+          }
+        })
+      }
     }
-
-    console.log(user, 'user');
-    // this.props.handleAuth(obj, type);
-
-
-    // switch(type){
-    //   case 'signup': {
-    //     return console.log('signup submitted');
-    //   }
-    //   case 'reset': {
-    //     return console.log('reset submitted');
-    //   }
-    //   case 'login': {
-    //       console.log('login submitted');
-    //       rebaseAuth.signInWithEmailAndPassword(formInfo.email, formInfo.password).then(user => {
-    //         console.log(user, 'signed in');
-    //         console.log(rebaseAuth.currentUser, 'rebaseAuth');
-    //         const admin = {...this.state.admin, user, loggedIn:true}
-    //         this.setState({admin})
-    //       }).catch(err => console.log(err, 'error'))
-    //       break;
-    //   }
-    //   default: return false
-    // }
   }
 
 
 
   render(){
 
-    if(this.state.formType === 'signup'){
+    if(this.state.loading){
+      console.log('WE ARE LOADING');
+      return (<div> <h1>LOADING....</h1> </div>)
+    } else if(this.state.formType === 'signup'){
       return (
         <div>
           <h1>Sign Up</h1>

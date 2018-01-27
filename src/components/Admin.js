@@ -139,57 +139,14 @@ class Admin extends React.Component {
     return <li key={index}>{team[index].team} - {team[index].points} </li>
   }
 
-
-
-  // handleAuth(e, type){
-  //   e.preventDefault();
-  //   console.log(type, 'type');
-  //   console.log(this.email.value);
-  //   console.log(this.pass.value);
-  //   const email = this.email.value;
-  //   const password = this.pass.value;
-  //
-  //   // var email = 'k@k.comm';
-  //   // var password  = 'kkkkkk';
-  //   // rebaseAuth.createUserWithEmailAndPassword(email,password).then(user => {
-  //   //   console.log(user, 'user created!');
-  //   // });
-  //   console.log(rebaseAuth.currentUser, 'rebaseAuth');
-  //   // rebaseAuth.signInWithEmailAndPassword(email, password).then(user => {
-  //   //   console.log(user, 'signed in');
-  //   //   console.log(rebaseAuth.currentUser, 'rebaseAuth');
-  //   //
-  //   // })
-  // }
-
-  logout(){
-    rebaseAuth.signOut().then(() => {
-      console.log('user signed out');
-      console.log(rebaseAuth.currentUser, 'rebaseAuth');
-
-    });
-  }
-
-  // renderLogin(){
-  //   return (
-  //     <form onSubmit={(e)=> this.handleAuth(e,'haha')}>
-  //       <input ref={(input) => this.email = input} type="text" name="" id=""/>
-  //       <input ref={(input) => this.pass = input} type="text" name="" id=""/>
-  //       <button>click me!</button>
-  //       <button type='button' onClick={this.logout.bind(this)}>logout</button>
-  //     </form>
-  //   )
-  // }
-
   render() {
-    console.log(base);
-    if(!this.props.admin.loggedIn){
-      // return this.renderLogin();
+    console.log(rebaseAuth.currentUser, 'currentUser');
+    if(!rebaseAuth.currentUser){
       return <Login pathname={this.props.location.pathname} handleAuth={this.props.handleAuth}/>
     }
     return(
       <div>
-        <Header admin={this.props.admin}/>
+        <Header admin={this.props.admin} logout={this.props.logout}/>
 
         <div className="admin-post">
 
