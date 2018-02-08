@@ -1,11 +1,10 @@
-//hello adrian
-
 import React from 'react';
 import base, {rebaseAuth} from '../config';
 import MatchupRecap from './MatchupRecap';
 import Header from './Header';
 import Login from './Login';
 
+import '../css/adrian.css';
 
 class Admin extends React.Component {
   constructor(props) {
@@ -120,7 +119,6 @@ class Admin extends React.Component {
       this.setState({subStaged_standings: subStandingsCopy})
 
     } else if (e.target.value){
-
       var team = {
         team: e.target.name,
         points: e.target.value
@@ -138,7 +136,7 @@ class Admin extends React.Component {
   renderStandings(index) {
     const team = this.state.subStaged_standings
 
-    return <li key={index}>{team[index].team} - {team[index].points} </li>
+    return <li key={index}>{team[index].team} <span>{team[index].points} PTS</span></li>
   }
 
   render() {
@@ -150,65 +148,131 @@ class Admin extends React.Component {
       <div>
         <Header admin={this.props.admin} logout={this.props.logout}/>
 
-        <div className="admin-post">
-
-
-          <form onSubmit={(e) => this.submitRecap(e)} ref={(input) => {this.mainForm = input}}>
-            <div className="admin-article-dets">
-              <div className="admin-article-desc">
-                <label>Post Title</label>
-                <input ref={(input) => this.title = input} type="text" placeholder="Week 1 Recap" />
-
-                <label>Post Summary</label>
-                <input ref={(input) => this.summary = input} type="text" name="Summary" placeholder="Brandon's team suddenly falls apart and becomes the laughing stock of the leage!" />
-              </div>
-              <div className="admin-article-image">
-                <label>Post Image</label>
-                <input ref={(input) => this.image = input} type="text" name="Article Image" accept="image/*" />
-
-                <img src="http://placehold.it/300x150" alt="Article" />
-                <span className="remove">Delete</span> <span>/</span> <span className="edit">Replace</span>
+        <form>
+          <div className="container light">
+            <div className="form-content flex-column">
+              <div className="flex-row">
+                <div className="col">
+                  <h3>Post Title</h3>
+                  <p>(i.e. Week 1 Recap)</p>
+                  <input ref={(input) => this.title = input} type="text" placeholder="Week 1 Recap" />
+                </div>
+                <div className="col">
+                  <h3>Post Summary</h3>
+                  <p>(i.e Brandon will always be the league’s Sacko)</p>
+                  <input ref={(input) => this.summary = input} type="text" placeholder="Brandon's team suddenly falls apart and becomes the laughing stock of the leage!" />
+                </div>
               </div>
 
-              <div className="admin-article-content">
-                <label>Post Intro</label>
-                <textarea ref={(input) => this.articleIntro = input} type="text" name="Article Intro" />
-
-                <label>Match Intro</label>
-                <textarea ref={(input) => this.matchupIntro = input} type="text" name="Match Intro" />
-
-                <div className="admin-article-standings">
-                  <div className="standings-data">
-                    <h3>Current Standings:</h3>
-                    <ul>
-                    {
-                      Object.keys(this.state.staged_standings).map((item, index)=> {
-                        return <li key={index}> {item}  <input type="number" name={item} onBlur={(e) => this.getTeamPoints(index, e)} /></li>
-                      })
-                    }
-                    </ul>
-                  </div>
-
-                  <div className="standings-table">
-                    <ol>
-                      {
-                        Object.keys(this.state.subStaged_standings).map(this.renderStandings.bind(this))
-                      }
-                    </ol>
-                  </div>
+              <div className="flex-row">
+                <div className="col img-post">
+                  <h3>Image URL</h3>
+                  <p>Copy and paste the image URL from imgur.com.</p>
+                  <input ref={(input) => this.image = input} type="text" name="Article Image" accept="image/*" />
+                </div>
+                <div className="col">
+                  <img src="http://placehold.it/480x150" alt="Article" />
                 </div>
               </div>
             </div>
-            <button>click me</button>
-          </form>
+          </div>
 
-        </div>
+          <div className="container dark">
+             <div className="form-content flex-row">
+               <div className="col">
+                <h3>Post Intro</h3>
+                <p>Write an introduction paragraph making which is an overall recap of the week.</p>
+                <textarea ref={(input) => this.articleIntro = input} type="text" name="Article Intro" />
+               </div>
 
-        <MatchupRecap handleStaged={this.handleStaged} stagedMatchups={this.state.staged_matchups} owners={this.state.owners} />
+               <div className="col">
+                <h3>Matchups Intro</h3>
+                <p>Write an introduction to the matchups. This can be used to make fun of general managers for losing.</p>
+                <textarea ref={(input) => this.matchupIntro = input} type="text" name="Match Intro" />
+               </div>
+             </div>
+          </div>
 
+          <div className="container light">
+            <div className="form-content flex-row standings">
+              <div>
+                <h3>Update Standings</h3>
+                <p>Add the points each team has and the staged standings will update automatically.</p>
+                <ul>
+                  {
+                    Object.keys(this.state.staged_standings)
+                          .map((item, index) => { return <li key={index} className="flex-row"> { item } <input type="number" name={item} onBlur={(e) => this.getTeamPoints(index, e)} /></li> })
+                  }
+                </ul>
+              </div>
+
+              <div>
+                <ol>
+                  {
+                    Object.keys(this.state.subStaged_standings)
+                          .map(this.renderStandings.bind(this))
+                  }
+                </ol>
+              </div>
+            </div>
+          </div>
+        </form>
       </div>
     )
   }
 }
 
 export default Admin;
+
+// <div className="admin-post">
+//   <form onSubmit={(e) => this.submitRecap(e)} ref={(input) => {this.mainForm = input}}>
+//     <div className="admin-article-dets">
+//       <div className="admin-article-desc">
+//         <label>Post Title</label>
+//         <input ref={(input) => this.title = input} type="text" placeholder="Week 1 Recap" />
+//
+//         <label>Post Summary</label>
+//         <input ref={(input) => this.summary = input} type="text" name="Summary" placeholder="Brandon's team suddenly falls apart and becomes the laughing stock of the leage!" />
+//       </div>
+//       <div className="admin-article-image">
+//         <label>Post Image</label>
+//         <input ref={(input) => this.image = input} type="text" name="Article Image" accept="image/*" />
+//
+//         <img src="http://placehold.it/300x150" alt="Article" />
+//         <span className="remove">Delete</span> <span>/</span> <span className="edit">Replace</span>
+//       </div>
+//
+//       <div className="admin-article-content">
+//         <label>Post Intro</label>
+//         <textarea ref={(input) => this.articleIntro = input} type="text" name="Article Intro" />
+//
+//         <label>Match Intro</label>
+//         <textarea ref={(input) => this.matchupIntro = input} type="text" name="Match Intro" />
+//
+//         <div className="admin-article-standings">
+//           <div className="standings-data">
+//             <h3>Current Standings:</h3>
+//             <ul>
+//             {
+//               Object.keys(this.state.staged_standings).map((item, index)=> {
+//                 return <li key={index}> {item}  <input type="number" name={item} onBlur={(e) => this.getTeamPoints(index, e)} /></li>
+//               })
+//             }
+//             </ul>
+//           </div>
+//
+//           <div className="standings-table">
+//             <ol>
+//               {
+//                 Object.keys(this.state.subStaged_standings).map(this.renderStandings.bind(this))
+//               }
+//             </ol>
+//           </div>
+//         </div>
+//       </div>
+//     </div>
+//     <button>click me</button>
+//   </form>
+//   <MatchupRecap handleStaged={this.handleStaged} stagedMatchups={this.state.staged_matchups} owners={this.state.owners} />
+//
+// </div>
