@@ -171,7 +171,7 @@ class Admin extends React.Component {
                   <input ref={(input) => this.image = input} type="text" name="Article Image" accept="image/*" />
                 </div>
                 <div className="col">
-                  <img src="http://placehold.it/480x150" alt="Article" />
+                  <img src="http://www.placehold.it/460x200" alt="Article" />
                 </div>
               </div>
             </div>
@@ -181,13 +181,13 @@ class Admin extends React.Component {
              <div className="form-content flex-row">
                <div className="col">
                 <h3>Post Intro</h3>
-                <p>Write an introduction paragraph making which is an overall recap of the week.</p>
+                <p>Write an overall summary of the week.</p>
                 <textarea ref={(input) => this.articleIntro = input} type="text" name="Article Intro" />
                </div>
 
                <div className="col">
                 <h3>Matchups Intro</h3>
-                <p>Write an introduction to the matchups. This can be used to make fun of general managers for losing.</p>
+                <p>Highlight some big moments in the matchups.</p>
                 <textarea ref={(input) => this.matchupIntro = input} type="text" name="Match Intro" />
                </div>
              </div>
@@ -195,7 +195,7 @@ class Admin extends React.Component {
 
           <div className="container light">
             <div className="form-content flex-row standings">
-              <div>
+              <div className="col">
                 <h3>Update Standings</h3>
                 <p>Add the points each team has and the staged standings will update automatically.</p>
                 <ul>
@@ -206,7 +206,7 @@ class Admin extends React.Component {
                 </ul>
               </div>
 
-              <div>
+              <div className="col">
                 <ol>
                   {
                     Object.keys(this.state.subStaged_standings)
