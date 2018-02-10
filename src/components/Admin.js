@@ -164,7 +164,7 @@ class Admin extends React.Component {
                 </div>
               </div>
 
-              <div className="flex-row">
+              <div className="flex-row" style={{background:"red"}}>
                 <div className="col img-post">
                   <h3>Image URL</h3>
                   <p>Copy and paste the image URL from imgur.com.</p>

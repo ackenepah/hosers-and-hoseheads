@@ -61,10 +61,10 @@ class MatchupRecap extends React.Component {
       this.setState({
         homeTeam: "",
         homeMvpLvp: "",
-        homeTeamScore: "",
+        homeTeamScore: "0",
         awayTeam: "",
         awayMvpLvp: "",
-        awayTeamScore: "",
+        awayTeamScore: "0",
         recap: "",
         editing: false,
         editingKey: ""
@@ -89,10 +89,10 @@ class MatchupRecap extends React.Component {
       this.setState({
         homeTeam: "",
         homeMvpLvp: "",
-        homeTeamScore: "",
+        homeTeamScore: "0",
         awayTeam: "",
         awayMvpLvp: "",
-        awayTeamScore: "",
+        awayTeamScore: "0",
         recap: "",
         editing: false,
         editingKey: ""
@@ -121,10 +121,10 @@ class MatchupRecap extends React.Component {
     this.setState({
       homeTeam: "",
       homeMvpLvp: "",
-      homeTeamScore: "",
+      homeTeamScore: "0",
       awayTeam: "",
       awayMvpLvp: "",
-      awayTeamScore: "",
+      awayTeamScore: "0",
       recap: "",
       editing: false,
       editingKey: ""
@@ -139,10 +139,10 @@ class MatchupRecap extends React.Component {
     this.setState({
       homeTeam: "",
       homeMvpLvp: "",
-      homeTeamScore: "",
+      homeTeamScore: "0",
       awayTeam: "",
       awayMvpLvp: "",
-      awayTeamScore: "",
+      awayTeamScore: "0",
       recap: "",
       editing: false,
       editingKey: ""
@@ -235,14 +235,32 @@ class MatchupRecap extends React.Component {
             </label>
             <textarea id="recap" ref={(input) => this.recap = input} value={this.state.recap} onChange={(e) => this.handleTeamChange('recap', e)}></textarea>
 
-            <label htmlFor="home">{homeMvpLvp}</label>
-            <textarea id="home" ref={(input) => this.homeMvpLvp = input} value={this.state.homeMvpLvp} onChange={(e) => this.handleTeamChange('homeMvpLvp', e)}></textarea>
+            <div className="mvp-lvp-container">
 
-            <label htmlFor="away">{awayMvpLvp}</label>
-            <textarea id="away" ref={(input) => this.awayMvpLvp = input} value={this.state.awayMvpLvp} onChange={(e) => this.handleTeamChange('awayMvpLvp', e)}></textarea>
 
-            <button>{buttonText}</button>
-            <button type="button" onClick={this.clearForm}>{clearFormBtn}</button>
+              <label htmlFor="home">
+                <h3>{homeMvpLvp}</h3>
+                <p>{`Write the home team's MVP and LVP`}</p>
+                <textarea id="home" ref={(input) => this.homeMvpLvp = input} value={this.state.homeMvpLvp} onChange={(e) => this.handleTeamChange('homeMvpLvp', e)}></textarea>
+
+              </label>
+
+              <div className="gutter"></div>
+
+              <label htmlFor="away">
+                <h3>{awayMvpLvp}</h3>
+                <p>{`Write the away team's MVP and LVP`}</p>
+                <textarea id="away" ref={(input) => this.awayMvpLvp = input} value={this.state.awayMvpLvp} onChange={(e) => this.handleTeamChange('awayMvpLvp', e)}></textarea>
+
+              </label>
+
+
+            </div>
+
+            <div className="mr-button-container">
+              <button>{buttonText}</button>
+              <button type="button" onClick={this.clearForm}>{clearFormBtn}</button>
+            </div>
           </form>
 
         </div>

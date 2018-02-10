@@ -148,11 +148,40 @@ input[type=number]::-webkit-outer-spin-button {
 .team .options li:hover {
   background: #be9e35;
   color: #f1f1f1;
-  /*width: calc(100% + 40px);*/
 }
 
 
 
+.mvp-lvp-container {
+  /*background: red;*/
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.gutter {
+  width: 20px;
+}
+
+.mvp-lvp-container > label {
+  width: 100%;
+  /*margin: 5px;*/
+}
+
+.mvp-lvp-container textarea {
+  height: 150px;
+}
+
+.mr-button-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.mr-button-container button {
+  margin-left: 20px;
+  background: #EEC643;
+}
 
 
 /*.home-team1 .select li:not(:first-of-type) {
