@@ -1,0 +1,146 @@
+.container {
+  width: 100vw;
+}
+
+.form-content {
+  max-width: 1160px;
+  margin: 0 auto;
+}
+
+.light {
+  background-color: #f1f1f1;
+}
+
+.dark {
+  background-color: #333;
+}
+
+
+h3 {
+  color: #EEC643;
+}
+
+p {
+  color: #f1f1f1;
+}
+
+
+.matchup-form {
+
+}
+
+
+.matchup-form .teams {
+  background: red;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+}
+
+.matchup-form .teams .vs {
+  font-size: 48px;
+  color: #f1f1f1;
+}
+
+.matchup-form .teams select {
+  border: none;
+  background: #333;
+  color: #EEC643;
+  -webkit-appearance: none;
+  appearance: none;
+  padding: 20px;
+  font-size: 29px;
+  text-indent: 5px;
+  text-align-last:center;
+  text-transform: uppercase;
+}
+
+.matchup-form .teams input {
+  border: none;
+  background: #333;
+  color: #EEC643;
+  -webkit-appearance: none;
+  padding: 20px;
+  font-size: 48px;
+  text-align: center;
+}
+
+/* For Firefox */
+input[type='number'] {
+    -moz-appearance:textfield;
+    appearance: none;
+
+}
+/* Webkit browsers like Safari and Chrome */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    /*margin: 0;*/
+    appearance: none;
+
+}
+
+
+
+.home-team1 .options li {
+  color: white;
+  background: pink;
+}
+
+.home-team1 {
+  color: white;
+  width: 400px;
+  margin: 50px 0;
+}
+
+.home-team1 .main {
+  border: 1px solid red;
+  color: #EEC643;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /*background: yellow;*/
+  padding: 20px;
+  position: relative;
+}
+
+
+.home-team1 .main .dash {
+
+  width: 40px;
+  background: #EEC643;
+  height: 2px;
+  margin: 0 20px ;
+}
+
+.home-team1 .option {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+
+.home-team1 .options li {
+  background-color: #f1f1f1;
+
+}
+
+.home-team1 .options li {
+  color: #333;
+}
+
+.home-team1 .options li:hover {
+  background: #c0c0c0;
+}
+
+
+
+
+/*.home-team1 .select li:not(:first-of-type) {
+  display: none;
+}
+
+.home-team1:hover .select li {
+  display: block;
+}*/

@@ -1,5 +1,6 @@
 import React from 'react';
 import StagedMatchups from './StagedMatchups';
+import '../css/keith.css';
 
 class MatchupRecap extends React.Component {
 
@@ -9,22 +10,31 @@ class MatchupRecap extends React.Component {
     this.editMatchupRecap = this.editMatchupRecap.bind(this);
     this.deleteMatchupRecap = this.deleteMatchupRecap.bind(this);
     this.clearForm = this.clearForm.bind(this);
-
+    // this.handleTeamChange2 = this.handleTeamChange2.bind(this);
     this.state = {
+      homeTeamDefault: "Home Team",
       homeTeam: "",
       homeMvpLvp: "",
-      homeTeamScore: "",
+      homeTeamScore: 0,
       awayTeam: "",
       awayMvpLvp: "",
-      awayTeamScore: "",
+      awayTeamScore: 0,
       recap: "",
       editing: false,
-      editingKey: ""
+      editingKey: "",
+      homeTeamShowing: false
     }
   }
 
   handleTeamChange(type, e){
+
     this.setState({[type]: e.target.value})
+  }
+
+
+  handleTeamChange2(type, key){
+    console.log(type, key);
+    this.setState({[type]: key})
   }
 
   submitMatchupRecap(e){
@@ -150,46 +160,71 @@ class MatchupRecap extends React.Component {
     const clearFormBtn = this.state.editing ? 'Cancel' : 'Clear';
 
     return(
-      <div className="matchup-recap">
-        <h1>Matchup Recap</h1>
-        <form ref={(input) => this.matchupRecapForm = input} onSubmit={this.submitMatchupRecap}>
+      <div className="container dark">
+        <div className="form-content">
+          <h3>Matchup Recap</h3>
+          <p>Select a home team and an away team and write the matchup!</p>
+          <form className="matchup-form" ref={(input) => this.matchupRecapForm = input} onSubmit={this.submitMatchupRecap}>
 
-          <div className="home-team">
-            <select className="home-team-select" onChange={(e) => this.handleTeamChange('homeTeam', e)} value={this.state.homeTeam}>
-              <option>Select Home Team</option>
-              {Object.keys(owners).map((key, ind) => { return <option key={ind} value={key}>{key}</option>})}
-            </select>
-            <input type="number" min="0" max="10" ref={(input) => this.homeTeamScore = input} value={this.state.homeTeamScore} onChange={(e) => this.handleTeamChange('homeTeamScore', e)}/>
+          { /*  <div className="teams">
+
+           <div className="home-team">
+              <select className="home-team-select" onChange={(e) => this.handleTeamChange('homeTeam', e)} value={this.state.homeTeam}>
+                <option> - Home Team - </option>
+                {Object.keys(owners).map((key, ind) => { return <option key={ind} value={key}>{key}</option>})}
+              </select>
+              <input type="number" min="0" max="10" ref={(input) => this.homeTeamScore = input} value={this.state.homeTeamScore} onChange={(e) => this.handleTeamChange('homeTeamScore', e)}/>
+            </div>
+
+            <div className="vs">VS.</div>
+
+            <div className="away-team">
+              <input type="number" min="0" max="10" ref={(input) => this.awayTeamScore = input} value={this.state.awayTeamScore} onChange={(e) => this.handleTeamChange('awayTeamScore', e)}/>
+
+              <select className="away-team-select" onChange={(e) => this.handleTeamChange('awayTeam', e)} value={this.state.awayTeam}>
+                <option> - Away Team - </option>
+                {Object.keys(owners).map((key, ind) => { return <option key={ind} value={key}>{key}</option>})}
+              </select>
+            </div>
+
+          </div> */ }
+
+
+          <div className="home-team1">
+            <div className="main" onClick={()=>{this.setState({homeTeamShowing:!this.state.homeTeamShowing})}}>
+              {!this.state.homeTeam && <span className="dash"> </span>}{this.state.homeTeam || this.state.homeTeamDefault}{!this.state.homeTeam && <span className="dash"> </span>}
+            </div>
+              {this.state.homeTeamShowing &&
+                <ul className="options">
+                  {Object.keys(owners).map((key, ind) => { return <li onClick={()=>{this.handleTeamChange2('homeTeam', key) ; this.setState({homeTeamShowing:!this.state.homeTeamShowing})}} key={ind} value={key}>{key}</li>})}
+                </ul>
+              }
           </div>
 
-          <div className="away-team">
-            <select className="away-team-select" onChange={(e) => this.handleTeamChange('awayTeam', e)} value={this.state.awayTeam}>
-              <option>Select Away Team</option>
-              {Object.keys(owners).map((key, ind) => { return <option key={ind} value={key}>{key}</option>})}
-
-            </select>
-            <input type="number" min="0" max="10" ref={(input) => this.awayTeamScore = input} value={this.state.awayTeamScore} onChange={(e) => this.handleTeamChange('awayTeamScore', e)}/>
-          </div>
 
 
-          <label htmlFor="recap">Recap</label>
-          <textarea id="recap" ref={(input) => this.recap = input} value={this.state.recap} onChange={(e) => this.handleTeamChange('recap', e)}></textarea>
+            <label htmlFor="recap">Recap</label>
+            <textarea id="recap" ref={(input) => this.recap = input} value={this.state.recap} onChange={(e) => this.handleTeamChange('recap', e)}></textarea>
 
-          <label htmlFor="home">{homeMvpLvp}</label>
-          <textarea id="home" ref={(input) => this.homeMvpLvp = input} value={this.state.homeMvpLvp} onChange={(e) => this.handleTeamChange('homeMvpLvp', e)}></textarea>
+            <label htmlFor="home">{homeMvpLvp}</label>
+            <textarea id="home" ref={(input) => this.homeMvpLvp = input} value={this.state.homeMvpLvp} onChange={(e) => this.handleTeamChange('homeMvpLvp', e)}></textarea>
 
-          <label htmlFor="away">{awayMvpLvp}</label>
-          <textarea id="away" ref={(input) => this.awayMvpLvp = input} value={this.state.awayMvpLvp} onChange={(e) => this.handleTeamChange('awayMvpLvp', e)}></textarea>
+            <label htmlFor="away">{awayMvpLvp}</label>
+            <textarea id="away" ref={(input) => this.awayMvpLvp = input} value={this.state.awayMvpLvp} onChange={(e) => this.handleTeamChange('awayMvpLvp', e)}></textarea>
 
-          <button>{buttonText}</button>
-          <button type="button" onClick={this.clearForm}>{clearFormBtn}</button>
-        </form>
+            <button>{buttonText}</button>
+            <button type="button" onClick={this.clearForm}>{clearFormBtn}</button>
+          </form>
 
-        <StagedMatchups staged={this.props.stagedMatchups} editMatchupRecap={this.editMatchupRecap} deleteMatchupRecap={this.deleteMatchupRecap}/>
-
+        </div>
       </div>
     )
   }
 }
+
+// <StagedMatchups staged={this.props.stagedMatchups} editMatchupRecap={this.editMatchupRecap} deleteMatchupRecap={this.deleteMatchupRecap}/>
+// <span onClick={()=>{this.setState({homeTeam: ""})}}>
+// {this.state.homeTeam || this.state.homeTeamDefault} " ha"
+// </span>
 
 export default MatchupRecap;
