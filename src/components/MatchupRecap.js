@@ -16,13 +16,16 @@ class MatchupRecap extends React.Component {
       homeTeam: "",
       homeMvpLvp: "",
       homeTeamScore: 0,
+      awayTeamDefault: "Away Team",
       awayTeam: "",
       awayMvpLvp: "",
       awayTeamScore: 0,
       recap: "",
       editing: false,
       editingKey: "",
-      homeTeamShowing: false
+      homeTeamShowing: false,
+      awayTeamShowing: false
+
     }
   }
 
@@ -189,21 +192,47 @@ class MatchupRecap extends React.Component {
 
           </div> */ }
 
+          <div className="teams">
 
-          <div className="home-team1">
-            <div className="main" onClick={()=>{this.setState({homeTeamShowing:!this.state.homeTeamShowing})}}>
-              {!this.state.homeTeam && <span className="dash"> </span>}{this.state.homeTeam || this.state.homeTeamDefault}{!this.state.homeTeam && <span className="dash"> </span>}
+            <div className="team">
+              <div className="main" onClick={()=>{this.setState({homeTeamShowing:!this.state.homeTeamShowing})}}>
+                {!this.state.homeTeam && <span className="dash"> </span>}{this.state.homeTeam || this.state.homeTeamDefault}{!this.state.homeTeam && <span className="dash"> </span>}
+                {this.state.homeTeamShowing &&
+                  <ul className="options">
+                    {Object.keys(owners).map((key, ind) => { return <li onClick={()=>{this.handleTeamChange2('homeTeam', key) ; this.setState({homeTeamShowing:!this.state.homeTeamShowing})}} key={ind} value={key}>{key}</li>})}
+                  </ul>
+                }
+              </div>
+
+              <input type="number" min="0" max="10" ref={(input) => this.homeTeamScore = input} value={this.state.homeTeamScore} onChange={(e) => this.handleTeamChange('homeTeamScore', e)}/>
+
             </div>
-              {this.state.homeTeamShowing &&
-                <ul className="options">
-                  {Object.keys(owners).map((key, ind) => { return <li onClick={()=>{this.handleTeamChange2('homeTeam', key) ; this.setState({homeTeamShowing:!this.state.homeTeamShowing})}} key={ind} value={key}>{key}</li>})}
-                </ul>
-              }
+
+            <div className="vs">VS.</div>
+
+            <div className="team">
+              <input type="number" min="0" max="10" ref={(input) => this.awayTeamScore = input} value={this.state.awayTeamScore} onChange={(e) => this.handleTeamChange('awayTeamScore', e)}/>
+
+              <div className="main" onClick={()=>{this.setState({awayTeamShowing:!this.state.awayTeamShowing})}}>
+                {!this.state.awayTeam && <span className="dash"> </span>}{this.state.awayTeam || this.state.awayTeamDefault}{!this.state.awayTeam && <span className="dash"> </span>}
+                {this.state.awayTeamShowing &&
+                  <ul className="options">
+                    {Object.keys(owners).map((key, ind) => { return <li onClick={()=>{this.handleTeamChange2('awayTeam', key) ; this.setState({awayTeamShowing:!this.state.awayTeamShowing})}} key={ind} value={key}>{key}</li>})}
+                  </ul>
+                }
+              </div>
+
+            </div>
+
+
           </div>
 
 
 
-            <label htmlFor="recap">Recap</label>
+            <label htmlFor="recap">
+              <h3>{homeMvpLvp} vs {awayMvpLvp}</h3>
+              <p>{`Write an overview of the recap and a detailed paragraph for each team`}</p>
+            </label>
             <textarea id="recap" ref={(input) => this.recap = input} value={this.state.recap} onChange={(e) => this.handleTeamChange('recap', e)}></textarea>
 
             <label htmlFor="home">{homeMvpLvp}</label>

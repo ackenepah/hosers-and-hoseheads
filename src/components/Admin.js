@@ -216,6 +216,8 @@ class Admin extends React.Component {
               </div>
             </div>
           </div>
+            <MatchupRecap handleStaged={this.handleStaged} stagedMatchups={this.state.staged_matchups} owners={this.state.owners} />
+
         </form>
       </div>
     )

@@ -3,7 +3,7 @@
 }
 
 .form-content {
-  max-width: 1160px;
+  /*max-width: 1160px;*/
   margin: 0 auto;
 }
 
@@ -26,24 +26,26 @@ p {
 
 
 .matchup-form {
-
+width: 100%;
 }
 
 
 .matchup-form .teams {
-  background: red;
+  /*background: lightblue;*/
+  width: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  padding: 15px;
+  /*padding: 15px;*/
 }
 
 .matchup-form .teams .vs {
   font-size: 48px;
   color: #f1f1f1;
+  padding: 0 20px;
 }
 
-.matchup-form .teams select {
+/*.matchup-form .teams select {
   border: none;
   background: #333;
   color: #EEC643;
@@ -54,7 +56,7 @@ p {
   text-indent: 5px;
   text-align-last:center;
   text-transform: uppercase;
-}
+}*/
 
 .matchup-form .teams input {
   border: none;
@@ -62,8 +64,10 @@ p {
   color: #EEC643;
   -webkit-appearance: none;
   padding: 20px;
-  font-size: 48px;
+  font-size: 42px;
   text-align: center;
+  width: 70px;
+  height: 90px;
 }
 
 /* For Firefox */
@@ -82,57 +86,71 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 
-
-.home-team1 .options li {
+.team {
   color: white;
-  background: pink;
-}
-
-.home-team1 {
-  color: white;
-  width: 400px;
+  /*width: 400px;*/
+  width: 100%;
   margin: 50px 0;
+  display: flex;
+  justify-content: space-between;
+  /*background: blue;*/
 }
 
-.home-team1 .main {
-  border: 1px solid red;
+
+.team .options li {
+  color: white;
+  /*background: pink;*/
+}
+
+
+
+.team .main {
+  /*border: 1px solid red;*/
   color: #EEC643;
   display: flex;
   justify-content: center;
   align-items: center;
-  /*background: yellow;*/
-  padding: 20px;
   position: relative;
+  cursor: pointer;
+  width: 100%;
+  font-size: 30px;
 }
 
+/*.team .main:last-child {
+  justify-content: flex-end;
+}*/
 
-.home-team1 .main .dash {
 
+.team .main .dash {
   width: 40px;
   background: #EEC643;
   height: 2px;
-  margin: 0 20px ;
+  margin: 0px 19px 0 19px;
 }
 
-.home-team1 .option {
+.team .options {
   position: absolute;
-  top: 0;
+  top: -50%;
   left: 0;
+  /*background: red;*/
+  background: #EEC643;
+
+  width: 100%;
+  font-size: 25px;
+  padding: 10px 0;
 }
 
-
-.home-team1 .options li {
-  background-color: #f1f1f1;
-
-}
-
-.home-team1 .options li {
+.team .options li {
   color: #333;
+  padding: 3px 20px;
 }
 
-.home-team1 .options li:hover {
-  background: #c0c0c0;
+.team .options li:hover {
+  background: #be9e35;
+  color: #f1f1f1;
+  /*width: calc(100% + 40px);*/
 }
+
 
 
 
