@@ -16,6 +16,7 @@
   "dependencies": {
     "firebase": "^4.8.0",
     "flexbox-react": "^4.4.0",
+    "node-sass-chokidar": "0.0.3",
     "history": "4.2.0",
     "node-sass-chokidar": "0.0.3",
     "re-base": "^3.2.2",
