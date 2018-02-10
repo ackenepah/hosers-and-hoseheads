@@ -24,7 +24,7 @@ class StagedMatchups extends React.Component {
     // console.log(stagedIds, 'stagied');
     return (
       <div className="staged-matchups" style={divStyle}>
-        <h1 style={h1style}>StagedMatchups</h1>
+        <h3 style={h1style}>StagedMatchups</h3>
         <ul style={ulStyle}>
           {this.props.staged.map(this.renderStages.bind(this))}
         </ul>

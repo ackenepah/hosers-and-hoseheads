@@ -50,13 +50,12 @@ ADMIN COMPONENT STYLES
 
 /* --- Admin Dashboard --- */
 
-.admin-dashboard {
+/*.admin-dashboard {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   color: #fff;
-  /*width: 100vw;*/
   padding: 10px;
 }
 
@@ -74,7 +73,7 @@ ADMIN COMPONENT STYLES
   display: flex;
   flex-direction: row;
   align-items: center;
-}
+}*/
 
 /* --- Admin Recap Form --- */
 
@@ -84,7 +83,7 @@ ADMIN COMPONENT STYLES
   padding: 20px 0px;
 } */
 
-.admin-article-image img {
+/*.admin-article-image img {
   width: 200px;
   height: 100px;
-}
+}*/
