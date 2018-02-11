@@ -50,7 +50,7 @@ ADMIN COMPONENT STYLES
 
 /* --- Admin Dashboard --- */
 
-/*.admin-dashboard {
+.admin-dashboard {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -73,7 +73,7 @@ ADMIN COMPONENT STYLES
   display: flex;
   flex-direction: row;
   align-items: center;
-}*/
+}
 
 /* --- Admin Recap Form --- */
 

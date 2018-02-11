@@ -44,7 +44,7 @@ class Header extends React.Component {
       position: 'absolute'
     }
 
-    this.state.popupOpen ? popupStyle.display = 'flex' : '';
+    popupStyle.display = this.state.popupOpen === true ? popupStyle.display = 'flex' : 'none';
 
     if(this.props.admin.loggedIn){
       return (
