@@ -34,18 +34,26 @@ button {
   border: 1px solid #333;
   padding: 15px 20px;
   cursor: pointer;
-  -webkit-transition: ease-in-out .5s;
-  transition: ease-in-out .5s;
+  -webkit-transition: ease-in-out .1s;
+  transition: ease-in-out .1s;
+
+  background: #EEC643;
+  /*background: #f1f1f1;*/
+
+
+}
+
+button:hover {
+  /*darker*/
+  background: #be9e35;
+
+  /*lighter*/
+  /*background: #f1d168;*/
 }
 
 p {
   margin-bottom: 20px;
 }
-
-button:hover {
-  background-color: #f1f1f1;
-}
-
 
 .standings-table ol {
   background-color: #00ff00;

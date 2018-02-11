@@ -1,37 +1,29 @@
 import React from 'react';
+
 class StagedMatchups extends React.Component {
 
-
-  renderStages(item, key){
-    const liStyle = {width: '100%', border: '1px solid black', padding: "2px"}
-    const staged = item;
-    // const staged = this.props.staged[key];
-    // console.log(staged , 'staged');
+  renderStages(staged, key){
     return (
-      <li key={key} style={liStyle}>
-        <span onClick={(e) => {this.props.editMatchupRecap(staged, key)}}> {staged.homeTeam} vs {staged.awayTeam}</span> | <span onClick={(e) => {this.props.deleteMatchupRecap(staged, key)}}> X </span>
+      <li key={key}>
+        <div className="staged" onClick={(e) => {this.props.editMatchupRecap(staged, key)}}> {staged.homeTeam} vs {staged.awayTeam}</div>
+        <div className="delete" onClick={(e) => {this.props.deleteMatchupRecap(staged, key)}}>
+          <div className="hoverRemove">Remove</div>
+          X
+        </div>
       </li>
     )
   }
 
-
   render(){
-    const divStyle = {background: 'lightGreen'};
-    const h1style = {fontSize: '40px'}
-    const ulStyle = {width: '400px', background: 'yellow', minHeight: '500px'}
-
-    // const stagedIds = Object.keys(this.props.staged)
-    // console.log(stagedIds, 'stagied');
     return (
-      <div className="staged-matchups" style={divStyle}>
-        <h3 style={h1style}>StagedMatchups</h3>
-        <ul style={ulStyle}>
+      <div className="staged-matchups">
+        <h3>StagedMatchups</h3>
+        <ul>
           {this.props.staged.map(this.renderStages.bind(this))}
         </ul>
       </div>
     )
   }
 }
-// {stagedIds.map(this.renderStages.bind(this))}
 
 export default StagedMatchups;

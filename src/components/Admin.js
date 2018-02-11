@@ -57,6 +57,7 @@ class Admin extends React.Component {
   }
 
   submitRecap(e, staged){
+    console.log("submitting recap");
     e.preventDefault()
     if(this.state.staged_matchups && this.state.staged_matchups.length <= 0){
       alert("please select at least one matchpp")
@@ -139,6 +140,10 @@ class Admin extends React.Component {
     return <li key={index}>{team[index].team} <span>{team[index].points} PTS</span></li>
   }
 
+  componentDidUpdate(){
+    console.log(this.state.staged_matchups, "this.matchups");
+  }
+
   render() {
     console.log(rebaseAuth.currentUser, 'currentUser');
     if(!rebaseAuth.currentUser){
@@ -148,7 +153,7 @@ class Admin extends React.Component {
       <div>
         <Header admin={this.props.admin} logout={this.props.logout}/>
 
-        <form>
+        <form id="main-form" onSubmit={(e) => this.submitRecap(e)} ref={(input) => {this.mainForm = input}}>
           <div className="container light">
             <div className="form-content flex-column">
               <div className="flex-row">
@@ -216,9 +221,17 @@ class Admin extends React.Component {
               </div>
             </div>
           </div>
+        </form>
+
+        <div className="container dark">
+          <div className="form-content flex-column">
             <MatchupRecap handleStaged={this.handleStaged} stagedMatchups={this.state.staged_matchups} owners={this.state.owners} />
 
-        </form>
+            { /* user "form=" to submit the main form from outside the form element .. cannot nest form inside form (matchup recap)*/}
+            <button form="main-form">Publish Post</button>
+          </div>
+        </div>
+
       </div>
     )
   }

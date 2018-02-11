@@ -1,42 +1,16 @@
-.container {
-  width: 100vw;
-}
-
-.form-content {
-  /*max-width: 1160px;*/
-  margin: 0 auto;
-}
-
-.light {
-  background-color: #f1f1f1;
-}
-
-.dark {
-  background-color: #333;
-}
-
-
-h3 {
-  color: #EEC643;
-}
-
-p {
-  color: #f1f1f1;
-}
-
+/******************************
+*** MATCHUP RECAP COMPONENT ***
+******************************/
 
 .matchup-form {
-width: 100%;
+  width: 100%;
 }
 
-
 .matchup-form .teams {
-  /*background: lightblue;*/
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  /*padding: 15px;*/
 }
 
 .matchup-form .teams .vs {
@@ -44,7 +18,7 @@ width: 100%;
   color: #f1f1f1;
   padding: 0 20px;
 }
-
+/* FOR NATIVE SELECT STYLING */
 /*.matchup-form .teams select {
   border: none;
   background: #333;
@@ -62,7 +36,6 @@ width: 100%;
   border: none;
   background: #333;
   color: #EEC643;
-  -webkit-appearance: none;
   padding: 20px;
   font-size: 42px;
   text-align: center;
@@ -71,41 +44,31 @@ width: 100%;
 }
 
 /* For Firefox */
-input[type='number'] {
+.matchup-form .teams input[type='number'] {
     -moz-appearance:textfield;
     appearance: none;
 
 }
 /* Webkit browsers like Safari and Chrome */
-input[type=number]::-webkit-inner-spin-button,
-input[type=number]::-webkit-outer-spin-button {
+.matchup-form .teams input[type=number]::-webkit-inner-spin-button,
+.matchup-form .teams input[type=number]::-webkit-outer-spin-button {
     -webkit-appearance: none;
-    /*margin: 0;*/
     appearance: none;
-
 }
-
 
 .team {
   color: white;
-  /*width: 400px;*/
   width: 100%;
   margin: 50px 0;
   display: flex;
   justify-content: space-between;
-  /*background: blue;*/
 }
-
 
 .team .options li {
   color: white;
-  /*background: pink;*/
 }
 
-
-
 .team .main {
-  /*border: 1px solid red;*/
   color: #EEC643;
   display: flex;
   justify-content: center;
@@ -115,11 +78,6 @@ input[type=number]::-webkit-outer-spin-button {
   width: 100%;
   font-size: 30px;
 }
-
-/*.team .main:last-child {
-  justify-content: flex-end;
-}*/
-
 
 .team .main .dash {
   width: 40px;
@@ -132,9 +90,7 @@ input[type=number]::-webkit-outer-spin-button {
   position: absolute;
   top: -50%;
   left: 0;
-  /*background: red;*/
   background: #EEC643;
-
   width: 100%;
   font-size: 25px;
   padding: 10px 0;
@@ -150,10 +106,7 @@ input[type=number]::-webkit-outer-spin-button {
   color: #f1f1f1;
 }
 
-
-
 .mvp-lvp-container {
-  /*background: red;*/
   display: flex;
   justify-content: space-between;
   margin-top: 20px;
@@ -165,7 +118,6 @@ input[type=number]::-webkit-outer-spin-button {
 
 .mvp-lvp-container > label {
   width: 100%;
-  /*margin: 5px;*/
 }
 
 .mvp-lvp-container textarea {
@@ -180,14 +132,70 @@ input[type=number]::-webkit-outer-spin-button {
 
 .mr-button-container button {
   margin-left: 20px;
+  /*background: #EEC643;*/
+}
+
+
+
+/*******************************
+*** STAGED MATCHUP COMPONENT ***
+*******************************/
+
+
+.staged-matchups {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.staged-matchups ul {
+  min-height: 68px;
+  margin: 10px 0 20px;
+}
+
+.staged-matchups ul li {
+  background: #f1f1f1;
+  border: 1px solid black;
+  display: flex;
+  justify-content: space-between;
+  font-size: 20px;
+  overflow: hidden;
+  cursor: pointer;
+  margin: 5px 0;
+}
+
+.staged-matchups ul li div {
+  padding: 20px 40px;
+}
+
+.staged-matchups ul li .staged {
+  width: 100%;
+}
+
+.staged-matchups .delete {
   background: #EEC643;
+  position: relative;
+}
+
+.hoverRemove {
+  position: absolute;
+  left: 100px;
+  top: 0;
+  background: #EEC643;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s ease;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  -ms-transition: all 0.3s ease;
+}
+
+.delete:hover .hoverRemove{
+  left: -63px;
 }
 
 
-/*.home-team1 .select li:not(:first-of-type) {
-  display: none;
+button {
+  /*background: #EEC643;*/
 }
-
-.home-team1:hover .select li {
-  display: block;
-}*/

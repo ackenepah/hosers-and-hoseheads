@@ -98,6 +98,8 @@ class MatchupRecap extends React.Component {
         editingKey: ""
       })
 
+      console.log(newMatchup, 'new matc');
+
       this.props.stagedMatchups.push(newMatchup)
       // this.props.handleStaged(stageMatchup, 'new')
     }
@@ -163,8 +165,8 @@ class MatchupRecap extends React.Component {
     const clearFormBtn = this.state.editing ? 'Cancel' : 'Clear';
 
     return(
-      <div className="container dark">
-        <div className="form-content">
+      <div>
+        <div>
           <h3>Matchup Recap</h3>
           <p>Select a home team and an away team and write the matchup!</p>
           <form className="matchup-form" ref={(input) => this.matchupRecapForm = input} onSubmit={this.submitMatchupRecap}>
@@ -262,8 +264,11 @@ class MatchupRecap extends React.Component {
               <button type="button" onClick={this.clearForm}>{clearFormBtn}</button>
             </div>
           </form>
+          <StagedMatchups staged={this.props.stagedMatchups} editMatchupRecap={this.editMatchupRecap} deleteMatchupRecap={this.deleteMatchupRecap}/>
 
         </div>
+
+
       </div>
     )
   }
