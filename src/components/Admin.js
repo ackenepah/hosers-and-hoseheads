@@ -151,7 +151,7 @@ class Admin extends React.Component {
     }
     return(
       <div>
-        <Header admin={this.props.admin} logout={this.props.logout}/>
+        <Header admin={this.props.admin} logout={this.props.logout} updateAdmin={this.props.updateAdmin}/>
 
         <form id="main-form" onSubmit={(e) => this.submitRecap(e)} ref={(input) => {this.mainForm = input}}>
           <div className="container light">
