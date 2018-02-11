@@ -12,6 +12,7 @@ class Header extends React.Component {
     }
 
     this.togglePopup = this.togglePopup.bind(this);
+    this.headerFormSubmit = this.headerFormSubmit.bind(this);
   }
 
 
@@ -23,6 +24,28 @@ class Header extends React.Component {
       this.setState({popupOpen: !this.state.popupOpen})
     }
   }
+
+
+  headerFormSubmit(e){
+    e.preventDefault();
+    console.log('getting here');
+
+
+    const updateAdminData = {
+      displayName: this.displayName.value,
+      profilePicture: this.profilePicture.value,
+      email: this.email.value,
+      password: this.password.value,
+      password2: this.password2.value
+    }
+
+    console.log(updateAdminData);
+
+    this.props.updateAdmin(updateAdminData)
+    this.setState({popupOpen: !this.state.popupOpen})
+
+  }
+
 
   adminDashboard(){
     console.log(this.state.popupOpen, 'popup');
@@ -46,15 +69,18 @@ class Header extends React.Component {
 
     popupStyle.display = this.state.popupOpen === true ? popupStyle.display = 'flex' : 'none';
 
+    const profilePicture = this.props.admin.adminUser.photoURL ? this.props.admin.adminUser.photoURL : "http://placehold.it/50x50";
+    const userName = this.props.admin.adminUser.displayName ? this.props.admin.adminUser.displayName : this.props.admin.adminUser.email;
+
     if(this.props.admin.loggedIn){
       return (
         <div className="admin-dashboard">
           <div className="admin-settings">
-            <Link to="/admin">
-              <img src="http://placehold.it/50x50" alt="User" />
-              <span>Welcome, {this.props.admin.adminUser.displayName ? this.props.admin.adminUser.displayName : this.props.admin.adminUser.email}</span>
+            <Link className="admin-link" to="/admin">
+              <img src={profilePicture} alt="User" />
+              <span>Welcome, {userName}</span>
             </Link>
-            <p style={{color: 'white'}} onClick={()=>{this.togglePopup()}}>asdasgsa</p>
+            <p onClick={()=>{this.togglePopup()}}>Edit</p>
           </div>
 
           <Link to='/'><button onClick={this.props.logout}>logout</button></Link>
@@ -64,10 +90,13 @@ class Header extends React.Component {
 
           <div className="popup"  style={popupStyle} onClick={(e)=>{this.togglePopup(e)}}>
             <p onClick={()=>{this.togglePopup()}}>XXXX</p>
-            <form style={formStyle}>
-              <input type="text" placeholder='Display Name'/>
-              <input type="text" placeholder='Update Email'/>
-              <input type="text" placeholder='Update Password'/>
+            <form style={formStyle} onSubmit={this.headerFormSubmit}>
+              <input type="text" ref={(input) => this.displayName = input} defaultValue={this.props.admin.adminUser.displayName} placeholder='Display Name'/>
+              <input type="text" ref={(input) => this.profilePicture = input} defaultValue={this.props.admin.adminUser.photoURL} placeholder='Profile Picture'/>
+              <input type="text" ref={(input) => this.email = input} defaultValue={this.props.admin.adminUser.email} placeholder='Update Email'/>
+              <input type="text" ref={(input) => this.password = input} placeholder='Update Password'/>
+              <input type="text" ref={(input) => this.password2 = input} placeholder='Confirm Password'/>
+
               <button>Submit</button>
             </form>
           </div>

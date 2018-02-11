@@ -64,6 +64,32 @@ class Root extends React.Component {
     }, 500);
   }
 
+  updateAdmin(data){
+    console.log(data, 'IN INDEXJS');
+
+    var user = rebaseAuth.currentUser;
+
+    user.updateProfile({
+      displayName: data.displayName,
+      photoURL: data.profilePicture
+    }).then(function() {
+      console.log('profile updated!');
+      // Update successful.
+    }).catch(function(error) {
+      // An error happened.
+    });
+
+
+    user.updateEmail("k@k.com").then(function() {
+      console.log('email updated!');
+      // Update successful.
+    }).catch(function(error) {
+      // An error happened.
+      console.log(error, 'email error');
+    });
+
+  }
+
 
   render(){
     if(this.state.loading){
@@ -80,8 +106,8 @@ class Root extends React.Component {
           <Flexbox element="main" flexGrow={1}>
             <BrowserRouter>
               <div>
-                <Match exactly pattern="/"  render={(props) => <Home {...props} admin={this.state.admin} logout={this.logout}/> }/>
-                <Match pattern="/admin" render={(props) => <Admin {...props} admin={this.state.admin} logout={this.logout} handleAuth={this.handleAuth}/> }/>
+                <Match exactly pattern="/"  render={(props) => <Home {...props}  updateAdmin={this.updateAdmin} admin={this.state.admin} logout={this.logout}/> }/>
+                <Match pattern="/admin" render={(props) => <Admin {...props} updateAdmin={this.updateAdmin} admin={this.state.admin} logout={this.logout} handleAuth={this.handleAuth}/> }/>
                 <Miss component={NotFound} />
               </div>
             </BrowserRouter>
