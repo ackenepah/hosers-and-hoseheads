@@ -3,7 +3,7 @@ import React from 'react';
 class Article extends React.Component {
   render() {
 
-    console.log(this.props.details);
+    // console.log(this.props.details);
     const d = this.props.details
 
     return(
