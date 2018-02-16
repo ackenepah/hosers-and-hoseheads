@@ -10,6 +10,7 @@ import './css/modules.css';
 
 import Home from './components/Home';
 import Admin from './components/Admin';
+import ArticleView from './components/ArticleView';
 import NotFound from './components/NotFound';
 
 import { rebaseAuth } from './config';
@@ -108,6 +109,7 @@ class Root extends React.Component {
               <div>
                 <Match exactly pattern="/"  render={(props) => <Home {...props}  updateAdmin={this.updateAdmin} admin={this.state.admin} logout={this.logout}/> }/>
                 <Match pattern="/admin" render={(props) => <Admin {...props} updateAdmin={this.updateAdmin} admin={this.state.admin} logout={this.logout} handleAuth={this.handleAuth}/> }/>
+                <Match pattern="/articleview" component={ArticleView}/>
                 <Miss component={NotFound} />
               </div>
             </BrowserRouter>
