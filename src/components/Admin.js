@@ -162,6 +162,7 @@ class Admin extends React.Component {
                   <p>(i.e. Week 1 Recap)</p>
                   <input ref={(input) => this.title = input} type="text" placeholder="Week 1 Recap" />
                 </div>
+
                 <div className="col">
                   <h3>Post Summary</h3>
                   <p>(i.e Brandon will always be the league’s Sacko)</p>
@@ -175,6 +176,7 @@ class Admin extends React.Component {
                   <p>Copy and paste the image URL from imgur.com.</p>
                   <input ref={(input) => this.image = input} type="text" name="Article Image" accept="image/*" />
                 </div>
+
                 <div className="col">
                   <img src="http://www.placehold.it/460x200" alt="Article" />
                 </div>
