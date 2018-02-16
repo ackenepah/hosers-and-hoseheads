@@ -42,9 +42,14 @@ button {
 button:hover {
   /*darker*/
   background: #be9e35;
-
   /*lighter*/
   /*background: #f1d168;*/
+}
+
+button:disabled {
+  /*darker*/
+  background: #a28f51;
+  cursor: not-allowed;
 }
 
 p {
