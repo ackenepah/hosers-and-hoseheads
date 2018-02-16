@@ -22,6 +22,7 @@
   padding: 10px 20px;
   background: #f1f1f1;
 
+
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -29,9 +30,6 @@
 
 .edit-form > form div {
   margin-right: 40px;
-  /*background: lightblue;*/
-  /*width: 100%;*/
-  /*background: green;*/
 }
 
 .edit-form > form div input {

@@ -18,9 +18,8 @@ class Header extends React.Component {
 
 
   togglePopup(e){
-    console.log('popup fired');
-    if(e && (e.target.nodeName === 'FORM' || e.target.nodeName === 'INPUT' || e.target.nodeName === 'BUTTON')){
-      console.log('not closing');
+    if(e && (e.target.nodeName === 'FORM' || e.target.nodeName === 'INPUT' || e.target.nodeName === 'BUTTON' || e.target.nodeName === 'LABEL' || e.target.parentNode.className.split(" ")[0] === "form-modal" )){
+      // console.log('not closing');
     } else {
       this.setState({popupOpen: !this.state.popupOpen})
     }
@@ -30,6 +29,8 @@ class Header extends React.Component {
   headerFormSubmit(e, type){
     e.preventDefault();
     console.log('getting here');
+
+    //should validate data being given
 
 
     // const updateAdminData = {
@@ -99,9 +100,9 @@ class Header extends React.Component {
 
           <div className="popup" style={popupStyle} onClick={(e)=>{this.togglePopup(e)}}>
             <p onClick={()=>{this.togglePopup()}}>XXXX</p>
-            <div className="edit-form" >
+            <div className="modal edit-form" id="haha">
 
-              <form className="update-profile" onSubmit={(e) => this.headerFormSubmit(e, 'updateProfile')}>
+              <form className="form-modal update-profile" onSubmit={(e) => this.headerFormSubmit(e, 'updateProfile')}>
                 <div>
                   <label htmlFor=""> Display Name</label>
 
@@ -114,7 +115,7 @@ class Header extends React.Component {
 
               </form>
 
-              <form className="update-email" onSubmit={(e) => this.headerFormSubmit(e, 'updateEmail')}>
+              <form className="form-modal update-email" onSubmit={(e) => this.headerFormSubmit(e, 'updateEmail')}>
                 <div>
                   <label htmlFor=""> Email</label>
                   <input type="email" ref={(input) => this.email = input} defaultValue={this.props.admin.adminUser.email} placeholder='Update Email'/>
@@ -124,7 +125,7 @@ class Header extends React.Component {
 
               </form>
 
-              <form className="update-password" onSubmit={(e) => this.headerFormSubmit(e, 'updatePassword')}>
+              <form className="form-modal update-password" onSubmit={(e) => this.headerFormSubmit(e, 'updatePassword')}>
                 <div>
                   <label htmlFor=""> Update Password </label>
 
