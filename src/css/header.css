@@ -1,0 +1,49 @@
+.popup {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.8);
+  /*display: none;*/                /*display none being set and changed inside header Component*/
+  justify-content: center;
+  align-items: center;
+}
+
+.edit-form {
+  z-index: 100;
+  background: #9B9B9B;
+
+  padding: 2px;
+}
+
+
+.edit-form > form {
+  padding: 10px 20px;
+  background: #f1f1f1;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.edit-form > form div {
+  margin-right: 40px;
+  /*background: lightblue;*/
+  /*width: 100%;*/
+  /*background: green;*/
+}
+
+.edit-form > form div input {
+  min-width: 300px;
+  display: block;
+}
+
+.edit-form > form div label {
+  margin: 10px 0;
+  display: block;
+}
+.edit-form > form div label:nth-child(3) {
+  margin-top: 10px;
+  /*background: green;*/
+}

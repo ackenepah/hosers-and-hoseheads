@@ -24,21 +24,22 @@ class Root extends React.Component {
         loggedIn: false,
         adminUser: {}
       },
-      loading: false
+      loading: false,
+      emailError: false
     }
 
     this.handleAuth = this.handleAuth.bind(this);
     this.logout = this.logout.bind(this);
+    this.updateAdmin = this.updateAdmin.bind(this);
+
   }
 
   componentWillMount(){
     this.setState({loading: true})
-    // console.log(rebaseAuth.currentUser, 'CURRENT USER IN componentWillMount');
   }
 
   handleAuth(adminUser){
     const admin = {...this.state.admin, adminUser, loggedIn: true}
-    // console.log(admin, 'admin index');
     this.setState({admin})
   }
 
@@ -54,7 +55,6 @@ class Root extends React.Component {
   setMyState(){
     var that = this;
     setTimeout(function () {
-      // console.log('fireing', rebaseAuth);
       if(rebaseAuth.currentUser){
         let adminUser = rebaseAuth.currentUser
         let admin = {adminUser: adminUser, loggedIn: true}
@@ -65,34 +65,52 @@ class Root extends React.Component {
     }, 500);
   }
 
-  updateAdmin(data){
+  updateAdmin(data, type){
     console.log(data, 'IN INDEXJS');
 
-    var user = rebaseAuth.currentUser;
+    const user = rebaseAuth.currentUser;
+    var that = this;
+    if (type === 'updateProfile'){
+      user.updateProfile({
+        displayName: data.displayName,
+        photoURL: data.profilePicture
+      }).then(function() {
+        console.log('profile updated!');
+        let admin = {adminUser: user, loggedIn: true}
+        that.setState({admin})
+        // Update successful.
+      }).catch(function(error) {
+        // An error happened.
+        console.log(error, "profile error");
+      });
+    } else if (type === 'updateEmail'){
+      user.updateEmail(data.email).then(function() {
+        // Update successful.
+        console.log('email updated!');
+        let admin = {adminUser: user, loggedIn: true}
+        that.setState({admin})
+      }).catch(function(error) {
+        // An error happened.
+        console.log(error, 'email error');
+        if(error.code === "auth/requires-recent-login"){
+          alert('please log out and then log back in and then update your email')
+          that.setState({emailError: true})
+        }
+      });
 
-    user.updateProfile({
-      displayName: data.displayName,
-      photoURL: data.profilePicture
-    }).then(function() {
-      console.log('profile updated!');
-      // Update successful.
-    }).catch(function(error) {
-      // An error happened.
-    });
+    } else if(type === 'updatePassword'){
+      console.log('update password');
+    }
 
 
-    user.updateEmail("k@k.com").then(function() {
-      console.log('email updated!');
-      // Update successful.
-    }).catch(function(error) {
-      // An error happened.
-      console.log(error, 'email error');
-    });
+
+
 
   }
 
 
   render(){
+    console.log(this.state.emailError, 'email');
     if(this.state.loading){
       return (
         <div>
@@ -108,7 +126,7 @@ class Root extends React.Component {
             <BrowserRouter>
               <div>
                 <Match exactly pattern="/"  render={(props) => <Home {...props}  updateAdmin={this.updateAdmin} admin={this.state.admin} logout={this.logout}/> }/>
-                <Match pattern="/admin" render={(props) => <Admin {...props} updateAdmin={this.updateAdmin} admin={this.state.admin} logout={this.logout} handleAuth={this.handleAuth}/> }/>
+                <Match pattern="/admin" render={(props) => <Admin {...props} updateAdmin={this.updateAdmin} admin={this.state.admin} logout={this.logout} handleAuth={this.handleAuth} emailError={this.state.emailError}/> }/>
                 <Match pattern="/articleview" component={ArticleView}/>
                 <Miss component={NotFound} />
               </div>

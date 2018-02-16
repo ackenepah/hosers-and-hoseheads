@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 import logo from '../img/logo.png';
+import '../css/header.css';
 
 class Header extends React.Component {
 
@@ -26,22 +27,37 @@ class Header extends React.Component {
   }
 
 
-  headerFormSubmit(e){
+  headerFormSubmit(e, type){
     e.preventDefault();
     console.log('getting here');
 
 
+    // const updateAdminData = {
+    //   displayName: this.displayName.value,
+    //   profilePicture: this.profilePicture.value,
+    //   email: this.email.value,
+    //   password: this.password.value,
+    //   password2: this.password2.value
+    // }
+
     const updateAdminData = {
-      displayName: this.displayName.value,
-      profilePicture: this.profilePicture.value,
-      email: this.email.value,
-      password: this.password.value,
-      password2: this.password2.value
+      updateProfile: {
+        displayName: this.displayName.value,
+        profilePicture: this.profilePicture.value
+      },
+      updateEmail: {
+        email: this.email.value
+      },
+      updatePassword: {
+        password: this.password.value,
+        password2: this.password2.value
+      }
     }
+    console.log(type, 'updateAdmin');
 
-    console.log(updateAdminData);
+    console.log(updateAdminData[type], 'updateAdmin');
 
-    this.props.updateAdmin(updateAdminData)
+    this.props.updateAdmin(updateAdminData[type], type)
     this.setState({popupOpen: !this.state.popupOpen})
 
   }
@@ -50,24 +66,17 @@ class Header extends React.Component {
   adminDashboard(){
     console.log(this.state.popupOpen, 'popup');
     let popupStyle = {
-      position: 'fixed',
-      top: 0,
-      bottom: 0,
-      left: 0,
-      right: 0,
-      background: 'rgba(0,0,0,0.5)',
-      display: 'none',
-      justifyContent: 'center',
-      alignItems: 'center'
+      display: 'none'
     }
 
-    const formStyle = {
-      'zIndex': 100,
-      background: 'pink',
-      position: 'absolute'
-    }
+    // let popupStyle2 = {
+    //   display: 'none'
+    // }
+
 
     popupStyle.display = this.state.popupOpen === true ? popupStyle.display = 'flex' : 'none';
+
+    // popupStyle2.display = this.props.emailError === true ? popupStyle2.display = 'flex' : 'none';
 
     const profilePicture = this.props.admin.adminUser.photoURL ? this.props.admin.adminUser.photoURL : "http://placehold.it/50x50";
     const userName = this.props.admin.adminUser.displayName ? this.props.admin.adminUser.displayName : this.props.admin.adminUser.email;
@@ -88,24 +97,65 @@ class Header extends React.Component {
 
           { /* POPUP FOR ON CLICK SETTINGS */ }
 
-          <div className="popup"  style={popupStyle} onClick={(e)=>{this.togglePopup(e)}}>
+          <div className="popup" style={popupStyle} onClick={(e)=>{this.togglePopup(e)}}>
             <p onClick={()=>{this.togglePopup()}}>XXXX</p>
-            <form style={formStyle} onSubmit={this.headerFormSubmit}>
-              <input type="text" ref={(input) => this.displayName = input} defaultValue={this.props.admin.adminUser.displayName} placeholder='Display Name'/>
-              <input type="text" ref={(input) => this.profilePicture = input} defaultValue={this.props.admin.adminUser.photoURL} placeholder='Profile Picture'/>
-              <input type="text" ref={(input) => this.email = input} defaultValue={this.props.admin.adminUser.email} placeholder='Update Email'/>
-              <input type="text" ref={(input) => this.password = input} placeholder='Update Password'/>
-              <input type="text" ref={(input) => this.password2 = input} placeholder='Confirm Password'/>
+            <div className="edit-form" >
 
-              <button>Submit</button>
-            </form>
+              <form className="update-profile" onSubmit={(e) => this.headerFormSubmit(e, 'updateProfile')}>
+                <div>
+                  <label htmlFor=""> Display Name</label>
+
+                  <input type="text" ref={(input) => this.displayName = input} defaultValue={this.props.admin.adminUser.displayName} placeholder='Display Name'/>
+                  <label htmlFor=""> Profile Picture URL </label>
+                  <input type="text" ref={(input) => this.profilePicture = input} defaultValue={this.props.admin.adminUser.photoURL} placeholder='Profile Picture'/>
+
+                </div>
+                <button>Update Profile</button>
+
+              </form>
+
+              <form className="update-email" onSubmit={(e) => this.headerFormSubmit(e, 'updateEmail')}>
+                <div>
+                  <label htmlFor=""> Email</label>
+                  <input type="email" ref={(input) => this.email = input} defaultValue={this.props.admin.adminUser.email} placeholder='Update Email'/>
+
+                </div>
+                <button>Update Email</button>
+
+              </form>
+
+              <form className="update-password" onSubmit={(e) => this.headerFormSubmit(e, 'updatePassword')}>
+                <div>
+                  <label htmlFor=""> Update Password </label>
+
+                  <input disabled type="text" ref={(input) => this.password = input} placeholder='Update Password'/>
+                  <label htmlFor=""> Confirm Password </label>
+                  <input disabled type="text" ref={(input) => this.password2 = input} placeholder='Confirm Password'/>
+                </div>
+                <button disabled>Update Password</button>
+
+
+              </form>
+
+
+
+
+            </div>
           </div>
+
+        { /*   <div className="popup" style={popupStyle2}>
+            HERE IS AN ALERT MODAL HAHA
+          </div>
+          */ }
+
         </div>
       )
     }
   }
 
   render() {
+
+    console.log(this.props.emailError, 'emailError');
     return(
       <div className="header">
         <div className="logo">
