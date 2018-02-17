@@ -5,7 +5,8 @@ class Article extends React.Component {
 
     // console.log(this.props.details);
     const d = this.props.details
-
+    console.log(d.matchup_recaps, 'MOTHER FUCKER')
+    console.log(Object.keys(d.matchup_recaps), 'DOS OBJECTS')
     return(
       <div className="article-wrapper">
         <div className="article">
@@ -30,22 +31,35 @@ class Article extends React.Component {
 
               <h4>Current Standings:</h4>
               <ol className="standings-list">
-                <p>List the current stadings.</p>
+                {
+                  d.standings.map((data, key) => {
+                    return(
+                      <li key={key}>{data.team} <span>{data.points}</span></li>
+                    )
+                  })
+                }
               </ol>
 
-              <p>{d.matchupIntro}</p>
+              <p>{d.matchup_intro}</p>
+              {
+                d.matchup_recaps.map((data, key) => {
+                  console.log(data, 'data');
+                  return(
+                    <div key={key}>
+                      <h3>{data.homeTeam} vs. {data.awayTeam}</h3>
+                      <span className="score">{data.homeTeamScore} - {data.awayTeamScore}</span>
+                      <p>{data.recap}</p>
 
-              <h3>Matchup Title</h3>
-              <span className="score">Da Score</span>
-              <p>Matchup Overview</p>
-              <p>Away Team Recap</p>
-              <p>Home Team Recap</p>
-              <h4>AWAYTEAM MVP & LVP</h4>
-              <p>MVP Recap</p>
-              <p>LVP Recap</p>
-              <h4>HOMETEAM MVP & LVP</h4>
-              <p>MVP Recap</p>
-              <p>LVP Recap</p>
+                      <h4>{data.homeTeam} MVP & LVP</h4>
+                      <p>{data.homeMvpLvp}</p>
+                      <p>{data.awayMvpLvp}</p>
+
+                      <h4>{data.awayTeam} MVP & LVP</h4>
+                      <p>{data.awayMvpLvp}</p>
+                    </div>
+                  )
+                })
+              }
             </div>
             <button>View More</button>
           </div>

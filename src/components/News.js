@@ -28,7 +28,7 @@ class News extends React.Component {
     return(
       <div className="article-container">
 
-        {Object.keys(this.state.recaps).map(key => <Article key={key}  details={this.state.recaps[key]}/>)}
+        {Object.keys(this.state.recaps).map(key => <Article key={key}  details={this.state.recaps[key]}/>).reverse()}
       </div>
     )
   }
