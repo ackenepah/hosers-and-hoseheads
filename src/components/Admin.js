@@ -3,6 +3,7 @@ import base, {rebaseAuth} from '../config';
 import MatchupRecap from './MatchupRecap';
 import Header from './Header';
 import Login from './Login';
+import Modal from './Modal';
 
 import '../css/adrian.css';
 
@@ -33,7 +34,9 @@ class Admin extends React.Component {
       subStaged_standings: {},
 
       staged_matchups: [],
-      owners: {}
+      owners: {},
+      isOpen: false,
+      isOpen2: false
     }
   }
 
@@ -233,6 +236,19 @@ class Admin extends React.Component {
             <button form="main-form">Publish Post</button>
           </div>
         </div>
+        <button onClick={()=>{this.setState({isOpen: true})}}>OPEN MODAL</button>
+        <button onClick={()=>{this.setState({isOpen2: true})}}>OPEN SECOND MODAL</button>
+
+        <Modal isOpen={this.state.isOpen} close={()=>{this.setState({isOpen: false})}}>
+          <h1>MODAL TEXT FROM ADMIN</h1>
+          <h1>MODAL TEXT FROM ADMIN</h1>
+
+        </Modal>
+
+        <Modal isOpen={this.state.isOpen2} close={()=>{this.setState({isOpen2: false})}}>
+          <h1>SEONC MODNAL LOL</h1>
+        </Modal>
+
 
       </div>
     )
