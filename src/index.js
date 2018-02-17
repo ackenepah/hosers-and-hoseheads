@@ -31,7 +31,7 @@ class Root extends React.Component {
     this.handleAuth = this.handleAuth.bind(this);
     this.logout = this.logout.bind(this);
     this.updateAdmin = this.updateAdmin.bind(this);
-
+    this.toggleEmailError = this.toggleEmailError.bind(this);
   }
 
   componentWillMount(){
@@ -108,7 +108,7 @@ class Root extends React.Component {
         // An error happened.
         console.log(error, 'email error');
         if(error.code === "auth/requires-recent-login"){
-          alert('please log out and then log back in and then update your email')
+          // alert('please log out and then log back in and then update your email')
           that.setState({emailError: true})
         }
       });
@@ -116,11 +116,10 @@ class Root extends React.Component {
     } else if(type === 'updatePassword'){
       console.log('update password');
     }
+  }
 
-
-
-
-
+  toggleEmailError(){
+    this.setState({emailError: !this.state.emailError})
   }
 
 
@@ -141,7 +140,7 @@ class Root extends React.Component {
             <BrowserRouter>
               <div>
                 <Match exactly pattern="/"  render={(props) => <Home {...props}  updateAdmin={this.updateAdmin} admin={this.state.admin} logout={this.logout}/> }/>
-                <Match pattern="/admin" render={(props) => <Admin {...props} updateAdmin={this.updateAdmin} admin={this.state.admin} logout={this.logout} handleAuth={this.handleAuth} emailError={this.state.emailError}/> }/>
+                <Match pattern="/admin" render={(props) => <Admin {...props} updateAdmin={this.updateAdmin} admin={this.state.admin} logout={this.logout} handleAuth={this.handleAuth} emailError={this.state.emailError} toggleEmailError={this.toggleEmailError}/> }/>
                 <Match pattern="/articleview" component={ArticleView}/>
                 <Miss component={NotFound} />
               </div>
