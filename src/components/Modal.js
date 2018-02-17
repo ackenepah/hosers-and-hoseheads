@@ -1,14 +1,15 @@
 import React from 'react';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'; // ES6
 import '../css/modal.css';
 
 class Modal extends React.Component {
 
   bgClick(e){
-    if(this.props.showClose){
+    // if(this.props.showClose){
       if(e.target === e.currentTarget){
         return this.props.close();
-      }  
-    }
+      }
+    // }
 
   }
 
@@ -19,7 +20,12 @@ class Modal extends React.Component {
 
     if(this.props.isOpen === true) {
       return (
-        <div>
+        <ReactCSSTransitionGroup
+          transitionName="modal-anim"
+          transitionEnterTimeout={200}
+          transitionLeaveTimeout={200}
+        >
+
           <div className="modal-bg" onClick={this.bgClick.bind(this)}>
             <div className="modal">
               {this.props.children}
@@ -28,11 +34,12 @@ class Modal extends React.Component {
           </div>
 
 
-        </div>
+        </ReactCSSTransitionGroup>
 
       )
     } else {
-      return null
+      return <ReactCSSTransitionGroup           transitionEnterTimeout={200}
+                transitionLeaveTimeout={200}transitionName="modal-anim" />;
     }
 
 
