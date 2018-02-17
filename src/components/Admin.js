@@ -36,7 +36,13 @@ class Admin extends React.Component {
       staged_matchups: [],
       owners: {},
       isOpen: false,
-      isOpen2: false
+      isOpen2: false,
+      // modals: {
+      //   noMatchupsModal: false
+      // }
+      modalNoMatchups: false,
+      // modalNoMatchupsText: ''
+      modalSubmitSuccess: false
     }
   }
 
@@ -63,8 +69,13 @@ class Admin extends React.Component {
     console.log("submitting recap");
     e.preventDefault()
     if(this.state.staged_matchups && this.state.staged_matchups.length <= 0){
-      alert("please select at least one matchpp")
+      // alert("please select at least one matchpp")
+      // const text = "Please select at least one matchup before submitting";
+      // this.setState({modalNoMatchups: !this.state.modalNoMatchups, modalNoMatchupsText: text})
+      this.setState({modalNoMatchups: !this.state.modalNoMatchups})
+
     } else {
+      // const nutext = "Your post has been submitted!";
       const timeStamp = Date.now();
       const newRecap = {...this.state.new_recap};
       const recap = {
@@ -82,7 +93,11 @@ class Admin extends React.Component {
         post_date: timeStamp
       }
       newRecap[`recap-${timeStamp}`] = recap;
-      this.setState({recaps: newRecap, staged_matchups: []})
+      // console.log(nutext, 'text in submit');
+      // this.setState({recaps: newRecap, staged_matchups: [], modalNoMatchups: !this.state.modalNoMatchups, modalNoMatchupsText: nutext})
+      this.setState({recaps: newRecap, staged_matchups: [], modalSubmitSuccess: !this.state.modalSubmitSuccess})
+
+
       this.mainForm.reset();
     }
   }
@@ -236,17 +251,35 @@ class Admin extends React.Component {
             <button form="main-form">Publish Post</button>
           </div>
         </div>
-        <button onClick={()=>{this.setState({isOpen: true})}}>OPEN MODAL</button>
-        <button onClick={()=>{this.setState({isOpen2: true})}}>OPEN SECOND MODAL</button>
+        {/*
+        <Modal
+          isOpen={this.state.modalNoMatchups}
+          close={()=>{this.setState({modalNoMatchups: !this.state.modalNoMatchups})}}
+          showClose={true}
+        >
+          <h1>{this.state.modalNoMatchupsText}</h1>
+        </Modal>
+        */}
 
-        <Modal isOpen={this.state.isOpen} close={()=>{this.setState({isOpen: false})}}>
-          <h1>MODAL TEXT FROM ADMIN</h1>
-          <h1>MODAL TEXT FROM ADMIN</h1>
 
+        {/*
+          /////////// MODALS ///////////
+        */}
+
+        <Modal
+          isOpen={this.state.modalNoMatchups}
+          close={()=>{this.setState({modalNoMatchups: !this.state.modalNoMatchups})}}
+          showClose={true}
+        >
+          <h1>Please select at least one matchup before submitting</h1>
         </Modal>
 
-        <Modal isOpen={this.state.isOpen2} close={()=>{this.setState({isOpen2: false})}}>
-          <h1>SEONC MODNAL LOL</h1>
+        <Modal
+          isOpen={this.state.modalSubmitSuccess}
+          close={()=>{this.setState({modalSubmitSuccess: !this.state.modalSubmitSuccess})}}
+          showClose={true}
+        >
+          <h1>Your post has successfully been submitted</h1>
         </Modal>
 
 
