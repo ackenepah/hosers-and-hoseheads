@@ -1,6 +1,6 @@
 import React from 'react';
 import Article from './News/Article';
-import base from '../configg';
+import base from '../config';
 
 class News extends React.Component {
   constructor(props) {

@@ -1,5 +1,5 @@
 import React from 'react';
-import base, {rebaseAuth} from '../configg';
+import base, {rebaseAuth} from '../config';
 import MatchupRecap from './MatchupRecap';
 import Header from './Header';
 import Login from './Login';

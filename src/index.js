@@ -12,7 +12,7 @@ import Home from './components/Home';
 import Admin from './components/Admin';
 import NotFound from './components/NotFound';
 
-import { rebaseAuth } from './configg';
+import { rebaseAuth } from './config';
 
 class Root extends React.Component {
 
