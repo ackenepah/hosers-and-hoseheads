@@ -45,7 +45,7 @@ class Admin extends React.Component {
       modalNoMatchups: false,
       // modalNoMatchupsText: ''
       modalSubmitSuccess: false,
-      component: "newPost",
+      component: true,
       editing: false,
       editingId: ""
     }
@@ -241,7 +241,7 @@ class Admin extends React.Component {
               <button onClick={()=>{this.setState({component: "newPost"})}}>New Post</button>
             </div>
 
-            { this.state.component === "newPost" ?
+            { this.state.newPostView ?
 
             <div>
               <form id="main-form" onSubmit={(e) => this.submitRecap(e)} ref={(input) => {this.mainForm = input}}>
@@ -371,7 +371,7 @@ class Admin extends React.Component {
               </Modal>
             </div>
           :
-            <ArticleView details={this.state.recaps} editArticle={this.editArticle} />
+            <ArticleView details={this.state.recaps} editArticle={this.editArticle} changeComponent={() => { this.setState({ newPostView: !this.state.newPostView }) }} />
         }
         </div>
       )

@@ -9,7 +9,9 @@
 - [ ] Edit User Info modal needs to be restructured to have one update button.
 - [X] ArticleView Component needs to be pulling real data.
 - [ ] Form Validation for Login Component and posting blog.
-- [ ] Editing post creates new Article object, it needs to update the existing article object data.
+- [X] Editing post creates new Article object, it needs to update the existing article object data.
+- [ ] When 'Publish Post' is clicked, direct to ArticleView component.
+- [X] Add functionality to direct user to admin page when an article is clicked.
 
 
 ## Styling
