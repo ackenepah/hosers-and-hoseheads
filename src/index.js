@@ -134,7 +134,6 @@ class Root extends React.Component {
     } else {
       return(
         <Flexbox flexDirection="column" minHeight="100vh">
-
           <Flexbox element="main" flexGrow={1}>
             <BrowserRouter>
               <div>
@@ -143,10 +142,6 @@ class Root extends React.Component {
                 <Miss component={NotFound} />
               </div>
             </BrowserRouter>
-          </Flexbox>
-
-          <Flexbox element="footer">
-            Footer
           </Flexbox>
         </Flexbox>
       )
