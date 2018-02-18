@@ -217,6 +217,14 @@ class Admin extends React.Component {
   updateComponent(type){
     this.setState({component: type})
   }
+
+  renderRecapImage(s){
+    console.log(s.value);
+    console.log('getting here');
+    let recap = {...this.state.recap};
+    recap.image = s.value;
+    this.setState({recap})
+  }
   componentDidUpdate(){
     console.log(this.state.staged_matchups, "this.matchups");
   }
@@ -237,8 +245,8 @@ class Admin extends React.Component {
             />
 
             <div>
-              <button onClick={()=>{this.setState({component: "articleView"})}}>Articles </button>
-              <button onClick={()=>{this.setState({component: "newPost"})}}>New Post</button>
+              <button onClick={()=>{this.setState({newPostView: false})}}>Articles </button>
+              <button onClick={()=>{this.setState({newPostView: true})}}>New Post</button>
             </div>
 
             { this.state.newPostView ?
@@ -267,13 +275,14 @@ class Admin extends React.Component {
                       <div className="col img-post">
                         <h3>Image URL</h3>
                         <p>Copy and paste the image URL from imgur.com.</p>
-                        <input ref={(input) => this.image = input} type="text" defaultValue={this.state.recap.image}  name="Article Image" accept="image/*" />
+                        <input ref={(input) => this.image = input} type="text" defaultValue={this.state.recap.image}  onBlur={()=>this.renderRecapImage(this.image)}name="Article Image" accept="image/*" />
                       </div>
 
                       <div className="gutter"></div>
 
                       <div className="col">
-                        <img src="http://www.placehold.it/460x200" alt="Article" />
+
+                        <div style={{width:"460px", height: "200px", backgroundSize: "cover", backgroundImage: `url(${this.state.recap.image})` || "url(http://www.placehold.it/460x200)"}} alt="Article" ></div>
                       </div>
                     </div>
                   </div>
@@ -336,7 +345,16 @@ class Admin extends React.Component {
                   <MatchupRecap handleStaged={this.handleStaged} stagedMatchups={this.state.staged_matchups} owners={this.state.owners} />
 
                   { /* user "form=" to submit the main form from outside the form element .. cannot nest form inside form (matchup recap)*/}
-                  <button form="main-form">Publish Post</button>
+                  { this.state.editing ?
+                    <div style={{display: "flex", justifyContent: "space-between"}}>
+                      <button form="main-form" style={{width: "80%"}}>Edit Post</button>
+                      <button style={{background: "#C40C0C", width: "18%", color: "#f1f1f1"}}>DELETE</button>
+                    </div>
+
+                    :
+                    <button form="main-form">Publish Post</button>
+
+                  }
                 </div>
               </div>
               {/*
