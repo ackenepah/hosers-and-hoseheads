@@ -5,16 +5,13 @@ import '../css/modal.css';
 class Modal extends React.Component {
 
   bgClick(e){
-    // if(this.props.showClose){
-      if(e.target === e.currentTarget){
-        return this.props.close();
-      }
-    // }
-
+    if(e.target === e.currentTarget){
+      return this.props.close();
+    }
   }
 
   render(){
-    console.log(this.props, 'this.props');
+    // console.log(this.props, 'this.props');
 
     const closeBtn = this.props.showClose ? <button onClick={this.props.close}> Close </button> : '';
 
@@ -33,16 +30,15 @@ class Modal extends React.Component {
             </div>
           </div>
 
-
         </ReactCSSTransitionGroup>
-
       )
     } else {
-      return <ReactCSSTransitionGroup           transitionEnterTimeout={200}
-                transitionLeaveTimeout={200}transitionName="modal-anim" />;
+      return <ReactCSSTransitionGroup
+                transitionEnterTimeout={200}
+                transitionLeaveTimeout={200}
+                transitionName="modal-anim"
+            />;
     }
-
-
   }
 }
 
