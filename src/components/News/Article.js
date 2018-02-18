@@ -52,7 +52,6 @@ class Article extends React.Component {
 
                       <h4>{data.homeTeam} MVP & LVP</h4>
                       <p>{data.homeMvpLvp}</p>
-                      <p>{data.awayMvpLvp}</p>
 
                       <h4>{data.awayTeam} MVP & LVP</h4>
                       <p>{data.awayMvpLvp}</p>

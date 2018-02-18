@@ -199,6 +199,8 @@ class Admin extends React.Component {
                         <input ref={(input) => this.title = input} type="text" placeholder="Week 1 Recap" />
                       </div>
 
+                      <div className="gutter"></div>
+
                       <div className="col">
                         <h3>Post Summary</h3>
                         <p>(i.e Brandon will always be the league’s Sacko)</p>
@@ -206,12 +208,14 @@ class Admin extends React.Component {
                       </div>
                     </div>
 
-                    <div className="flex-row" style={{background:"red"}}>
+                    <div className="flex-row">
                       <div className="col img-post">
                         <h3>Image URL</h3>
                         <p>Copy and paste the image URL from imgur.com.</p>
                         <input ref={(input) => this.image = input} type="text" name="Article Image" accept="image/*" />
                       </div>
+
+                      <div className="gutter"></div>
 
                       <div className="col">
                         <img src="http://www.placehold.it/460x200" alt="Article" />
@@ -227,6 +231,8 @@ class Admin extends React.Component {
                       <p>Write an overall summary of the week.</p>
                       <textarea ref={(input) => this.articleIntro = input} type="text" name="Article Intro" />
                      </div>
+
+                     <div className="gutter"></div>
 
                      <div className="col">
                       <h3>Matchups Intro</h3>
