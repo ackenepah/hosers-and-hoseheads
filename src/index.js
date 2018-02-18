@@ -141,7 +141,6 @@ class Root extends React.Component {
               <div>
                 <Match exactly pattern="/"  render={(props) => <Home {...props}  updateAdmin={this.updateAdmin} admin={this.state.admin} logout={this.logout}/> }/>
                 <Match pattern="/admin" render={(props) => <Admin {...props} updateAdmin={this.updateAdmin} admin={this.state.admin} logout={this.logout} handleAuth={this.handleAuth} emailError={this.state.emailError} toggleEmailError={this.toggleEmailError}/> }/>
-                <Match pattern="/articleview" component={ArticleView}/>
                 <Miss component={NotFound} />
               </div>
             </BrowserRouter>

@@ -307,7 +307,7 @@ class Admin extends React.Component {
               </Modal>
             </div>
           :
-            <ArticleView />
+            <ArticleView details = {this.state.recaps}/>
         }
         </div>
       )
