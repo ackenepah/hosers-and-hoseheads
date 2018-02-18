@@ -17,7 +17,7 @@ class ArticleView extends React.Component {
                 Object.keys(d).map((data, key) => {
                   console.log(data, 'DAT DATA');
                   return(
-                    <li key={key}>{d[data].title}</li>
+                    <li key={key} onClick={() => this.props.editArticle(data)}>{d[data].title}</li>
                   )
                 })
               }

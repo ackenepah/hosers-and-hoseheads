@@ -10,7 +10,6 @@ import './css/modules.css';
 
 import Home from './components/Home';
 import Admin from './components/Admin';
-import ArticleView from './components/ArticleView';
 import NotFound from './components/NotFound';
 
 import { rebaseAuth } from './config';

@@ -15,6 +15,7 @@ class Admin extends React.Component {
     this.handleStaged = this.handleStaged.bind(this);
     this.getTeamPoints = this.getTeamPoints.bind(this);
     this.updateComponent = this.updateComponent.bind(this);
+    this.editArticle = this.editArticle.bind(this);
     // this.handleAuth = this.handleAuth.bind(this);
 
     this.state = {
@@ -22,7 +23,8 @@ class Admin extends React.Component {
         name: '',
         image: ''
       },
-      recaps: {
+      recaps: {},
+      recap: {
         title: '',
         summary: '',
         image: '',
@@ -43,7 +45,8 @@ class Admin extends React.Component {
       modalNoMatchups: false,
       // modalNoMatchupsText: ''
       modalSubmitSuccess: false,
-      component: "newPost"
+      component: "newPost",
+      editing: false
     }
   }
 
@@ -118,13 +121,47 @@ class Admin extends React.Component {
     // }
   }
 
+  editArticle(id) {
+    console.log(id, 'admin edit id');
+
+    const article = this.state.recaps[id]
+    console.log(article.standings, 'BITCHES CLEAN UP SHIT');
+
+    const editRecap = {
+      title: article.title,
+      summary: article.summary,
+      image: article.image,
+      article_intro: article.article_intro,
+      match_intro: article.match_intro,
+      standings: article.standings,
+      matchup_recaps: article.matchup_recaps
+    }
+
+
+    this.setState({recap: editRecap, editing: true, subStaged_standings: article.standings})
+    // recaps: {
+    //   title: '',
+    //   summary: '',
+    //   image: '',
+    //   article_intro: '',
+    //   match_intro: '',
+    //   standings: {},
+    //   matchup_recaps: [],
+    //   post_date: ''
+    // },
+    // staged_standings: {},
+    // subStaged_standings: {},
+    //
+    // staged_matchups: []
+  }
+
   getTeamPoints(index, e) {
     const subStandingsCopy = [...this.state.subStaged_standings]
     let teamFound = false;
     let teamFoundIndex = "";
 
     for(var i = 0; i < subStandingsCopy.length; i++){
-      if (e.target.name === subStandingsCopy[i].team){
+      if (e.target.name === subStandingsCopy[i].team || e.target.name == i){
         teamFound = true;
         teamFoundIndex = i;
       }
@@ -154,10 +191,13 @@ class Admin extends React.Component {
   }
 
   renderStandings(index) {
-    const team = this.state.subStaged_standings
+    const tea = this.state.subStaged_standings
+    const r = this.state.editing ?
+         <li key={index}>{tea[index].team} <span>{tea[index].points} PTSSS</span></li>
+      :  <li key={index}>{tea[index].team} <span>{tea[index].points} PTS</span></li>
 
-    return <li key={index}>{team[index].team} <span>{team[index].points} PTS</span></li>
-  }
+      return r
+ }
 
   updateComponent(type){
     this.setState({component: type})
@@ -167,7 +207,7 @@ class Admin extends React.Component {
   }
 
   render() {
-    console.log(rebaseAuth.currentUser, 'currentUser');
+    console.log(this.state.subStaged_standings, "subStandingsCopy");
     if(!rebaseAuth.currentUser){
       return <Login pathname={this.props.location.pathname} handleAuth={this.props.handleAuth}/>
     }
@@ -196,7 +236,7 @@ class Admin extends React.Component {
                       <div className="col">
                         <h3>Post Title</h3>
                         <p>(i.e. Week 1 Recap)</p>
-                        <input ref={(input) => this.title = input} type="text" placeholder="Week 1 Recap" />
+                        <input ref={(input) => this.title = input} type="text" defaultValue={this.state.recap.title} placeholder="Week 1 Recap" />
                       </div>
 
                       <div className="gutter"></div>
@@ -204,7 +244,7 @@ class Admin extends React.Component {
                       <div className="col">
                         <h3>Post Summary</h3>
                         <p>(i.e Brandon will always be the league’s Sacko)</p>
-                        <input ref={(input) => this.summary = input} type="text" placeholder="Brandon's team suddenly falls apart and becomes the laughing stock of the leage!" />
+                        <input ref={(input) => this.summary = input} type="text" defaultValue={this.state.recap.summary} placeholder="Brandon's team suddenly falls apart and becomes the laughing stock of the leage!" />
                       </div>
                     </div>
 
@@ -212,7 +252,7 @@ class Admin extends React.Component {
                       <div className="col img-post">
                         <h3>Image URL</h3>
                         <p>Copy and paste the image URL from imgur.com.</p>
-                        <input ref={(input) => this.image = input} type="text" name="Article Image" accept="image/*" />
+                        <input ref={(input) => this.image = input} type="text" defaultValue={this.state.recap.image}  name="Article Image" accept="image/*" />
                       </div>
 
                       <div className="gutter"></div>
@@ -229,7 +269,7 @@ class Admin extends React.Component {
                      <div className="col">
                       <h3>Post Intro</h3>
                       <p>Write an overall summary of the week.</p>
-                      <textarea ref={(input) => this.articleIntro = input} type="text" name="Article Intro" />
+                      <textarea ref={(input) => this.articleIntro = input} type="text" defaultValue={this.state.recap.article_intro} name="Article Intro" />
                      </div>
 
                      <div className="gutter"></div>
@@ -237,7 +277,7 @@ class Admin extends React.Component {
                      <div className="col">
                       <h3>Matchups Intro</h3>
                       <p>Highlight some big moments in the matchups.</p>
-                      <textarea ref={(input) => this.matchupIntro = input} type="text" name="Match Intro" />
+                      <textarea ref={(input) => this.matchupIntro = input} type="text" defaultValue={this.state.recap.matchup_intro} name="Match Intro" />
                      </div>
                    </div>
                 </div>
@@ -247,12 +287,21 @@ class Admin extends React.Component {
                     <div className="col">
                       <h3>Update Standings</h3>
                       <p>Add the points each team has and the staged standings will update automatically.</p>
+
+
                       <ul>
-                        {
-                          Object.keys(this.state.staged_standings)
-                                .map((item, index) => { return <li key={index} className="flex-row"> { item } <input type="number" name={item} onBlur={(e) => this.getTeamPoints(index, e)} /></li> })
+                        { this.state.editing ?
+                          Object.keys(this.state.subStaged_standings)
+                                .map((item, index) => { return <li key={index} className="flex-row"> {this.state.subStaged_standings[index].team}<input type="number" name={item} onBlur={(e) => this.getTeamPoints(index, e)} defaultValue={this.state.subStaged_standings[index].points}  /></li> })
+                          :
+
+                            Object.keys(this.state.staged_standings)
+                                  .map((item, index) => { return <li key={index} className="flex-row"> { item } <input type="number" name={item} onBlur={(e) => this.getTeamPoints(index, e)}  /></li> })
+
                         }
                       </ul>
+
+
                     </div>
 
                     <div className="col">
@@ -307,7 +356,7 @@ class Admin extends React.Component {
               </Modal>
             </div>
           :
-            <ArticleView details = {this.state.recaps}/>
+            <ArticleView details={this.state.recaps} editArticle={this.editArticle} />
         }
         </div>
       )
