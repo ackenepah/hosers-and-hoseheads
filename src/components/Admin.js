@@ -46,7 +46,8 @@ class Admin extends React.Component {
       // modalNoMatchupsText: ''
       modalSubmitSuccess: false,
       component: "newPost",
-      editing: false
+      editing: false,
+      editingId: ""
     }
   }
 
@@ -70,13 +71,33 @@ class Admin extends React.Component {
   }
 
   submitRecap(e, staged){
-    console.log("submitting recap");
+    console.log(this.state.editingId, "submitting recap");
     e.preventDefault()
     if(this.state.staged_matchups && this.state.staged_matchups.length <= 0){
       // alert("please select at least one matchpp")
       // const text = "Please select at least one matchup before submitting";
       // this.setState({modalNoMatchups: !this.state.modalNoMatchups, modalNoMatchupsText: text})
       this.setState({modalNoMatchups: !this.state.modalNoMatchups})
+
+    } else if (this.state.editing){
+      let recaps = {...this.state.recaps}
+      const recap = {
+        title: this.title.value,
+        summary: this.summary.value,
+        image: this.image.value,
+        article_intro: this.articleIntro.value,
+        matchup_intro: this.matchupIntro.value,
+        standings: this.state.subStaged_standings,
+        matchup_recaps: this.state.staged_matchups,
+      }
+
+      recaps[this.state.editingId] = recap;
+      console.log(recaps, 'recaps');
+      console.log(recap, 'recaps');
+
+      // console.log(this.state.recaps[this.state.editingId]);
+      this.setState({recaps, recap: {},staged_matchups: [], subStaged_standings: {}, modalSubmitSuccess: !this.state.modalSubmitSuccess, editing: false})
+      this.mainForm.reset();
 
     } else {
       // const nutext = "Your post has been submitted!";
@@ -125,20 +146,18 @@ class Admin extends React.Component {
     console.log(id, 'admin edit id');
 
     const article = this.state.recaps[id]
-    console.log(article.standings, 'BITCHES CLEAN UP SHIT');
+    console.log(article.matchup_recaps, 'BITCHES CLEAN UP SHIT');
 
     const editRecap = {
       title: article.title,
       summary: article.summary,
       image: article.image,
       article_intro: article.article_intro,
-      match_intro: article.match_intro,
-      standings: article.standings,
-      matchup_recaps: article.matchup_recaps
+      matchup_intro: article.matchup_intro,
     }
 
 
-    this.setState({recap: editRecap, editing: true, subStaged_standings: article.standings})
+    this.setState({recap: editRecap, editing: true, editingId: id, subStaged_standings: article.standings, staged_matchups: article.matchup_recaps})
     // recaps: {
     //   title: '',
     //   summary: '',
