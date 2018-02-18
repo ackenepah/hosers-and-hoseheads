@@ -4,6 +4,7 @@ import MatchupRecap from './MatchupRecap';
 import Header from './Header';
 import Login from './Login';
 import Modal from './Modal';
+import ArticleView from './ArticleView';
 
 import '../css/adrian.css';
 
@@ -13,6 +14,7 @@ class Admin extends React.Component {
 
     this.handleStaged = this.handleStaged.bind(this);
     this.getTeamPoints = this.getTeamPoints.bind(this);
+    this.updateComponent = this.updateComponent.bind(this);
     // this.handleAuth = this.handleAuth.bind(this);
 
     this.state = {
@@ -35,14 +37,13 @@ class Admin extends React.Component {
 
       staged_matchups: [],
       owners: {},
-      isOpen: false,
-      isOpen2: false,
       // modals: {
       //   noMatchupsModal: false
       // }
       modalNoMatchups: false,
       // modalNoMatchupsText: ''
-      modalSubmitSuccess: false
+      modalSubmitSuccess: false,
+      component: "newPost"
     }
   }
 
@@ -158,6 +159,9 @@ class Admin extends React.Component {
     return <li key={index}>{team[index].team} <span>{team[index].points} PTS</span></li>
   }
 
+  updateComponent(type){
+    this.setState({component: type})
+  }
   componentDidUpdate(){
     console.log(this.state.staged_matchups, "this.matchups");
   }
@@ -167,130 +171,140 @@ class Admin extends React.Component {
     if(!rebaseAuth.currentUser){
       return <Login pathname={this.props.location.pathname} handleAuth={this.props.handleAuth}/>
     }
-    return(
-      <div>
-        <Header
-          admin={this.props.admin} 
-          logout={this.props.logout}
-          updateAdmin={this.props.updateAdmin}
-          emailError={this.props.emailError}
-          toggleEmailError={this.props.toggleEmailError
-        }/>
+      return (
+        <div>
+          <Header
+            admin={this.props.admin}
+            logout={this.props.logout}
+            updateAdmin={this.props.updateAdmin}
+            emailError={this.props.emailError}
+            toggleEmailError={this.props.toggleEmailError}
+            />
 
-        <form id="main-form" onSubmit={(e) => this.submitRecap(e)} ref={(input) => {this.mainForm = input}}>
-          <div className="container light">
-            <div className="form-content flex-column">
-              <div className="flex-row">
-                <div className="col">
-                  <h3>Post Title</h3>
-                  <p>(i.e. Week 1 Recap)</p>
-                  <input ref={(input) => this.title = input} type="text" placeholder="Week 1 Recap" />
-                </div>
-
-                <div className="col">
-                  <h3>Post Summary</h3>
-                  <p>(i.e Brandon will always be the league’s Sacko)</p>
-                  <input ref={(input) => this.summary = input} type="text" placeholder="Brandon's team suddenly falls apart and becomes the laughing stock of the leage!" />
-                </div>
-              </div>
-
-              <div className="flex-row" style={{background:"red"}}>
-                <div className="col img-post">
-                  <h3>Image URL</h3>
-                  <p>Copy and paste the image URL from imgur.com.</p>
-                  <input ref={(input) => this.image = input} type="text" name="Article Image" accept="image/*" />
-                </div>
-
-                <div className="col">
-                  <img src="http://www.placehold.it/460x200" alt="Article" />
-                </div>
-              </div>
+            <div>
+              <button onClick={()=>{this.setState({component: "articleView"})}}>Articles </button>
+              <button onClick={()=>{this.setState({component: "newPost"})}}>New Post</button>
             </div>
-          </div>
 
-          <div className="container dark">
-             <div className="form-content flex-row">
-               <div className="col">
-                <h3>Post Intro</h3>
-                <p>Write an overall summary of the week.</p>
-                <textarea ref={(input) => this.articleIntro = input} type="text" name="Article Intro" />
-               </div>
+            { this.state.component === "newPost" ?
 
-               <div className="col">
-                <h3>Matchups Intro</h3>
-                <p>Highlight some big moments in the matchups.</p>
-                <textarea ref={(input) => this.matchupIntro = input} type="text" name="Match Intro" />
-               </div>
-             </div>
-          </div>
+            <div>
+              <form id="main-form" onSubmit={(e) => this.submitRecap(e)} ref={(input) => {this.mainForm = input}}>
+                <div className="container light">
+                  <div className="form-content flex-column">
+                    <div className="flex-row">
+                      <div className="col">
+                        <h3>Post Title</h3>
+                        <p>(i.e. Week 1 Recap)</p>
+                        <input ref={(input) => this.title = input} type="text" placeholder="Week 1 Recap" />
+                      </div>
 
-          <div className="container light">
-            <div className="form-content flex-row standings">
-              <div className="col">
-                <h3>Update Standings</h3>
-                <p>Add the points each team has and the staged standings will update automatically.</p>
-                <ul>
-                  {
-                    Object.keys(this.state.staged_standings)
-                          .map((item, index) => { return <li key={index} className="flex-row"> { item } <input type="number" name={item} onBlur={(e) => this.getTeamPoints(index, e)} /></li> })
-                  }
-                </ul>
+                      <div className="col">
+                        <h3>Post Summary</h3>
+                        <p>(i.e Brandon will always be the league’s Sacko)</p>
+                        <input ref={(input) => this.summary = input} type="text" placeholder="Brandon's team suddenly falls apart and becomes the laughing stock of the leage!" />
+                      </div>
+                    </div>
+
+                    <div className="flex-row" style={{background:"red"}}>
+                      <div className="col img-post">
+                        <h3>Image URL</h3>
+                        <p>Copy and paste the image URL from imgur.com.</p>
+                        <input ref={(input) => this.image = input} type="text" name="Article Image" accept="image/*" />
+                      </div>
+
+                      <div className="col">
+                        <img src="http://www.placehold.it/460x200" alt="Article" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="container dark">
+                   <div className="form-content flex-row">
+                     <div className="col">
+                      <h3>Post Intro</h3>
+                      <p>Write an overall summary of the week.</p>
+                      <textarea ref={(input) => this.articleIntro = input} type="text" name="Article Intro" />
+                     </div>
+
+                     <div className="col">
+                      <h3>Matchups Intro</h3>
+                      <p>Highlight some big moments in the matchups.</p>
+                      <textarea ref={(input) => this.matchupIntro = input} type="text" name="Match Intro" />
+                     </div>
+                   </div>
+                </div>
+
+                <div className="container light">
+                  <div className="form-content flex-row standings">
+                    <div className="col">
+                      <h3>Update Standings</h3>
+                      <p>Add the points each team has and the staged standings will update automatically.</p>
+                      <ul>
+                        {
+                          Object.keys(this.state.staged_standings)
+                                .map((item, index) => { return <li key={index} className="flex-row"> { item } <input type="number" name={item} onBlur={(e) => this.getTeamPoints(index, e)} /></li> })
+                        }
+                      </ul>
+                    </div>
+
+                    <div className="col">
+                      <ol>
+                        {
+                          Object.keys(this.state.subStaged_standings)
+                                .map(this.renderStandings.bind(this))
+                        }
+                      </ol>
+                    </div>
+                  </div>
+                </div>
+              </form>
+
+              <div className="container dark">
+                <div className="form-content flex-column">
+                  <MatchupRecap handleStaged={this.handleStaged} stagedMatchups={this.state.staged_matchups} owners={this.state.owners} />
+
+                  { /* user "form=" to submit the main form from outside the form element .. cannot nest form inside form (matchup recap)*/}
+                  <button form="main-form">Publish Post</button>
+                </div>
               </div>
+              {/*
+              <Modal
+                isOpen={this.state.modalNoMatchups}
+                close={()=>{this.setState({modalNoMatchups: !this.state.modalNoMatchups})}}
+                showClose={true}
+              >
+                <h1>{this.state.modalNoMatchupsText}</h1>
+              </Modal>
+              */}
 
-              <div className="col">
-                <ol>
-                  {
-                    Object.keys(this.state.subStaged_standings)
-                          .map(this.renderStandings.bind(this))
-                  }
-                </ol>
-              </div>
+
+              {/*
+                /////////// MODALS ///////////
+              */}
+
+              <Modal
+                isOpen={this.state.modalNoMatchups}
+                close={()=>{this.setState({modalNoMatchups: !this.state.modalNoMatchups})}}
+                showClose={true}
+              >
+                <h1>Please select at least one matchup before submitting</h1>
+              </Modal>
+
+              <Modal
+                isOpen={this.state.modalSubmitSuccess}
+                close={()=>{this.setState({modalSubmitSuccess: !this.state.modalSubmitSuccess})}}
+                showClose={true}
+              >
+                <h1>Your post has successfully been submitted</h1>
+              </Modal>
             </div>
-          </div>
-        </form>
-
-        <div className="container dark">
-          <div className="form-content flex-column">
-            <MatchupRecap handleStaged={this.handleStaged} stagedMatchups={this.state.staged_matchups} owners={this.state.owners} />
-
-            { /* user "form=" to submit the main form from outside the form element .. cannot nest form inside form (matchup recap)*/}
-            <button form="main-form">Publish Post</button>
-          </div>
+          :
+            <ArticleView />
+        }
         </div>
-        {/*
-        <Modal
-          isOpen={this.state.modalNoMatchups}
-          close={()=>{this.setState({modalNoMatchups: !this.state.modalNoMatchups})}}
-          showClose={true}
-        >
-          <h1>{this.state.modalNoMatchupsText}</h1>
-        </Modal>
-        */}
-
-
-        {/*
-          /////////// MODALS ///////////
-        */}
-
-        <Modal
-          isOpen={this.state.modalNoMatchups}
-          close={()=>{this.setState({modalNoMatchups: !this.state.modalNoMatchups})}}
-          showClose={true}
-        >
-          <h1>Please select at least one matchup before submitting</h1>
-        </Modal>
-
-        <Modal
-          isOpen={this.state.modalSubmitSuccess}
-          close={()=>{this.setState({modalSubmitSuccess: !this.state.modalSubmitSuccess})}}
-          showClose={true}
-        >
-          <h1>Your post has successfully been submitted</h1>
-        </Modal>
-
-
-      </div>
-    )
+      )
   }
 }
 

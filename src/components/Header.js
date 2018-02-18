@@ -70,7 +70,7 @@ class Header extends React.Component {
 
   adminDashboard(){
     console.log(this.state.popupOpen, 'popup');
-    console.log(this.props.emailError, 'emailError');
+    console.log(this.props, 'emailError');
 
 
     const profilePicture = this.props.admin.adminUser.photoURL ? this.props.admin.adminUser.photoURL : "http://placehold.it/50x50";
@@ -88,7 +88,12 @@ class Header extends React.Component {
               <p onClick={()=>{this.togglePopup()}}>Edit</p>
             </div>
 
-            <Link to='/'><button onClick={this.props.logout}>logout</button></Link>
+            <div className="nav-right">
+
+              <Link to='/'><button onClick={this.props.logout}>logout</button></Link>
+
+            </div>
+
 
 
             { /* POPUP FOR ON CLICK SETTINGS */ }
