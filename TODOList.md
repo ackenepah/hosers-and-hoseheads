@@ -7,8 +7,9 @@
 - [X] News Component needs to be pulling all data from a blog post, including the staged standings, matchup recaps, etc.
 - [X] Toggle between ArticleView and NewPost components.
 - [ ] Edit User Info modal needs to be restructured to have one update button.
-- [ ] ArticleView Component needs to be pulling real data.
+- [X] ArticleView Component needs to be pulling real data.
 - [ ] Form Validation for Login Component and posting blog.
+- [ ] Editing post creates new Article object, it needs to update the existing article object data.
 
 
 ## Styling

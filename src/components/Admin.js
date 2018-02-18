@@ -191,12 +191,8 @@ class Admin extends React.Component {
   }
 
   renderStandings(index) {
-    const tea = this.state.subStaged_standings
-    const r = this.state.editing ?
-         <li key={index}>{tea[index].team} <span>{tea[index].points} PTSSS</span></li>
-      :  <li key={index}>{tea[index].team} <span>{tea[index].points} PTS</span></li>
-
-      return r
+    const team = this.state.subStaged_standings
+    return <li key={index}>{team[index].team} <span>{team[index].points} PTS</span></li>
  }
 
   updateComponent(type){
