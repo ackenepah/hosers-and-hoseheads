@@ -21,14 +21,9 @@
   padding-left: 10px;
   height: 50px;
   cursor: pointer;
+  transition: ease-in-out .2s;
 }
 
-.article-list ul li span {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.article-list ul li:hover {
   background-color: #EEC643;
-  font-size: 18px;
-  width: 75px;
-  height: 49px;
 }
