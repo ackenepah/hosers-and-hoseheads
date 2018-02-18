@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router';
-import { rebaseAuth } from '../configg';
+import { rebaseAuth } from '../config';
 
 class Login extends React.Component {
 
