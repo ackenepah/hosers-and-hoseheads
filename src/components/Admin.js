@@ -16,6 +16,7 @@ class Admin extends React.Component {
     this.getTeamPoints = this.getTeamPoints.bind(this);
     this.updateComponent = this.updateComponent.bind(this);
     this.editArticle = this.editArticle.bind(this);
+    this.togglePostView = this.togglePostView.bind(this);
     // this.handleAuth = this.handleAuth.bind(this);
 
     this.state = {
@@ -24,15 +25,25 @@ class Admin extends React.Component {
         image: ''
       },
       recaps: {},
+      // recap: {
+      //   title: '',
+      //   summary: '',
+      //   image: '',
+      //   article_intro: '',
+      //   match_intro: '',
+      //   standings: {},
+      //   matchup_recaps: [],
+      //   post_date: ''
+      // },
       recap: {
-        title: '',
-        summary: '',
-        image: '',
-        article_intro: '',
-        match_intro: '',
-        standings: {},
-        matchup_recaps: [],
-        post_date: ''
+        title: null,
+        summary: 'heressss',
+        image: null,
+        article_intro: null,
+        match_intro: null,
+        standings: null,
+        matchup_recaps: null,
+        post_date: null
       },
       staged_standings: {},
       subStaged_standings: {},
@@ -47,7 +58,9 @@ class Admin extends React.Component {
       modalSubmitSuccess: false,
       component: true,
       editing: false,
-      editingId: ""
+      editingId: "",
+      newPostView: false,
+      baseStaged_standings: {}
     }
   }
 
@@ -62,10 +75,10 @@ class Admin extends React.Component {
       state: 'owners'
     })
 
-    base.fetch('/owners', {
+    this.ref3 = base.fetch('/owners', {
       context: this,
       then(data){
-        this.setState({staged_standings: data})
+        this.setState({staged_standings: data, baseStaged_standings: data})
       }
     });
   }
@@ -225,12 +238,50 @@ class Admin extends React.Component {
     recap.image = s.value;
     this.setState({recap})
   }
+
+  resetForm(){
+    console.log('resetting');
+    // console.log(this.mainForm);
+    // this.setState(this.baseState)
+    this.setState({recap: {}, staged_matchups: [], staged_standings: this.state.baseStaged_standings, subStaged_standings: {}})
+    console.log(this.ref3);
+
+
+    this.title.value = ""
+    this.summary.value = ""
+    this.image.value = ""
+    this.articleIntro.value = ""
+    this.matchupIntro.value = ""
+  }
+
   componentDidUpdate(){
-    console.log(this.state.staged_matchups, "this.matchups");
+    // console.log(this.state.staged_matchups, "this.matchups");
+  }
+
+  togglePostView(bool){
+    // console.log(Object.values(this.state.recap), "valueees");
+    // var obj = Object.values(this.state.recap);
+    // let isRecapEmpty = true;
+    //
+    // for(var i = 0; i < obj.length; i++){
+    //   console.log(obj[i]);
+    //   if( obj[i] !== ""){
+    //     console.log('NOT NULL');
+    //     isRecapEmpty = false;
+    //     break;
+    //   } else {
+    //     console.log("NULL VALUEEEEE");
+    //   }
+    // }
+    this.setState({newPostView: bool})
+    if(this.state.newPostView){
+      this.resetForm();
+      this.setState({editing: false})
+    }
   }
 
   render() {
-    console.log(this.state.subStaged_standings, "subStandingsCopy");
+    // console.log(this.state.subStaged_standings, "subStandingsCopy");
     if(!rebaseAuth.currentUser){
       return <Login pathname={this.props.location.pathname} handleAuth={this.props.handleAuth}/>
     }
@@ -244,9 +295,9 @@ class Admin extends React.Component {
             toggleEmailError={this.props.toggleEmailError}
             />
 
-            <div>
-              <button onClick={()=>{this.setState({newPostView: false})}}>Articles </button>
-              <button onClick={()=>{this.setState({newPostView: true})}}>New Post</button>
+            <div className=" admin-button-group">
+              <button onClick={()=>{this.togglePostView(false)}}>Articles </button>
+              <button onClick={()=>{this.togglePostView(true)}}>New Post</button>
             </div>
 
             { this.state.newPostView ?
@@ -389,7 +440,7 @@ class Admin extends React.Component {
               </Modal>
             </div>
           :
-            <ArticleView details={this.state.recaps} editArticle={this.editArticle} changeComponent={() => { this.setState({ newPostView: !this.state.newPostView }) }} />
+            <ArticleView mainForm={this.mainForm} details={this.state.recaps} editArticle={this.editArticle} changeComponent={() => { this.setState({ newPostView: !this.state.newPostView }) }} />
         }
         </div>
       )
