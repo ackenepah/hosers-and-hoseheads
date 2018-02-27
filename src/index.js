@@ -123,7 +123,6 @@ class Root extends React.Component {
 
 
   render(){
-    console.log(this.state.emailError, 'email');
     if(this.state.loading){
       return (
         <div>

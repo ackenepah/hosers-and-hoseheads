@@ -69,8 +69,8 @@ class Header extends React.Component {
 
 
   adminDashboard(){
-    console.log(this.state.popupOpen, 'popup');
-    console.log(this.props, 'emailError');
+    // console.log(this.state.popupOpen, 'popup');
+    // console.log(this.props, 'emailError');
 
 
     const profilePicture = this.props.admin.adminUser.photoURL ? this.props.admin.adminUser.photoURL : "http://placehold.it/50x50";
@@ -156,7 +156,7 @@ class Header extends React.Component {
 
   render() {
 
-    console.log(this.props.emailError, 'emailError');
+    // console.log(this.props.emailError, 'emailError');
     return(
       <div className="header">
         <div className="logo">

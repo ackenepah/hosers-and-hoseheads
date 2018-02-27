@@ -17,6 +17,7 @@ class Admin extends React.Component {
     this.updateComponent = this.updateComponent.bind(this);
     this.editArticle = this.editArticle.bind(this);
     this.togglePostView = this.togglePostView.bind(this);
+    this.resetForm = this.resetForm.bind(this);
     // this.handleAuth = this.handleAuth.bind(this);
 
     this.state = {
@@ -87,11 +88,8 @@ class Admin extends React.Component {
     console.log(this.state.editingId, "submitting recap");
     e.preventDefault()
     if(this.state.staged_matchups && this.state.staged_matchups.length <= 0){
-      // alert("please select at least one matchpp")
-      // const text = "Please select at least one matchup before submitting";
-      // this.setState({modalNoMatchups: !this.state.modalNoMatchups, modalNoMatchupsText: text})
       this.setState({modalNoMatchups: !this.state.modalNoMatchups})
-
+      return;
     } else if (this.state.editing){
       let recaps = {...this.state.recaps}
       const recap = {
@@ -109,8 +107,8 @@ class Admin extends React.Component {
       console.log(recap, 'recaps');
 
       // console.log(this.state.recaps[this.state.editingId]);
-      this.setState({recaps, recap: {},staged_matchups: [], subStaged_standings: {}, modalSubmitSuccess: !this.state.modalSubmitSuccess, editing: false})
-      this.mainForm.reset();
+      // this.setState({recaps, recap: {},staged_matchups: [], subStaged_standings: {}, modalSubmitSuccess: !this.state.modalSubmitSuccess, editing: false})
+      // this.mainForm.reset();
 
     } else {
       // const nutext = "Your post has been submitted!";
@@ -133,11 +131,12 @@ class Admin extends React.Component {
       newRecap[`recap-${timeStamp}`] = recap;
       // console.log(nutext, 'text in submit');
       // this.setState({recaps: newRecap, staged_matchups: [], modalNoMatchups: !this.state.modalNoMatchups, modalNoMatchupsText: nutext})
-      this.setState({recaps: newRecap, staged_matchups: [], modalSubmitSuccess: !this.state.modalSubmitSuccess})
-
-
-      this.mainForm.reset();
+      // this.setState({modalSubmitSuccess: !this.state.modalSubmitSuccess})
+      // this.resetForm();
+      // this.mainForm.reset();
     }
+    this.setState({modalSubmitSuccess: !this.state.modalSubmitSuccess, editing: false})
+    this.resetForm();
   }
 
   handleStaged(matchup_recaps, type){
@@ -241,12 +240,12 @@ class Admin extends React.Component {
 
   resetForm(){
     console.log('resetting');
-    // console.log(this.mainForm);
-    // this.setState(this.baseState)
-    this.setState({recap: {}, staged_matchups: [], staged_standings: this.state.baseStaged_standings, subStaged_standings: {}})
-    console.log(this.ref3);
-
-
+    this.setState({
+      recap: {},
+      staged_matchups: [],
+      staged_standings: this.state.baseStaged_standings,
+      subStaged_standings: {}
+    })
     this.title.value = ""
     this.summary.value = ""
     this.image.value = ""
