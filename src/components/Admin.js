@@ -38,7 +38,7 @@ class Admin extends React.Component {
       // },
       recap: {
         title: null,
-        summary: 'heressss',
+        summary: null,
         image: null,
         article_intro: null,
         match_intro: null,
@@ -55,7 +55,6 @@ class Admin extends React.Component {
       //   noMatchupsModal: false
       // }
       modalNoMatchups: false,
-      // modalNoMatchupsText: ''
       modalSubmitSuccess: false,
       component: true,
       editing: false,
@@ -91,6 +90,7 @@ class Admin extends React.Component {
       this.setState({modalNoMatchups: !this.state.modalNoMatchups})
       return;
     } else if (this.state.editing){
+      const editTimeStamp = Date.now();
       let recaps = {...this.state.recaps}
       const recap = {
         title: this.title.value,
@@ -100,18 +100,11 @@ class Admin extends React.Component {
         matchup_intro: this.matchupIntro.value,
         standings: this.state.subStaged_standings,
         matchup_recaps: this.state.staged_matchups,
+        edit_date: editTimeStamp
       }
-
       recaps[this.state.editingId] = recap;
-      console.log(recaps, 'recaps');
-      console.log(recap, 'recaps');
-
-      // console.log(this.state.recaps[this.state.editingId]);
-      // this.setState({recaps, recap: {},staged_matchups: [], subStaged_standings: {}, modalSubmitSuccess: !this.state.modalSubmitSuccess, editing: false})
-      // this.mainForm.reset();
-
+      this.setState({recaps})
     } else {
-      // const nutext = "Your post has been submitted!";
       const timeStamp = Date.now();
       const newRecap = {...this.state.new_recap};
       const recap = {
@@ -120,20 +113,12 @@ class Admin extends React.Component {
         image: this.image.value,
         article_intro: this.articleIntro.value,
         matchup_intro: this.matchupIntro.value,
-        // standings: {
-        //   team: this.teamName.value,
-        //   points: this.teamPoints.value,
-        // },
         standings: this.state.subStaged_standings,
         matchup_recaps: this.state.staged_matchups,
         post_date: timeStamp
       }
       newRecap[`recap-${timeStamp}`] = recap;
-      // console.log(nutext, 'text in submit');
-      // this.setState({recaps: newRecap, staged_matchups: [], modalNoMatchups: !this.state.modalNoMatchups, modalNoMatchupsText: nutext})
-      // this.setState({modalSubmitSuccess: !this.state.modalSubmitSuccess})
-      // this.resetForm();
-      // this.mainForm.reset();
+      this.setState({recaps: newRecap})
     }
     this.setState({modalSubmitSuccess: !this.state.modalSubmitSuccess, editing: false})
     this.resetForm();
@@ -167,23 +152,7 @@ class Admin extends React.Component {
       article_intro: article.article_intro,
       matchup_intro: article.matchup_intro,
     }
-
-
     this.setState({recap: editRecap, editing: true, editingId: id, subStaged_standings: article.standings, staged_matchups: article.matchup_recaps})
-    // recaps: {
-    //   title: '',
-    //   summary: '',
-    //   image: '',
-    //   article_intro: '',
-    //   match_intro: '',
-    //   standings: {},
-    //   matchup_recaps: [],
-    //   post_date: ''
-    // },
-    // staged_standings: {},
-    // subStaged_standings: {},
-    //
-    // staged_matchups: []
   }
 
   getTeamPoints(index, e) {
@@ -258,20 +227,6 @@ class Admin extends React.Component {
   }
 
   togglePostView(bool){
-    // console.log(Object.values(this.state.recap), "valueees");
-    // var obj = Object.values(this.state.recap);
-    // let isRecapEmpty = true;
-    //
-    // for(var i = 0; i < obj.length; i++){
-    //   console.log(obj[i]);
-    //   if( obj[i] !== ""){
-    //     console.log('NOT NULL');
-    //     isRecapEmpty = false;
-    //     break;
-    //   } else {
-    //     console.log("NULL VALUEEEEE");
-    //   }
-    // }
     this.setState({newPostView: bool})
     if(this.state.newPostView){
       this.resetForm();
@@ -280,7 +235,9 @@ class Admin extends React.Component {
   }
 
   render() {
-    // console.log(this.state.subStaged_standings, "subStandingsCopy");
+    const bgImg = this.state.recap.image ? this.state.recap.image : "http://via.placeholder.com/460x200";
+    const buttonText = this.state.editing ? 'Clear Form' : 'New Post';
+
     if(!rebaseAuth.currentUser){
       return <Login pathname={this.props.location.pathname} handleAuth={this.props.handleAuth}/>
     }
@@ -296,7 +253,7 @@ class Admin extends React.Component {
 
             <div className=" admin-button-group">
               <button onClick={()=>{this.togglePostView(false)}}>Articles </button>
-              <button onClick={()=>{this.togglePostView(true)}}>New Post</button>
+              <button onClick={()=>{this.togglePostView(true)}}>{buttonText}</button>
             </div>
 
             { this.state.newPostView ?
@@ -332,7 +289,7 @@ class Admin extends React.Component {
 
                       <div className="col">
 
-                        <div style={{width:"460px", height: "200px", backgroundSize: "cover", backgroundImage: `url(${this.state.recap.image})` || "url(http://www.placehold.it/460x200)"}} alt="Article" ></div>
+                        <div style={{width:"460px", height: "200px", backgroundSize: "cover", backgroundImage: `url(${bgImg})`}} alt="Article" ></div>
                       </div>
                     </div>
                   </div>
