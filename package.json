@@ -17,6 +17,7 @@
     "firebase": "^4.8.0",
     "flexbox-react": "^4.4.0",
     "history": "4.2.0",
+    "moment": "^2.20.1",
     "node-sass-chokidar": "0.0.3",
     "re-base": "^3.2.2",
     "react": "15.3.2",
