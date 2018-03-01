@@ -161,7 +161,7 @@ class Admin extends React.Component {
     let teamFoundIndex = "";
 
     for(var i = 0; i < subStandingsCopy.length; i++){
-      if (e.target.name === subStandingsCopy[i].team || e.target.name == i){
+      if (e.target.name === subStandingsCopy[i].team || e.target.name === Number(i)){
         teamFound = true;
         teamFoundIndex = i;
       }
