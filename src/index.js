@@ -53,22 +53,12 @@ class Root extends React.Component {
 
   setMyState(){
     var that = this;
-    // setTimeout(function () {
-    //   if(rebaseAuth.currentUser){
-    //     let adminUser = rebaseAuth.currentUser
-    //     let admin = {adminUser: adminUser, loggedIn: true}
-    //     console.log(admin);
-    //     that.setState({admin})
-    //   }
-    //   that.setState({loading: false})
-    // }, 500);
-
     rebaseAuth.onAuthStateChanged(function(user) {
       if (user) {
         // User is signed in.
         let adminUser = user
         let admin = {adminUser: adminUser, loggedIn: true}
-        console.log(admin);
+        // console.log(admin);
         that.setState({admin})
       } else {
         // No user is signed in.

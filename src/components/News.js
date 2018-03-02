@@ -18,12 +18,6 @@ class News extends React.Component {
     })
   }
 
-  componentDidUpdate(){
-    console.log(this.state);
-  }
-
-
-
   render() {
     return(
       <div className="article-container">

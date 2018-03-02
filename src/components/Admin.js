@@ -26,16 +26,6 @@ class Admin extends React.Component {
         image: ''
       },
       recaps: {},
-      // recap: {
-      //   title: '',
-      //   summary: '',
-      //   image: '',
-      //   article_intro: '',
-      //   match_intro: '',
-      //   standings: {},
-      //   matchup_recaps: [],
-      //   post_date: ''
-      // },
       recap: {
         title: null,
         summary: null,
@@ -48,17 +38,13 @@ class Admin extends React.Component {
       },
       staged_standings: {},
       subStaged_standings: {},
-
       staged_matchups: [],
       owners: {},
-      // modals: {
-      //   noMatchupsModal: false
-      // }
       modalNoMatchups: false,
       modalSubmitSuccess: false,
       component: true,
       editing: false,
-      editingId: "",
+      editingId: null,
       newPostView: false,
       baseStaged_standings: {}
     }
@@ -70,15 +56,10 @@ class Admin extends React.Component {
       state: 'recaps'
     })
 
-    this.ref2 = base.syncState(`/owners`, {
-      context: this,
-      state: 'owners'
-    })
-
-    this.ref3 = base.fetch('/owners', {
+    base.fetch('/owners', {
       context: this,
       then(data){
-        this.setState({staged_standings: data, baseStaged_standings: data})
+        this.setState({staged_standings: data, baseStaged_standings: data, owners: data})
       }
     });
   }
@@ -115,7 +96,12 @@ class Admin extends React.Component {
         matchup_intro: this.matchupIntro.value,
         standings: this.state.subStaged_standings,
         matchup_recaps: this.state.staged_matchups,
-        post_date: timeStamp
+        post_date: timeStamp,
+        author: {
+          name: rebaseAuth.currentUser.displayName,
+          id: rebaseAuth.currentUser.uid,
+          photo: rebaseAuth.currentUser.photoURL
+        }
       }
       newRecap[`recap-${timeStamp}`] = recap;
       this.setState({recaps: newRecap})
@@ -126,6 +112,8 @@ class Admin extends React.Component {
 
   handleStaged(matchup_recaps, type){
     //this function is not needed - data is being manipulated directly in MatchupRecap component
+
+    //////////// THIS IS BAD PRACTICE - NEED TO FIX ///////////
 
     // if(type === 'new'){
     //   console.log('ADDING NEW!!!');
@@ -140,11 +128,7 @@ class Admin extends React.Component {
   }
 
   editArticle(id) {
-    console.log(id, 'admin edit id');
-
     const article = this.state.recaps[id]
-    console.log(article.matchup_recaps, 'BITCHES CLEAN UP SHIT');
-
     const editRecap = {
       title: article.title,
       summary: article.summary,
@@ -199,11 +183,9 @@ class Admin extends React.Component {
     this.setState({component: type})
   }
 
-  renderRecapImage(s){
-    console.log(s.value);
-    console.log('getting here');
+  renderRecapImage(imgurl){
     let recap = {...this.state.recap};
-    recap.image = s.value;
+    recap.image = imgurl.value;
     this.setState({recap})
   }
 

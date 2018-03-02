@@ -135,8 +135,6 @@ class MatchupRecap extends React.Component {
     this.props.stagedMatchups.splice(key, 1)
   }
 
-
-
   clearForm(){
     this.setState({
       homeTeam: "",
@@ -150,12 +148,6 @@ class MatchupRecap extends React.Component {
       editingKey: ""
     })
   }
-
-  componentDidUpdate(){
-    // console.log(this.state.ownersA, "componentDidUpdate");
-    // console.log(own);
-  }
-
 
   render(){
     const owners = {...this.props.owners}
@@ -234,8 +226,8 @@ class MatchupRecap extends React.Component {
             <label htmlFor="recap">
               <h3>{homeMvpLvp} vs {awayMvpLvp}</h3>
               <p>{`Write an overview of the recap and a detailed paragraph for each team`}</p>
+              <textarea id="recap" ref={(input) => this.recap = input} value={this.state.recap} onChange={(e) => this.handleTeamChange('recap', e)}></textarea>
             </label>
-            <textarea id="recap" ref={(input) => this.recap = input} value={this.state.recap} onChange={(e) => this.handleTeamChange('recap', e)}></textarea>
 
             <div className="mvp-lvp-container">
 

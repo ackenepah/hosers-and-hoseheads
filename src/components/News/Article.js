@@ -5,8 +5,8 @@ class Article extends React.Component {
 
     // console.log(this.props.details);
     const d = this.props.details
-    console.log(d.matchup_recaps, 'MOTHER FUCKER')
-    console.log(Object.keys(d.matchup_recaps), 'DOS OBJECTS')
+    // console.log(d.matchup_recaps, 'MOTHER FUCKER')
+    // console.log(Object.keys(d.matchup_recaps), 'DOS OBJECTS')
     return(
       <div className="article-wrapper">
         <div className="article">
@@ -43,7 +43,7 @@ class Article extends React.Component {
               <p>{d.matchup_intro}</p>
               {
                 d.matchup_recaps.map((data, key) => {
-                  console.log(data, 'data');
+                  // console.log(data, 'data');
                   return(
                     <div key={key}>
                       <h3>{data.homeTeam} vs. {data.awayTeam}</h3>
