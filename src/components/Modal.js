@@ -11,9 +11,14 @@ class Modal extends React.Component {
   }
 
   render(){
-    // console.log(this.props, 'this.props');
-
     const closeBtn = this.props.showClose ? <button onClick={this.props.close}> Close </button> : '';
+    const deleteBtn = this.props.showDelete ?
+        <div>
+          <button onClick={this.props.close}>Cancel</button>
+          <button onClick={()=>{this.props.close(); this.props.deleteFunc(this.props.deleteId)}}>Delete</button>
+        </div>
+      : '';
+
 
     if(this.props.isOpen === true) {
       return (
@@ -27,6 +32,7 @@ class Modal extends React.Component {
             <div className="modal">
               {this.props.children}
               {closeBtn}
+              {deleteBtn}
             </div>
           </div>
 

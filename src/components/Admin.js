@@ -42,6 +42,7 @@ class Admin extends React.Component {
       owners: {},
       modalNoMatchups: false,
       modalSubmitSuccess: false,
+      modalDeletePost: false,
       component: true,
       editing: false,
       editingId: null,
@@ -204,16 +205,20 @@ class Admin extends React.Component {
     this.matchupIntro.value = ""
   }
 
-  componentDidUpdate(){
-    // console.log(this.state.staged_matchups, "this.matchups");
-  }
-
   togglePostView(bool){
     this.setState({newPostView: bool})
     if(this.state.newPostView){
       this.resetForm();
       this.setState({editing: false})
     }
+  }
+
+  deletePost(id){
+    console.log('deleting post', id);
+    const recaps = {...this.state.recaps};
+    recaps[id] = null;
+    this.setState({recaps})
+    this.resetForm();
   }
 
   render() {
@@ -337,7 +342,7 @@ class Admin extends React.Component {
                   { this.state.editing ?
                     <div style={{display: "flex", justifyContent: "space-between"}}>
                       <button form="main-form" style={{width: "80%"}}>Edit Post</button>
-                      <button style={{background: "#C40C0C", width: "18%", color: "#f1f1f1"}}>DELETE</button>
+                      <button onClick={()=>{this.setState({modalDeletePost: !this.state.modalDeletePost})}} style={{background: "#C40C0C", width: "18%", color: "#f1f1f1"}}>DELETE</button>
                     </div>
 
                     :
@@ -375,6 +380,18 @@ class Admin extends React.Component {
                 showClose={true}
               >
                 <h1>Your post has successfully been submitted</h1>
+              </Modal>
+
+              <Modal
+                isOpen={this.state.modalDeletePost}
+                close={()=>{this.setState({modalDeletePost: !this.state.modalDeletePost})}}
+                showClose={false}
+                showCancel={true}
+                showDelete={true}
+                deleteId={this.state.editingId}
+                deleteFunc={(id)=>{this.deletePost(id)}}
+              >
+                <h1>Are you sure you want to delete this post?</h1>
               </Modal>
             </div>
           :
