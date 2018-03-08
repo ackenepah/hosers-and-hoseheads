@@ -8,7 +8,7 @@ class ArticleView extends React.Component {
   post(monthName, monthObject){
     return monthObject[monthName].map((item, key)=>{
       return (
-        <div key={key} onClick={() => {this.props.editArticle(`recap-${item.post_date}`); this.props.changeComponent()}}>
+        <div className="article-view" key={key} onClick={() => {this.props.editArticle(`recap-${item.post_date}`); this.props.changeComponent()}}>
           <li>{item.title}</li>
         </div>
         )
