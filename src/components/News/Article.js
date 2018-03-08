@@ -1,12 +1,22 @@
 import React from 'react';
 
 class Article extends React.Component {
+
+  constructor() {
+    super()
+
+    this.state = {
+      viewMore: false
+    }
+  }
+
   render() {
 
     // console.log(this.props.details);
     const d = this.props.details
-    // console.log(d.matchup_recaps, 'MOTHER FUCKER')
-    // console.log(Object.keys(d.matchup_recaps), 'DOS OBJECTS')
+
+    const buttonText = this.state.viewMore ? "View Less" : "View More"
+
     return(
       <div className="article-wrapper">
         <div className="article">
@@ -29,6 +39,8 @@ class Article extends React.Component {
             <div className="article-body">
               <p>{d.article_intro}</p>
 
+              { this.state.viewMore ?
+              <div>
               <h4>Current Standings:</h4>
               <ol className="standings-list">
                 {
@@ -59,10 +71,20 @@ class Article extends React.Component {
                   )
                 })
               }
+
+
+
+
+
+
+              </div>
+              :
+              null
+              }
             </div>
-            <button>View More</button>
           </div>
         </div>
+        <button onClick={() => this.setState({viewMore: !this.state.viewMore})}>{buttonText}</button>
       </div>
     )
   }
